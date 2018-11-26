@@ -1,0 +1,29 @@
+---
+---
+
+.content-filters a {
+    text-decoration: none;
+}
+
+.content-main-full-height {
+    min-height: calc(100vh - 5.625rem);
+}
+
+.foundry-color {
+    color: #000000;
+}
+
+.header-foundry {
+    background-color: #000000;
+}
+
+
+.header-foundry ul {
+    margin-left: 0.5rem;
+}
+
+@media screen and (min-width: 56.25rem) {
+    .header-foundry ul {
+        margin-left: 2.625rem;
+    }
+}
