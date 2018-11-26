@@ -1,5 +1,4 @@
 ---
-layout: primer
 title: Primer Two
 slug: primer-two
 ---

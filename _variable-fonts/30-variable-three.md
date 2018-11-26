@@ -1,5 +1,4 @@
 ---
-layout: variable
 title: Variable Three
 slug: variable-three
 ---

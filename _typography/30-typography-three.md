@@ -1,5 +1,4 @@
 ---
-layout: typography
 title: Typography Three
 slug: typography-three
 ---

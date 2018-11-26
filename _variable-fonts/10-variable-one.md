@@ -1,5 +1,4 @@
 ---
-layout: variable
 title: Variable One
 slug: variable-one
 ---

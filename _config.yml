@@ -42,6 +42,26 @@ collections:
     output: true
     permalink: /:collection/:title
   
+defaults:
+  -
+    scope:
+      path: ""
+      type: primer
+    values:
+      layout: primer
+  -
+    scope:
+      path: ""
+      type: variable-fonts
+    values:
+      layout: variable
+  -
+    scope:
+      path: ""
+      type: typography
+    values:
+      layout: typography
+
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

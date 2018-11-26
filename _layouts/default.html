@@ -94,10 +94,9 @@
                 <a class="content-options-show-filters" href="#">Sidebar</a>
     
                 <article class="article-news ">
-                    {{page.breadcrumbs}}
-                    {% if page.breadcrumbs %}
+                    {% if layout.breadcrumbs %}
                     <header class="header-article-archive">
-                        <h1><span>{% for crumb in page.breadcrumbs %}{{crumb}} / {% endfor%}</span></h1>
+                        <h1><span>{% for crumb in layout.breadcrumbs %}{{crumb}} / {% endfor%}</span></h1>
                     </header>
                     {% endif %}
                     <header class="header-article">

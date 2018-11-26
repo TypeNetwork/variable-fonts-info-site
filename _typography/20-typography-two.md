@@ -1,5 +1,4 @@
 ---
-layout: typography
 title: Typography Two
 slug: typography-two
 ---
