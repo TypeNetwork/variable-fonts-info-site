@@ -1,0 +1,14 @@
+{% capture html %}{% include playgrounds/{{include.playground}}.html %}{% endcapture %}
+{% capture css %}{% include playgrounds/{{include.playground}}.css %}{% endcapture %}
+
+<div class='playground'>
+    <div class='output frame'>
+        <div class='demo'></div>
+    </div>
+    <div class='html frame'>
+        <div class='editor' contenteditable>{{ html | strip| escape }}</div>
+    </div>
+    <div class='css frame'>
+        <div class='editor' contenteditable>{{ css | strip | escape }}</div>
+    </div>
+</div>

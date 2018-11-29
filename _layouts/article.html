@@ -1,0 +1,41 @@
+---
+layout: default
+---
+<article class="article-news ">
+    {% if layout.breadcrumbs %}
+    <header class="header-article-archive">
+        <h1><span>{% for crumb in layout.breadcrumbs %}{{crumb}} / {% endfor%}</span></h1>
+    </header>
+    {% endif %}
+    <header class="header-article">
+        {% if page.hero %}
+        <div class="header-article-image">
+            <figure>
+                <img src="{{page.hero}}" alt="{{page.title}}">
+            </figure>
+        </div>
+        {% endif %}
+
+        <div class="header-article-intro">
+<!--                             <p class="metadata"><date>September 10, 2018</date></p> -->
+            <h1>{{page.title}}</h1>
+            {% if page.deck %}
+                <p class="header-article-deck">{{page.deck|markdownify}}</p>
+            {% endif %}
+            {% if page.author %}
+                <p class="byline"><span>by {{page.author}}</p>
+            {% endif %}
+        </div>
+    </header>
+
+    <section class="section-article">
+        {{ content }}
+
+{% comment %}                
+        <figure>
+        <a href="https://store.typenetwork.com/foundry/djr/series/forma"><img src="https://www.typenetwork.com/assets_content/uploads/RBC01Forma03.svg" alt="I think the number-one job for a designer is to make things easy to read. And give some sense of pleasure about it. - Roger Black quote set in Forma DJR Display Bold and Regular" /></a>
+        <figcaption>When Robb Rice—a collaborator of Roger Black’s—was redesigning <cite><a href="https://wwd.com">Women’s Wear Daily</a>,</cite> he saw the new <a href="https://store.typenetwork.com/foundry/djr/series/forma">Forma DJR</a> in <cite><a href="https://hk.asiatatler.com">Hong Kong Tatler</a>,</cite> which Black had redesigned. Rice licensed Forma for the relaunch of <cite>WWD</cite>. Then he called up David Jonathan Ross and asked: “What else you got?” Rice ended up using DJR’s <a href="https://store.typenetwork.com/foundry/djr/series/gimlet">Gimlet</a> for <cite><a href="https://footwearnews.com">Footwear News</a>.</figcaption>
+        </figure>
+{% endcomment %}
+    </section>
+</article>
