@@ -1,0 +1,31 @@
+{% assign sections = site.collections|where_exp:"c","c.label != 'posts'"|sort:"order" %}
+
+{% assign iznext = false %}
+{% for section in sections %}
+    {% if iznext %}
+        {% assign next_section = section %}
+        {% assign iznext = false %}
+    {% endif %}
+    {% if page.collection == section.label %}
+        {% assign iznext = true %}
+        {% assign current_section = section %}
+    {% endif %}
+{% endfor %}
+
+{% assign iznext = false %}
+{% for topic in sections[0].docs %}
+    {% if iznext %}
+        {% assign next_topic = topic %}
+        {% assign iznext = false %}
+    {% endif %}
+    {% if page.slug == topic.slug %}
+        {% assign iznext = true %}
+    {% endif %}
+{% endfor %}
+
+{% assign next_section_topic = next_section.docs|where:"slug",page.slug|first %}
+
+<nav>
+<p>Next topic: <a href="{{next_topic.url}}">{{next_topic.title}}</a></p>
+<p>Next section: <a href="{{next_section_topic.url}}">{{next_section.title}}</a></p>
+</nav>
