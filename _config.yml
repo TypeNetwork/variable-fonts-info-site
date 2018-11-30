@@ -34,18 +34,23 @@ collections:
     output: true
     permalink: /:collection/:title
     order: 1
-  variable-fonts:
+  variations:
     title: Variable fonts
     output: true
     permalink: /:collection/:title
     order: 2
-  typography:
-    title: Typography
+  examples:
+    title: Examples
     output: true
     permalink: /:collection/:title
     order: 3
   
 defaults:
+  -
+    scope:
+      path: "index.md"
+    values:
+      layout: article
   -
     scope:
       path: ""
@@ -55,13 +60,13 @@ defaults:
   -
     scope:
       path: ""
-      type: variable-fonts
+      type: variations
     values:
       layout: variable
   -
     scope:
       path: ""
-      type: typography
+      type: examples
     values:
       layout: typography
 
