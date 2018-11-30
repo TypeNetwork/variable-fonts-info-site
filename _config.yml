@@ -33,14 +33,17 @@ collections:
     title: Fonts primer
     output: true
     permalink: /:collection/:title
+    order: 1
   variable-fonts:
     title: Variable fonts
     output: true
     permalink: /:collection/:title
+    order: 2
   typography:
     title: Typography
     output: true
     permalink: /:collection/:title
+    order: 3
   
 defaults:
   -
