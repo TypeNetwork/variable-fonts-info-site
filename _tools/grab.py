@@ -45,6 +45,7 @@ for row in docs:
     #decode manually typed HTML
     doc = doc.replace('&lt;', '<')
     doc = doc.replace('&gt;', '>')
+    doc = re.sub(r'(?<=[=\s])&quot;|&quot;(?=[\s>])', '"', doc)
 
     #replace spans with semantic elements
     for cls, rules in classes.items():

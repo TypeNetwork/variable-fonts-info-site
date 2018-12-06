@@ -10,4 +10,4 @@ Decovar and family change
 
 Example 2
 
-Google variable font And “single file” for existing family
+Google variable font and “single file” for existing family
