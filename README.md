@@ -1,6 +1,9 @@
 # variable-fonts-info-site
 Public site, in collaboration with Google Fonts, advertising the benefits of variable fonts
 
+https://variablefonts.typenetwork.com/variations/  (Okay to post here?))
+
+
 Brochure Developer - Readme
 
 This repo is for a site demonstrating variable fonts being wrintten and illustrated by dBerlow@fontbureau.
