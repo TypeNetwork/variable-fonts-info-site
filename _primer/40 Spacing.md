@@ -1,16 +1,15 @@
 ---
-title: Spacing
+sidebar: "Spacing"
+title: "Spacing primer"
 slug: spacing
 ---
-<h2 id="h.6y52h8xj3k3a"><strong>Spacing primer</strong></h2>
-
 Digital typography has always included several kinds of spacing mechanisms: some fed by data created by the font developer, some determined by the typographer, and some in the hands of both. 
 
 The images of letters in each style of each family are designed with space around each letter, so the letters, by default, make words well in the direction of reading, and make lines well without interfering with the previous or next line in the other reading direction, from line to line. Digital typography and font formats have long enabled the variation of this surrounding space via tracking, or letterspacing, in percent-of-em changes to the left and right letterspaces, and linespacing in points or percent-of-em changes to the tops and bottoms of spaces between lines.
 
-There is also space inside and around the letters, trapped beyond the reach of tracking or linespacing without endangering the formation of words or lines of text. In any character with an enclosed space, like <b>B</b>, <b>g</b>, or <b>&amp;</b>, islands of white space are formed for the legibility of the letter, and have only been available to the typographer in the steps offered from one style of a font family to another style. 
+There is also space inside and around the letters, trapped beyond the reach of tracking or linespacing without endangering the formation of words or lines of text. In any character with an enclosed space, like <strong>B</strong>, <strong>g</strong>, or <strong>&amp;</strong>, islands of white space are formed for the legibility of the letter, and have only been available to the typographer in the steps offered from one style of a font family to another style. 
 
-And any letter that has a part that sticks out in any direction from the midst of a letter, like <b>L</b>, <b>T</b>, or <b>4</b>, and “grabs” white space around the letter somewhere in the direction of reading, can be modified in the font via kerning pairs, i.e., adjustments to particular letter combinations like <b>LT</b> or <b>74</b>, to bring the white space back to the spacing compatible with the rest, in a smooth flow of letters and words. 
+And any letter that has a part that sticks out in any direction from the midst of a letter, like <strong>L</strong>, <strong>T</strong>, or <strong>4</strong>, and “grabs” white space around the letter somewhere in the direction of reading, can be modified in the font via kerning pairs, i.e., adjustments to particular letter combinations like <strong>LT</strong> or <strong>74</strong>, to bring the white space back to the spacing compatible with the rest, in a smooth flow of letters and words. 
 
 For the most part, high-quality typeface families have thus been a collection of styles in some range of width and weight, with default spacing and pair kerning for each style offering something like snapshots of suggested typeface styles and their spacing that users can weave together with tracking, hyphenation, and justification, over a range of sizes, into a range of solutions.
 

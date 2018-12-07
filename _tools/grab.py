@@ -17,6 +17,8 @@ for row in docs:
     if not row['Published URL'] or not row['Link on site']:
         continue
 
+    sidebar_title = row['Title']
+
     resp = urlopen(row['Published URL'])
     doc = resp.read().decode(resp.info().get_content_charset('utf-8'))
     
@@ -70,6 +72,18 @@ for row in docs:
     doc = doc.replace('</p>', '')
     doc = re.sub(r'(\r?\n){2,}', '\n\n', doc)
     
+    doc = doc.strip()
+
+    #pull title from first line, if it exists
+    title_line = re.match(r'(?:<(?:h[123]|strong|b)[^>]*>\s*)+([^<]+)', doc)
+    
+    if title_line:
+        title_title = title_line.group(1)
+        doc = doc[title_line.end():]
+        doc = re.sub('^(</[^>]+>\s*)+', '', doc, flags=re.S)
+    else:
+        title_title = sidebar_title
+    
     segments = row['Link on site'].strip('/').split('/')
     outfile = None
     slug = None
@@ -84,15 +98,17 @@ for row in docs:
     else:
         section = segments[0]
         counts[section] += 1
-        outfile = '_{}/{}0 {}.md'.format(section, counts[section], row['Title'])
-        slug = row['Title'].lower().replace(' ', '-')
+        outfile = '_{}/{}0 {}.md'.format(section, counts[section], sidebar_title)
+        slug = sidebar_title.lower().replace(' ', '-')
 
     with open(outfile, 'w', encoding='utf-8') as f:
         print(outfile)
         f.write("---\n")
-        f.write("title: {}\n".format(row['Title']))
+        f.write("sidebar: \"{}\"\n".format(sidebar_title))
+        f.write("title: \"{}\"\n".format(title_title))
         if (slug):
             f.write("slug: {}\n".format(slug))
         f.write("---\n")
         f.write(doc)
+        f.write("\n")
 

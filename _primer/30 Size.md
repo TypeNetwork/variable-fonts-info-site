@@ -1,9 +1,8 @@
 ---
-title: Size
+sidebar: "Size"
+title: "Size primer"
 slug: size
 ---
-<h2 id="h.bm6nahoxeht"><strong>Size of type primer</strong></h2>
-
 Perhaps nothing has more of an effect on the appearance of typography than the size of type used, and nothing has a greater effect on the hierarchical organization of information than the number of sizes of type used. 
 
 Before digital typography, typeface families consisted of a font for each size. A form of trust, rigid as it was, existed between the maker of type and its users, promising fonts guaranteed to produce good results under reasonable conditions at the size they were made for, until they wore out. The trust was also based on the fact that type developers knew how to scale type up and down nonlinearly to preserve readability at the bottom end of the size of use, and to more efficiently conserve space as the size of use went up. 

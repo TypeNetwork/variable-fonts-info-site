@@ -5,7 +5,7 @@ layout: default
     {% if page.collection %}
         {% assign section = site.collections|where:"label",page.collection|first %}
         <header class="header-article-archive">
-            <h1><span>{{ section.title }} / </span></h1>
+            <h1><span>{{ section.title }} / {{ page.sidebar }}</span></h1>
         </header>
     {% endif %}
     <header class="header-article">

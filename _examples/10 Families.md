@@ -1,9 +1,8 @@
 ---
-title: Families
+sidebar: "Families"
+title: "Families"
 slug: families
 ---
-
-
 Example 1
 
 Decovar and family change

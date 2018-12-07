@@ -1,11 +1,8 @@
 ---
-title: Overview
+sidebar: "Overview"
+title: "Suggestions for using variable fonts"
 slug: ""
 ---
-
-
-Demonstration Section (intro)
-
 Introduction to momentum.vf, a demonstration on top of all the demonstrations.
 
 On any new operating system running any up-to-date browser, the demonstration of variable fonts on this site has already started. After the code of this website downloads the Momentum Sans variable font and installs it in the fonts the system can use, the user’s computer becomes a font factory, generating the styles from the variable-font file that are called for by the web code, scaling them to the sizes needed, and rendering them for the resolution of the device. 
