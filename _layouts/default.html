@@ -75,6 +75,7 @@
         <aside class="content-filters">
             <a class="content-filters-close" href="#">Close</a>
 
+{% comment %}
             <h3><a href="">Overview</a></h3>
             <ul>
                 <li><a href="">Before variable fonts</a></li>
@@ -95,8 +96,8 @@
                 <li><a href="">All under one roof</a></li>
                 <li><a href="">Family examples</a></li>
             </ul>
+{% endcomment %}
 
-            {% comment %}
             <a href='{{site.baseurl}}/'><h3>Overview</h3></a>
             
             {% assign sections = site.collections|sort:"order" %}
@@ -112,7 +113,6 @@
                 {% endif %}
             {% endfor %}
             
-            {% endcomment %}
         </aside>
     
         <div class="content-main">
