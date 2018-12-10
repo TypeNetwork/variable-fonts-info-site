@@ -24,6 +24,6 @@ https://drive.google.com/drive/folders/13OORl9CkqSFj6o4tcgwaOxb_HebuDYpp )
            I began putting text and sketches of these all together in a single RTF on the above drive in:
              Typography/All-Example Brochure Team
 
-A templete exists for these pages and mockups based on that template are in Google slides, which have been shared. 
+A template exists for these pages and mockups based on that template are in Google slides, which have been shared. 
 
 As of 11/28/18, content exists here to make 12-15 pages to start and get more contributors invoved. 
