@@ -1,0 +1,3 @@
+[submodule "typetools"]
+	path = typetools
+	url = git@github.com:TypeNetwork/variable-type-tools

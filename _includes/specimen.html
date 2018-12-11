@@ -1,0 +1,44 @@
+
+{% if include.font %}
+    {% assign nicefont = include.font %}
+{% else %}
+    {% assign nicefont = "Amstelvar-Alpha" %}
+{% endif %}
+
+{% if site.data.fonts.axes[nicefont] %}
+    {% assign fontfamily = nicefont %}
+{% elsif site.data.fonts.names[nicefont] %}
+    {% assign fontfamily = site.data.fonts.names[nicefont] %}
+{% else %}
+    {% assign fontfamily = "AmstelvarAlpha-VF" %}
+{% endif %}
+
+{% assign allaxes = site.data.fonts.axes[fontfamily] %}
+
+{% if include.size %}
+    {% assign fontsize = include.size|abs %}
+{% else %}
+    {% assign fontsize = 72 %}
+{% endif %}
+
+{% if include.leading %}
+    {% if include.leading < 6 %}
+        {% assign lineheight = fontsize|times:include.leading %}
+    {% else %}
+        {% assign lineheight = include.leading|abs %}
+    {% endif %}
+{% else %}
+    {% assign lineheight = fontsize %}
+{% endif %}
+
+<figure class='specimen' style='font-family:"{{fontfamily}}";font-size:{{fontsize}}px;line-height:{{lineheight}}px;font-variation-settings:{{include.axes}};'>
+    I’m not even supposed to <strong>be</strong> here today
+    <figcaption>
+        <ul>
+            <li>family: {{fontfamily}}</li>
+            <li>size: {{fontsize}}</li>
+            <li>leading: {{lineheight}}</li>
+            <li>axes: {{include.axes}}</li>
+        </ul>
+    </figcaption>
+</figure>
