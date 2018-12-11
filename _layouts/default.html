@@ -98,19 +98,22 @@
             </ul>
 {% endcomment %}
 
-            <a href='{{site.baseurl}}/'><h3>Overview</h3></a>
-            
-            {% assign sections = site.collections|sort:"order" %}
-            {% for collection in sections %}
-                {% assign numdocs = collection.docs|size %}
-                {% if numdocs > 0 %}
-                    <h3><a href="{{site.baseurl}}/{{collection.label}}">{{collection.title}}</a></h3>
-                    <ul>
-                    {% for doc in collection.docs %}
-                        <li><a href="{{doc.url}}">{{doc.sidebar}}</a></li>
-                    {% endfor %}
-                    </ul>
+            {% assign sections = site.collections|where_exp:"col","col.label != 'posts'"|sort:"order" %}
+            {% assign topics = sections[0].docs %}
+
+            {% for globaltopic in topics %}
+                {% assign topicindex = forloop.index0 %}
+                {% if topicindex == 0 %}
+                    <h3><a href="{{baseurl}}/">{{globaltopic.sidebar}}</a></h3>
+                {% else %}
+                    <h3>{{globaltopic.sidebar}}</h3>
                 {% endif %}
+                <ul>
+                {% for subsection in sections %}
+                    {% assign topic = subsection.docs[topicindex] %}
+                    <li><a href="{{topic.url}}">{{topic.title}}</a></li>
+                {% endfor %}
+                </ul>
             {% endfor %}
             
         </aside>

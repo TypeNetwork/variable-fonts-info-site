@@ -9,8 +9,8 @@ stylesheets:
     {% assign axes = font[1] %}
     @font-face {
         font-family: "{{fontname}}";
-        src: url("{{site.url}}/typetools/fonts/{{fontname}}.woff2") format("woff2"),
-            url("{{site.url}}/typetools/fonts/{{fontname}}.woff") format("woff");
+        src: url("typetools/fonts/{{fontname}}.woff2") format("woff2"),
+            url("typetools/fonts/{{fontname}}.woff") format("woff");
         font-weight: 1 1000;
     }
 {% endfor %}
@@ -23,6 +23,13 @@ figure, figcaption {
     padding: 0;
     border: 0;
     text-align: left;
+}
+
+.content-filters h3 a {
+    padding-left: 0;
+    &::before {
+        display: none;
+    }
 }
 
 .content-filters a {

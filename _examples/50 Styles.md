@@ -1,6 +1,6 @@
 ---
 sidebar: "Styles"
-title: "Styles"
+title: "Styles/Examples"
 slug: styles
 ---
 Styles/Examples

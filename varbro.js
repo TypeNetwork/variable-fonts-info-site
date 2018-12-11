@@ -4,12 +4,29 @@
 if (!window.doOnReady) {
     (function() { 
         var s = document.createElement('script');
-        s.addEventListener('load', function() { doOnReady(setupPlaygrounds); });
+        s.addEventListener('load', function() { doOnReady(varbroSetup); });
         s.src = "https://chrislewis.codes/js/polyfill.js";
         document.head.appendChild(s);
     })();
 } else {
-    doOnReady(setupPlaygrounds);
+    doOnReady(varbroSetup);
+}
+
+function varbroSetup() {
+    overrideTNJS();
+    setupPlaygrounds();
+}
+
+function overrideTNJS() {
+    //cancel expando/collapse sidebar headers
+    document.querySelectorAll('.content-filters h3 a').forEach(function(a) {
+        a.addEventListener('click', function(evt) {
+            if (this.href) {
+                window.location.href = this.href;
+                return;
+            }
+        });
+    });
 }
 
 function setupPlaygrounds() { 

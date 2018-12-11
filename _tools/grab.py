@@ -17,11 +17,12 @@ for row in docs:
     if not row['Published URL'] or not row['Link on site']:
         continue
 
-    sidebar_title = row['Title']
-
     resp = urlopen(row['Published URL'])
     doc = resp.read().decode(resp.info().get_content_charset('utf-8'))
-    
+
+    sidebar_title = row['Title']
+    title_title = re.search(r'<div id="header">(.*?)</div>', doc).group(1)
+
     #lots of stuff to clean up
     doc = re.sub(r'<script.+?</script>', '', doc, flags=re.S)
     doc = re.sub(r'^.+?<div id="contents">', '', doc, flags=re.S)
@@ -74,16 +75,6 @@ for row in docs:
     
     doc = doc.strip()
 
-    #pull title from first line, if it exists
-    title_line = re.match(r'(?:<(?:h[123]|strong|b)[^>]*>\s*)+([^<]+)', doc)
-    
-    if title_line:
-        title_title = title_line.group(1)
-        doc = doc[title_line.end():]
-        doc = re.sub('^(</[^>]+>\s*)+', '', doc, flags=re.S)
-    else:
-        title_title = sidebar_title
-    
     segments = row['Link on site'].strip('/').split('/')
     outfile = None
     slug = None

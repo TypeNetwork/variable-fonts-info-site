@@ -30,12 +30,12 @@ plugins:
 
 collections:
   primer:
-    title: Fonts primer
+    title: Past
     output: true
     permalink: /:collection/:title
     order: 1
   variations:
-    title: Variable fonts
+    title: Variations
     output: true
     permalink: /:collection/:title
     order: 2

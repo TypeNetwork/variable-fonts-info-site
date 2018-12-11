@@ -1,6 +1,6 @@
 ---
 sidebar: "Size"
-title: "Size"
+title: "Size: examples"
 slug: size
 ---
 Examples:

@@ -1,9 +1,7 @@
 ---
 sidebar: "Overview"
-title: "Overview"
+title: "Variable fonts: thirty to three billion users in three years"
 ---
-Variable fonts: thirty to three billion users in three years
-
 The web has changed the typographer’s role. Typographers no longer decide on typefaces, font sizes, line lengths, line spacing, or margins; they make suggestions via marks and instructions so that text can make those choices for itself, responding to the <em>context</em> of an unknown reader’s environment. And although typographers no longer have access to all of the finished proofs of their work for all of those environments, they can now suggest—along with everything else—variations suited for any environment that imposes undue pressure on a user&#39;s type. 
 
 That kind of detailed suggestion for composition can happen if the role of the type designer changes, too. The type designer, in partnership with the typographer, has to embrace a new model in working for the web, from one of making a few font styles of a typeface that are supposed to work over a wide array of conditions on the web, to making fonts that have at least a proper value system—and, at best, typeface families that have both the proper values and the fluidity of the rest of the web’s variables, like size, line length, line spacing, margins, and the pages themselves. 

@@ -1,6 +1,6 @@
 ---
 sidebar: "Families"
-title: "Families"
+title: "Families: Example 1 &amp; 2"
 slug: families
 ---
 Example 1
