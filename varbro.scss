@@ -3,6 +3,8 @@ stylesheets:
  - /typetools/
 ---
 
+$pink: #EB008B;
+
 /* demo fonts */
 {% for font in site.data.fonts.axes %}
     {% assign fontname = font[0] %}
@@ -60,3 +62,5 @@ figure, figcaption {
 }
 
 @import "playground";
+@import "specimens";
+@import "examples";

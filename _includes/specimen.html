@@ -28,6 +28,8 @@
 
 {% assign fvs_verbose = site.emptyArray %}
 {% assign fvs = site.emptyArray %}
+{% assign specified = site.emptyArray %}
+{% assign non_default = site.emptyArray %}
 
 {% for kv in allaxes %}
     {% assign tag = kv[0] %}
@@ -38,6 +40,10 @@
             {% capture fvsentry %}"{{tag}}" {{params.axes[tag]}}{% endcapture %}
             {% assign fvs = fvs|push:fvsentry %}
             {% assign fvs_verbose = fvs_verbose|push:fvsentry %}
+            {% assign specified = specified|push:tag %}
+            {% if params.axes[tag] != axis.default %}
+                {% assign non_default = non_default|push:tag %}
+            {% endif %}
         {% else %}
             {% capture fvsentry %}"{{tag}}" {{axis.default}}{% endcapture %}
             {% assign fvs_verbose = fvs_verbose|push:fvsentry %}
@@ -49,7 +55,16 @@
     {{params.text|default:"Example"}}
     <figcaption>
         <ul class='axes'>
-            <li>{{fvs|join:"</li><li>"|replace:'"':''}}</li>
+        {% for rule in fvs_verbose %}
+            {% assign tag = rule|slice:1,4 %}
+            {% assign pointzero = rule|slice:-2,2 %}
+            {% if pointzero == ".0" %}
+                {% assign ruleint = rule|replace:".0","" %}
+            {% else %}
+                {% assign ruleint = rule %}
+            {% endif %}
+            <li class="{% if specified contains tag %}highlight{% endif %} {% if non_default contains tag %}non-default{% endif %}">{{ruleint|replace:'"',''}}</li>
+        {% endfor %}
         </ul>
     </figcaption>
 </figure>
