@@ -1,0 +1,14 @@
+comparison:
+    -
+        font: Decovar
+        size: 96
+        text: Pink Thinking
+        axes:
+            WMX2: 12
+    -
+        font: Decovar
+        size: 96
+        text: Pink Thinking
+        axes:
+            WMX2: 12
+            TRMB: 973

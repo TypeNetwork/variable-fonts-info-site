@@ -1,9 +1,6 @@
+{% assign params = include.params|default:include %}
 
-{% if include.font %}
-    {% assign nicefont = include.font %}
-{% else %}
-    {% assign nicefont = "Amstelvar-Alpha" %}
-{% endif %}
+{% assign nicefont = params.font|default:"Amstelvar-Alpha" %}
 
 {% if site.data.fonts.axes[nicefont] %}
     {% assign fontfamily = nicefont %}
@@ -15,30 +12,44 @@
 
 {% assign allaxes = site.data.fonts.axes[fontfamily] %}
 
-{% if include.size %}
-    {% assign fontsize = include.size|abs %}
-{% else %}
-    {% assign fontsize = 72 %}
-{% endif %}
+{% assign fontsize = params.size|default:72|abs %}
 
-{% if include.leading %}
-    {% if include.leading < 6 %}
-        {% assign lineheight = fontsize|times:include.leading %}
+{% if params.leading %}
+    {% if params.leading < 6 %}
+        {% assign lineheight = fontsize|times:params.leading %}
     {% else %}
-        {% assign lineheight = include.leading|abs %}
+        {% assign lineheight = params.leading|abs %}
     {% endif %}
 {% else %}
     {% assign lineheight = fontsize %}
 {% endif %}
 
-<figure class='specimen' style='font-family:"{{fontfamily}}";font-size:{{fontsize}}px;line-height:{{lineheight}}px;font-variation-settings:{{include.axes}};'>
-    I’m not even supposed to <strong>be</strong> here today
+{% assign layout = params.layout|default:"single-line" %}
+
+{% assign fvs_verbose = site.emptyArray %}
+{% assign fvs = site.emptyArray %}
+
+{% for kv in allaxes %}
+    {% assign tag = kv[0] %}
+    {% assign axis = kv[1] %}
+    {% assign tagsize = tag|size %}
+    {% if tagsize == 4 %}
+        {% if params.axes[tag] %}
+            {% capture fvsentry %}"{{tag}}" {{params.axes[tag]}}{% endcapture %}
+            {% assign fvs = fvs|push:fvsentry %}
+            {% assign fvs_verbose = fvs_verbose|push:fvsentry %}
+        {% else %}
+            {% capture fvsentry %}"{{tag}}" {{axis.default}}{% endcapture %}
+            {% assign fvs_verbose = fvs_verbose|push:fvsentry %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+<figure class='specimen {{layout}}' style='font-family:"{{fontfamily}}";font-size:{{fontsize}}px;line-height:{{lineheight}}px;font-variation-settings:{{fvs_verbose|join:","}};'>
+    {{params.text|default:"Example"}}
     <figcaption>
-        <ul>
-            <li>family: {{fontfamily}}</li>
-            <li>size: {{fontsize}}</li>
-            <li>leading: {{lineheight}}</li>
-            <li>axes: {{include.axes}}</li>
+        <ul class='axes'>
+            <li>{{fvs|join:"</li><li>"|replace:'"':''}}</li>
         </ul>
     </figcaption>
 </figure>

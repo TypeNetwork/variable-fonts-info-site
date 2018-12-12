@@ -1,0 +1,13 @@
+{% assign example = site.data.examples[include.example] %}
+
+<div class='example {{info.class}}'>
+    {% if example.comparison %}
+        <ul class='comparison'>
+        {% for entry in example.comparison %}
+            <li>{% include specimen.html params=entry %}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        {% include specimen.html params=example %}
+    {% endif %}
+</div>
