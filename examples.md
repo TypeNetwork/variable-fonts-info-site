@@ -1,7 +1,7 @@
 ---
-sidebar: "Overview"
+layout: article
+sidebar: "Suggestions for using variable fonts"
 title: "Suggestions for using variable fonts"
-slug: ""
 ---
 Introduction to momentum.vf, a demonstration on top of all the demonstrations.
 

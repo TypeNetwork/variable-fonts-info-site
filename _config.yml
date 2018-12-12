@@ -27,48 +27,19 @@ markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
-
-collections:
-  primer:
-    title: Past
-    output: true
-    permalink: /:collection/:title
-    order: 1
-  variations:
-    title: Variations
-    output: true
-    permalink: /:collection/:title
-    order: 2
-  examples:
-    title: Examples
-    output: true
-    permalink: /:collection/:title
-    order: 3
   
-defaults:
-  -
-    scope:
-      path: "index.md"
-    values:
-      layout: article
-  -
-    scope:
-      path: ""
-      type: primer
-    values:
-      layout: primer
-  -
-    scope:
-      path: ""
-      type: variations
-    values:
-      layout: variable
-  -
-    scope:
-      path: ""
-      type: examples
-    values:
-      layout: typography
+#defaults:
+#  -
+#    scope:
+#      path: "index.md"
+#    values:
+#      layout: article
+#  -
+#    scope:
+#      path: ""
+#      type: primer
+#    values:
+#      layout: primer
 
 
 # Exclude from processing.

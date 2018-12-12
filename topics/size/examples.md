@@ -1,7 +1,7 @@
 ---
-sidebar: "Size"
+layout: article
+sidebar: "Size: examples"
 title: "Size: examples"
-slug: size
 ---
 Examples:
 

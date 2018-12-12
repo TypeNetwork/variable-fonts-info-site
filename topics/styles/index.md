@@ -1,7 +1,7 @@
 ---
+layout: article
 sidebar: "Styles"
 title: "Styles primer"
-slug: styles
 ---
 Because font families differ in stylistic context, a single entry in a font-family menu is not certain to contain the same thing. A single file for a regular style can be installed and appear in font menus, and the user can still have the options of Bold, Italic, and Bold Italic presented via OS font-software manipulations of the one installed style to present a family of four computer-augmented styles. Or there could be four files or a family installed to reach the same style set. Font-family styles can also include many weights and widths out of cascading menus, or a font family can become too large for that and be split into multiple entries on a font menu for different widths, optical sizes, or glyph repertoires. 
 

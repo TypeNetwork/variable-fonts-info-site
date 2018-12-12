@@ -1,7 +1,7 @@
 ---
-sidebar: "Spacing"
+layout: article
+sidebar: "Spacing examples"
 title: "Spacing examples"
-slug: spacing
 ---
 Example A: line length/linespacing/descenders
 

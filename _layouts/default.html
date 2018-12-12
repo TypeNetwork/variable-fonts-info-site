@@ -50,7 +50,7 @@
     <div class="wrapper ">
     
         <header class="header-global">
-            <h1><a href="https://www.typenetwork.com/">Type Network</a></h1>
+            <h1><a href="{{baseurl}}/">Type Network</a></h1>
         </header>
     
         <nav class="nav-global">
@@ -79,47 +79,19 @@
         <aside class="content-filters">
             <a class="content-filters-close" href="#">Close</a>
 
-{% comment %}
-            <h3><a href="">Overview</a></h3>
-            <ul>
-                <li><a href="">Before variable fonts</a></li>
-                <li><a href="">What variations give us</a></li>
-                <li><a href="">A taste of the possibilities</a></li>
-            </ul>
-
-            <h3><a href="">Script selection</a></h3>
-            <ul>
-                <li><a href="">Scriptural metrics</a></li>
-                <li><a href="">Metric shiftload</a></li>
-                <li><a href="">Show me the £¥€</a></li>
-            </ul>
-
-            <h3><a href="">All in the family</a></h3>
-            <ul>
-                <li><a href="">What is a family even</a></li>
-                <li><a href="">All under one roof</a></li>
-                <li><a href="">Family examples</a></li>
-            </ul>
-{% endcomment %}
-
-            {% assign sections = site.collections|where_exp:"col","col.label != 'posts'"|sort:"order" %}
-            {% assign topics = sections[0].docs %}
-
-            {% for globaltopic in topics %}
-                {% assign topicindex = forloop.index0 %}
-                {% if topicindex == 0 %}
-                    <h3><a href="{{baseurl}}/">{{globaltopic.sidebar}}</a></h3>
+            {% for link in site.data.sidebar %}
+                {% if link.heading %}
+                    {% unless forloop.first %}
+                        </ul>
+                    {% endunless %}
+                    <h3><a href="{{link.url}}">{{link.sidebar}}</a></h3>
+                    <ul>
                 {% else %}
-                    <h3>{{globaltopic.sidebar}}</h3>
+                    <li><a href="{{link.url}}">{{link.sidebar}}</a></li>
                 {% endif %}
-                <ul>
-                {% for subsection in sections %}
-                    {% assign topic = subsection.docs[topicindex] %}
-                    <li><a href="{{topic.url}}">{{topic.title}}</a></li>
-                {% endfor %}
-                </ul>
             {% endfor %}
-            
+            </ul>
+
         </aside>
     
         <div class="content-main">

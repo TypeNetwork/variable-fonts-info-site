@@ -1,7 +1,7 @@
 ---
+layout: article
 sidebar: "Spacing"
 title: "Spacing primer"
-slug: spacing
 ---
 Digital typography has always included several kinds of spacing mechanisms: some fed by data created by the font developer, some determined by the typographer, and some in the hands of both. 
 

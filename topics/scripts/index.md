@@ -1,7 +1,7 @@
 ---
+layout: article
 sidebar: "Scripts"
 title: "Scripts primer"
-slug: scripts
 ---
 What fonts containing multiple scripts have in common is that compromises have been made in the typography somewhere, compared to the type of each script if it was designed to work alone. A “Regular” style of Chinese is typically used at a different size than a Regular style of Latin, Arabic, or Thai. Arabic has a different basis for its alignments than other scripts. Stroke densities of glyphs across Unicode (i.e., how many parts each glyph has) vary from one stroke per glyph to fifty to sixty strokes, making variation of weight and width difficult and perilous over a broad range of scripts. 
 

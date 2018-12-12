@@ -1,7 +1,7 @@
 ---
-sidebar: "Families"
+layout: article
+sidebar: "Families: Example 1 &amp; 2"
 title: "Families: Example 1 &amp; 2"
-slug: families
 ---
 Example 1
 

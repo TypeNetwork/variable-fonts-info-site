@@ -1,7 +1,7 @@
 ---
-sidebar: "Styles"
+layout: article
+sidebar: "Styles/Examples"
 title: "Styles/Examples"
-slug: styles
 ---
 Styles/Examples
 

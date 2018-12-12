@@ -1,4 +1,5 @@
 ---
+layout: article
 sidebar: "Overview"
 title: "Variable fonts: thirty to three billion users in three years"
 ---

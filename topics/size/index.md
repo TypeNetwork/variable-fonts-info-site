@@ -1,7 +1,7 @@
 ---
+layout: article
 sidebar: "Size"
 title: "Size primer"
-slug: size
 ---
 Perhaps nothing has more of an effect on the appearance of typography than the size of type used, and nothing has a greater effect on the hierarchical organization of information than the number of sizes of type used. 
 
