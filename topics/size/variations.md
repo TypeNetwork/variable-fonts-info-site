@@ -1,9 +1,8 @@
 ---
-title: Size
-slug: size
+layout: article
+sidebar: "Size in variations"
+title: "Size in variations"
 ---
-<h2 id="h.dy9sd1iom860"><strong>Size in variations</strong></h2>
-
 A font format with an optical-size axis defined, as OpenType has, gives typographers the ability to trust type developers again, to undo the “san-serifization” of typography, and to reinvest in responsive typography with much better tools. 
 
 From logos, corporate identities, and simple or complex documents, to world scripts (whose ideal designs were not like Helvetica), optical size opens an avenue of trust from the type developer, looking with a critical eye for readability, clarity, and efficient use of space, at each type size. 

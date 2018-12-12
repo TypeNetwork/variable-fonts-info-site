@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import csv, re, os
+import csv, re, os, json
 from io import StringIO
 from urllib.request import urlopen
 
@@ -12,14 +12,22 @@ docscsv = docsresult.read().decode(docsresult.info().get_content_charset('iso-88
 docs = csv.DictReader(StringIO(docscsv))
 
 os.chdir(os.path.join(os.path.dirname(__file__), '..'))
-counts = {}
+
+data = []
+
 for row in docs:
     if not row['Published URL'] or not row['Link on site']:
         continue
 
+    dest_file = row['Link on site'].lstrip('/')
+    is_heading = dest_file.endswith('index')
+
     resp = urlopen(row['Published URL'])
     doc = resp.read().decode(resp.info().get_content_charset('utf-8'))
-    
+
+    title_title = re.search(r'<div id="header">(.*?)</div>', doc).group(1)
+    sidebar_title = row['Title'] if is_heading else title_title
+
     #lots of stuff to clean up
     doc = re.sub(r'<script.+?</script>', '', doc, flags=re.S)
     doc = re.sub(r'^.+?<div id="contents">', '', doc, flags=re.S)
@@ -45,6 +53,7 @@ for row in docs:
     #decode manually typed HTML
     doc = doc.replace('&lt;', '<')
     doc = doc.replace('&gt;', '>')
+    doc = re.sub(r'(?<=[=\s])&quot;|&quot;(?=[\s>])', '"', doc)
 
     #replace spans with semantic elements
     for cls, rules in classes.items():
@@ -69,29 +78,33 @@ for row in docs:
     doc = doc.replace('</p>', '')
     doc = re.sub(r'(\r?\n){2,}', '\n\n', doc)
     
-    segments = row['Link on site'].strip('/').split('/')
-    outfile = None
-    slug = None
+    doc = doc.strip()
 
-    if not segments or segments == [''] or segments == ['index']:
-        outfile = 'index.md'
-    elif len(segments) == 1:
-        section = segments[0]
-        counts[section] = 0
-        outfile = '_{}/00 Overview.md'.format(section)
-        slug = '""'
-    else:
-        section = segments[0]
-        counts[section] += 1
-        outfile = '_{}/{}0 {}.md'.format(section, counts[section], row['Title'])
-        slug = row['Title'].lower().replace(' ', '-')
+    outfile = dest_file + '.md'
+    if re.search(r'\w+/\w+', dest_file):
+        outfile = 'topics/{}'.format(outfile)
+
+    data.append({
+        'url': '/' + re.sub('(index)?\.md$', '', outfile),
+        'sidebar': sidebar_title,
+        'title': title_title,
+        'heading': is_heading,
+    })
+
+    print(outfile, sidebar_title, title_title)
+
+    filedir = os.path.dirname(os.path.realpath(outfile))
+    if not os.path.exists(filedir):
+        os.makedirs(filedir, 0o755)
 
     with open(outfile, 'w', encoding='utf-8') as f:
-        print(outfile)
         f.write("---\n")
-        f.write("title: {}\n".format(row['Title']))
-        if (slug):
-            f.write("slug: {}\n".format(slug))
+        f.write("layout: article\n")
+        f.write("sidebar: \"{}\"\n".format(sidebar_title))
+        f.write("title: \"{}\"\n".format(title_title))
         f.write("---\n")
         f.write(doc)
+        f.write("\n")
 
+with open('_data/sidebar.json', 'w') as datafile:
+    json.dump(data, datafile, indent=2)

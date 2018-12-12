@@ -1,5 +1,36 @@
 ---
+stylesheets:
+ - /typetools/
 ---
+
+/* demo fonts */
+{% for font in site.data.fonts.axes %}
+    {% assign fontname = font[0] %}
+    {% assign axes = font[1] %}
+    @font-face {
+        font-family: "{{fontname}}";
+        src: url("typetools/fonts/{{fontname}}.woff2") format("woff2"),
+            url("typetools/fonts/{{fontname}}.woff") format("woff");
+        font-weight: 1 1000;
+    }
+{% endfor %}
+/* end demo fonts */
+
+figure, figcaption {
+    display: block;
+    background: transparent;
+    margin: 1rem auto;
+    padding: 0;
+    border: 0;
+    text-align: left;
+}
+
+.content-filters h3 a {
+    padding-left: 0;
+    &::before {
+        display: none;
+    }
+}
 
 .content-filters a {
     text-decoration: none;

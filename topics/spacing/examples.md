@@ -1,9 +1,8 @@
 ---
-title: Spacing
-slug: spacing
+layout: article
+sidebar: "Spacing examples"
+title: "Spacing examples"
 ---
-<h2 id="h.i5jibv580i3r">Spacing examples</h2>
-
 Example A: line length/linespacing/descenders
 
 Example B: fit to width
@@ -16,4 +15,4 @@ Example B: fit to width
 
 Example C: wordspace/linespace control
 
-Example D: font feature/linespace control spacing lines at % of y-stem (<b>yopq</b>)
+Example D: font feature/linespace control spacing lines at % of y-stem (<strong>yopq</strong>)
