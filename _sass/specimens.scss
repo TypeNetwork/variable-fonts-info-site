@@ -33,7 +33,27 @@
     }
 }
 
+.specimen.editorial {
+    ul.axes {
+         display: none;
+         position: absolute;
+         margin-top: -0.5em;
+    }
+
+    .specimen:hover + ul.axes {
+        display: block;
+    }
+}
+
 h1.specimen, h2.specimen, p.specimen {
-    margin: 0;
+    margin: 1rem 0 -0.2em;
     padding: 0;
+    
+    &:first-child {
+        margin-top: 0;
+    }
+    
+    + ul.axes {
+        margin-top: 0.5em;
+    }
 }
