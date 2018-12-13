@@ -1,0 +1,11 @@
+<div class='example {{include.example.class}}'>
+    {% if include.example.comparison %}
+        <ul class='comparison'>
+        {% for entry in include.example.comparison %}
+            <li>{% include specimen.html params=entry %}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        {% include specimen.html params=include.example %}
+    {% endif %}
+</div>

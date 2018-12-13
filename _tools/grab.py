@@ -71,6 +71,9 @@ for row in docs:
                 doc
             )
 
+    #inline examples?
+    doc = re.sub(r'\[\s*example\s+(\S+?)\s*\]', r'{% include inline-example.html example="\1" %}', doc)
+
     doc = re.sub(r"</?span[^>]*>", "", doc) #spans
     doc = re.sub(r'\s+class="[^"]*"', "", doc) #classes
     doc = re.sub(r'<(\w+)[^>]*>\s*</\1>', '', doc) #empty tags
