@@ -50,7 +50,7 @@ h1.specimen, h2.specimen, p.specimen {
     padding: 0;
     
     &:first-child {
-        margin-top: 0;
+        margin-top: -0.1em;
     }
     
     + ul.axes {
