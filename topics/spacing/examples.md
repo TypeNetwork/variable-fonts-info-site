@@ -1,5 +1,6 @@
 ---
 layout: article
+breadcrumbs: ["spacing"]
 sidebar: "Spacing examples"
 title: "Spacing examples"
 ---

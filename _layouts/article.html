@@ -2,10 +2,9 @@
 layout: default
 ---
 <article class="article-news ">
-    {% if page.collection %}
-        {% assign section = site.collections|where:"label",page.collection|first %}
+    {% if page.breadcrumbs %}
         <header class="header-article-archive">
-            <h1><span>{{ section.title }} / {{ page.sidebar }}</span></h1>
+            <h1><span>{{ page.breadcrumbs|join:" / " }} / </span></h1>
         </header>
     {% endif %}
     <header class="header-article">

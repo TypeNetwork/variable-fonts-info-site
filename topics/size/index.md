@@ -1,5 +1,6 @@
 ---
 layout: article
+breadcrumbs: ["size"]
 sidebar: "Size"
 title: "Size primer"
 ---

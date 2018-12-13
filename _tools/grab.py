@@ -84,11 +84,14 @@ for row in docs:
     if re.search(r'\w+/\w+', dest_file):
         outfile = 'topics/{}'.format(outfile)
 
+    section = re.search('topics/([^/]+)', outfile).group(1) if outfile.startswith('topics') else 'overview'
+
     data.append({
         'url': '/' + re.sub('(index)?\.md$', '', outfile),
         'sidebar': sidebar_title,
         'title': title_title,
         'heading': is_heading,
+        'section': section,
     })
 
     print(outfile, sidebar_title, title_title)
@@ -100,6 +103,7 @@ for row in docs:
     with open(outfile, 'w', encoding='utf-8') as f:
         f.write("---\n")
         f.write("layout: article\n")
+        f.write("breadcrumbs: [\"{}\"]\n".format(section)),
         f.write("sidebar: \"{}\"\n".format(sidebar_title))
         f.write("title: \"{}\"\n".format(title_title))
         f.write("---\n")

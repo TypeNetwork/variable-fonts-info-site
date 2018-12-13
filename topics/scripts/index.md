@@ -1,5 +1,6 @@
 ---
 layout: article
+breadcrumbs: ["scripts"]
 sidebar: "Scripts"
 title: "Scripts primer"
 ---

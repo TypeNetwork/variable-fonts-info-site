@@ -1,0 +1,17 @@
+---
+layout: article
+---
+{% if page.description %}
+    {{page.description|markdownify}}
+{% endif %}
+<div class='example {{page.example.class}}'>
+    {% if page.comparison %}
+        <ul class='comparison'>
+        {% for entry in page.comparison %}
+            <li>{% include specimen.html params=entry %}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        {% include specimen.html params=page %}
+    {% endif %}
+</div>

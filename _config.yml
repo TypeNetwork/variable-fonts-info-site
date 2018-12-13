@@ -29,19 +29,24 @@ markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
-  
-#defaults:
+
+collections:
+    examples:
+        output: true
+        permalink: /:collection/:path
+
+defaults:
 #  -
 #    scope:
 #      path: "index.md"
 #    values:
 #      layout: article
-#  -
-#    scope:
-#      path: ""
-#      type: primer
-#    values:
-#      layout: primer
+  -
+    scope:
+      path: ""
+      type: examples
+    values:
+      layout: example
 
 
 # Exclude from processing.

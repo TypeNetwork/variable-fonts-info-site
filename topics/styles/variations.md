@@ -1,5 +1,6 @@
 ---
 layout: article
+breadcrumbs: ["styles"]
 sidebar: "Styles in variable fonts"
 title: "Styles in variable fonts"
 ---

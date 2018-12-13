@@ -1,5 +1,6 @@
 ---
 layout: article
+breadcrumbs: ["spacing"]
 sidebar: "Spacing in variable fonts"
 title: "Spacing in variable fonts"
 ---

@@ -4,10 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>{% if page.title %}{{page.title}} | {% endif %} Variable Fonts | Type Network + Google</title>
+    
     <link rel="stylesheet" href="https://www.typenetwork.com/assets_content/css/fonts-momentum-sans.css" />
     <link rel="stylesheet" href="https://www.typenetwork.com/assets_content/css/icon_font.css" />
     <link rel="stylesheet" href="https://www.typenetwork.com/assets_content/css/reset.css" />
     <link rel="stylesheet" href="https://www.typenetwork.com/assets_content/css/style.css" />
+    
+    {% if page.stylesheets %}
+        {% for ss in page.stylesheets %}
+            <link rel="stylesheet" href="{{ss}}" />
+        {% endfor %}
+    {% endif %}
     
     <link rel="apple-touch-icon" sizes="57x57" href="https://www.typenetwork.com/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="https://www.typenetwork.com/apple-touch-icon-60x60.png">
@@ -27,8 +35,6 @@
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <title>{% if page.title %}{{page.title}} | {% endif %} Variable Fonts | Type Network + Google</title>
-    
     <script src="{{site.baseurl}}/varbro.js"></script>
     <link rel="stylesheet" href="{{site.baseurl}}/varbro.css">
 
@@ -79,11 +85,23 @@
         <aside class="content-filters">
             <a class="content-filters-close" href="#">Close</a>
 
+            {% assign allexamples = site.collections|where:"label","examples"|first %}
+            {% assign section = "" %}
             {% for link in site.data.sidebar %}
                 {% if link.heading %}
                     {% unless forloop.first %}
+                        {% assign examples = allexamples.docs|where_exp:"doc","doc.url contains section" %}
+                        {% assign has_examples = examples|size %}
+                        {% if has_examples > 0 %}
+                            <li>Examples: <ul>
+                            {% for example in examples %}
+                                <li><a href='{{example.url}}'>{{example.title|default:"Example"}}</a></li>
+                            {% endfor %}
+                            </ul></li>
+                        {% endif %}
                         </ul>
                     {% endunless %}
+                    {% assign section = link.section %}
                     <h3><a href="{{link.url}}">{{link.sidebar}}</a></h3>
                     <ul>
                 {% else %}

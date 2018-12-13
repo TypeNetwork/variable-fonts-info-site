@@ -3,114 +3,133 @@
     "url": "/",
     "sidebar": "Overview",
     "title": "Variable fonts: thirty to three billion users in three years",
-    "heading": true
+    "heading": true,
+    "section": "overview"
   },
   {
-    "url": "/primer",
+    "url": "/topics/overview/primer",
     "sidebar": "An old and stable font format",
     "title": "An old and stable font format",
-    "heading": false
+    "heading": false,
+    "section": "overview"
   },
   {
-    "url": "/variations",
+    "url": "/topics/overview/variations",
     "sidebar": "Typographic enhancement with variable fonts",
     "title": "Typographic enhancement with variable fonts",
-    "heading": false
+    "heading": false,
+    "section": "overview"
   },
   {
-    "url": "/examples",
+    "url": "/topics/overview/examples",
     "sidebar": "Suggestions for using variable fonts",
     "title": "Suggestions for using variable fonts",
-    "heading": false
+    "heading": false,
+    "section": "overview"
   },
   {
     "url": "/topics/scripts/",
     "sidebar": "Scripts",
     "title": "Scripts primer",
-    "heading": true
+    "heading": true,
+    "section": "scripts"
   },
   {
     "url": "/topics/scripts/variations",
     "sidebar": "Scripts: variable fonts",
     "title": "Scripts: variable fonts",
-    "heading": false
+    "heading": false,
+    "section": "scripts"
   },
   {
     "url": "/topics/scripts/examples",
     "sidebar": "Scripts: Example 1",
     "title": "Scripts: Example 1",
-    "heading": false
+    "heading": false,
+    "section": "scripts"
   },
   {
     "url": "/topics/families/",
     "sidebar": "Families",
     "title": "Families: primer",
-    "heading": true
+    "heading": true,
+    "section": "families"
   },
   {
     "url": "/topics/families/variations",
     "sidebar": "Families: variable fonts",
     "title": "Families: variable fonts",
-    "heading": false
+    "heading": false,
+    "section": "families"
   },
   {
     "url": "/topics/families/examples",
     "sidebar": "Families: Example 1 &amp; 2",
     "title": "Families: Example 1 &amp; 2",
-    "heading": false
+    "heading": false,
+    "section": "families"
   },
   {
     "url": "/topics/styles/",
     "sidebar": "Styles",
     "title": "Styles primer",
-    "heading": true
+    "heading": true,
+    "section": "styles"
   },
   {
     "url": "/topics/styles/variations",
     "sidebar": "Styles in variable fonts",
     "title": "Styles in variable fonts",
-    "heading": false
+    "heading": false,
+    "section": "styles"
   },
   {
     "url": "/topics/styles/examples",
     "sidebar": "Styles/Examples",
     "title": "Styles/Examples",
-    "heading": false
+    "heading": false,
+    "section": "styles"
   },
   {
     "url": "/topics/size/",
     "sidebar": "Size",
     "title": "Size primer",
-    "heading": true
+    "heading": true,
+    "section": "size"
   },
   {
     "url": "/topics/size/variations",
     "sidebar": "Size in variations",
     "title": "Size in variations",
-    "heading": false
+    "heading": false,
+    "section": "size"
   },
   {
     "url": "/topics/size/examples",
     "sidebar": "Size: examples",
     "title": "Size: examples",
-    "heading": false
+    "heading": false,
+    "section": "size"
   },
   {
     "url": "/topics/spacing/",
     "sidebar": "Spacing",
     "title": "Spacing primer",
-    "heading": true
+    "heading": true,
+    "section": "spacing"
   },
   {
     "url": "/topics/spacing/variations",
     "sidebar": "Spacing in variable fonts",
     "title": "Spacing in variable fonts",
-    "heading": false
+    "heading": false,
+    "section": "spacing"
   },
   {
     "url": "/topics/spacing/examples",
     "sidebar": "Spacing examples",
     "title": "Spacing examples",
-    "heading": false
+    "heading": false,
+    "section": "spacing"
   }
 ]
