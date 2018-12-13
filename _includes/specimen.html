@@ -1,5 +1,15 @@
 {% assign params = include.params|default:include %}
 
+{% assign layout = params.layout|default:"single-line" %}
+
+{% if params.lines %}
+    {% for line in params.lines %}
+        {% include specimen.html params=line %}
+    {% endfor %}
+{% else %}
+
+{% assign element = params.element|default:"figure" %}
+
 {% assign nicefont = params.font|default:"Amstelvar-Alpha" %}
 
 {% if site.data.fonts.axes[nicefont] %}
@@ -21,10 +31,8 @@
         {% assign lineheight = params.leading|abs %}
     {% endif %}
 {% else %}
-    {% assign lineheight = fontsize %}
+    {% assign lineheight = fontsize|times:1.2 %}
 {% endif %}
-
-{% assign layout = params.layout|default:"single-line" %}
 
 {% assign fvs_verbose = site.emptyArray %}
 {% assign fvs = site.emptyArray %}
@@ -51,20 +59,30 @@
     {% endif %}
 {% endfor %}
 
-<figure class='specimen {{layout}}' style='font-family:"{{fontfamily}}";font-size:{{fontsize}}px;line-height:{{lineheight}}px;font-variation-settings:{{fvs_verbose|join:","}};'>
+<{{element}} class='specimen {{layout}} {{params.class}}' style='font-family:"{{fontfamily}}";font-size:{{fontsize}}px;line-height:{{lineheight}}px;font-variation-settings:{{fvs_verbose|join:","}};'>
     {{params.text|default:"Example"}}
-    <figcaption>
-        <ul class='axes'>
-        {% for rule in fvs_verbose %}
-            {% assign tag = rule|slice:1,4 %}
-            {% assign pointzero = rule|slice:-2,2 %}
-            {% if pointzero == ".0" %}
-                {% assign ruleint = rule|replace:".0","" %}
-            {% else %}
-                {% assign ruleint = rule %}
-            {% endif %}
-            <li class="{% if specified contains tag %}highlight{% endif %} {% if non_default contains tag %}non-default{% endif %}">{{ruleint|replace:'"',''}}</li>
-        {% endfor %}
-        </ul>
+    {% if element == "figure" %}
+        <figcaption>
+    {% else %}
+        <!-- lists can't be inside most text elements -->
+        </{{element}}>
+    {% endif %}
+
+    <ul class='axes'>
+    {% for rule in fvs_verbose %}
+        {% assign tag = rule|slice:1,4 %}
+        {% assign pointzero = rule|slice:-2,2 %}
+        {% if pointzero == ".0" %}
+            {% assign ruleint = rule|replace:".0","" %}
+        {% else %}
+            {% assign ruleint = rule %}
+        {% endif %}
+        <li class="{% if specified contains tag %}highlight{% endif %} {% if non_default contains tag %}non-default{% endif %}">{{ruleint|replace:'"',''}}</li>
+    {% endfor %}
+    </ul>
+{% if element == "figure" %}
     </figcaption>
-</figure>
+    </figure>
+{% endif %}
+
+{% endif %}
