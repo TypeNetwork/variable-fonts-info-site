@@ -2,10 +2,15 @@
 
 {% assign layout = params.layout|default:"single-line" %}
 
+{% assign background = params.background|default:"transparent" %}
+{% assign foreground = params.foreground|default:"inherit" %}
+
 {% if params.lines %}
+    <figure class="specimen {{layout}}"{% if params.css %} style="{% for kv in params.css %}{{kv[0]}}:{{kv[1]}};{% endfor %}"{% endif %}>
     {% for line in params.lines %}
         {% include specimen.html params=line %}
     {% endfor %}
+    </figure>
 {% else %}
 
 {% assign element = params.element|default:"figure" %}
@@ -59,7 +64,7 @@
     {% endif %}
 {% endfor %}
 
-<{{element}} class='specimen {{layout}} {{params.class}}' style='font-family:"{{fontfamily}}";font-size:{{fontsize}}px;line-height:{{lineheight}}px;font-variation-settings:{{fvs_verbose|join:","}};'>
+<{{element}} class='specimen {{layout}} {{params.class}}' style='color:{{foreground}};background:{{background}};font-family:"{{fontfamily}}";font-size:{{fontsize}}px;line-height:{{lineheight}}px;font-variation-settings:{{fvs_verbose|join:","}};'>
     {{params.text|default:"Example"}}
     {% if element == "figure" %}
         <figcaption>
