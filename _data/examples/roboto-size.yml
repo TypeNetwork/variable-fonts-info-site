@@ -1,0 +1,98 @@
+singles:
+    Roboto-Thin.ttf:
+        kilobytes: 55
+        axes:
+            wght: 200
+    Roboto-ThinItalic.ttf:
+        kilobytes: 57
+        axes:
+            wght: 200
+            slnt: 12
+    Roboto-Light.ttf:
+        kilobytes: 54
+        axes:
+            wght: 300
+    Roboto-LightItalic.ttf:
+        kilobytes: 57
+        axes:
+            wght: 300
+            slnt: 12
+    Roboto-Regular.ttf:
+        default: true
+        kilobytes: 54
+        axes:
+            wght: 400
+    Roboto-Italic.ttf:
+        default: true
+        kilobytes: 56
+        axes:
+            wght: 400
+            slnt: 12
+    Roboto-Medium.ttf:
+        kilobytes: 54
+        axes:
+            wght: 400
+    Roboto-MediumItalic.ttf:
+        kilobytes: 57
+        axes:
+            wght: 500
+            slnt: 12
+    Roboto-Bold.ttf:
+        default: true
+        kilobytes: 54
+        axes:
+            wght: 700
+    Roboto-BoldItalic.ttf:
+        default: true
+        kilobytes: 55
+        axes:
+            wght: 700
+            slnt: 12
+    Roboto-Black.ttf:
+        kilobytes: 54
+        axes:
+            wght: 800
+    Roboto-BlackItalic.ttf:
+        kilobytes: 57
+        axes:
+            wght: 800
+            slnt: 12
+    RobotoCondensed-Light.ttf:
+        kilobytes: 54
+        axes:
+            wght: 200
+            wdth: 75
+    RobotoCondensed-LightItalic.ttf:
+        kilobytes: 56
+        axes:
+            wght: 200
+            wdth: 75
+            slnt: 12
+    RobotoCondensed-Regular.ttf:
+        kilobytes: 54
+        axes:
+            wght: 400
+            wdth: 75
+    RobotoCondensed-Italic.ttf:
+        kilobytes: 57
+        axes:
+            wght: 400
+            wdth: 75
+            slnt: 12
+    RobotoCondensed-Bold.ttf:
+        kilobytes: 54
+        axes:
+            wght: 700
+            wdth: 75
+    RobotoCondensed-BoldItalic.ttf:
+        kilobytes: 56
+        axes:
+            wght: 700
+            wdth: 75
+            slnt: 12
+var:
+    filename: Roboto-VF.ttf
+    kilobytes: 399
+    axes:
+        wght: 200
+        wdth: 75

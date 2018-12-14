@@ -1,0 +1,37 @@
+---
+layout: article
+title: File size benefits of variable fonts
+description: If you are using multiple weights of blahdy blah…
+---
+
+{% assign roboto = site.data.examples.roboto-size %}
+
+<form id='size-benefit-demo'>
+    {% for single in roboto.singles %}
+        {% assign filename = single[0] %}
+        {% assign info = single[1] %}
+        <label style='font-variation-settings: {% for axis in info.axes %}"{{axis[0]}}" {{axis[1]}}{% unless forloop.last %}, {% endunless %}{% endfor %}'><input type='checkbox' name='singles' value='{{info.kilobytes}}'{% if info.default %} checked{% endif %}>{{filename}} <strong>{{info.kilobytes}}K</strong></label>
+    {% endfor %}
+    
+    <div id='size-benefit-total'>
+        <label>Size of selected instances:</label>
+        <output>00</output>
+    </div>
+</form>
+
+<script>
+doOnReady(function() {
+    var form = document.getElementById('size-benefit-demo');
+    var output = form.querySelector('#size-benefit-total output');
+
+    form.addEventListener('change', function(evt) {
+        var total = 0;
+        form.querySelectorAll('input[name=singles]:checked').forEach(function(el) {
+            total += parseInt(el.value);
+        });
+        output.textContent = total;
+    });
+    
+    form.trigger('change');
+});
+</script>

@@ -10,3 +10,39 @@
         }
     }
 }
+
+#size-benefit-demo {
+    label {
+        display: block;
+        font-family: inherit;
+        text-transform: none;
+        font-size: 1rem;
+        line-height: 1;
+        margin-bottom: 0.5em;
+        
+        input {
+            vertical-align: baseline;
+            margin-right: 0.5em;
+        }
+        
+        strong {
+            font-variation-settings: "wght" 700;
+        }
+    }
+
+    #size-benefit-total {
+        margin-top: 1em;
+        
+        output {
+            display: block;
+            border: 1px solid #999;
+            padding: 2px;
+            width: 6em;
+            font-size: 1.2rem;
+            
+            &::after {
+                content: " KB";
+            }
+        }
+    }
+}
