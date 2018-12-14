@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["families"]
+breadcrumbs: ["Families"]
 sidebar: "Families: variable fonts"
 title: "Families: variable fonts"
 ---

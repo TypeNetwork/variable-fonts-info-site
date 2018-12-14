@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["scripts"]
+breadcrumbs: ["Scripts"]
 sidebar: "Scripts: variable fonts"
 title: "Scripts: variable fonts"
 ---

@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["size"]
+breadcrumbs: ["Size"]
 sidebar: "Size in variations"
 title: "Size in variations"
 ---

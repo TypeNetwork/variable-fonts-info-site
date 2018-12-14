@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["families"]
+breadcrumbs: ["Families"]
 sidebar: "Families"
 title: "Families: primer"
 ---

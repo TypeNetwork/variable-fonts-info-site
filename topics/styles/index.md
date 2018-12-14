@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["styles"]
+breadcrumbs: ["Styles"]
 sidebar: "Styles"
 title: "Styles primer"
 ---

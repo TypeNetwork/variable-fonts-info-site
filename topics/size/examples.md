@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["size"]
+breadcrumbs: ["Size"]
 sidebar: "Size: examples"
 title: "Size: examples"
 ---
