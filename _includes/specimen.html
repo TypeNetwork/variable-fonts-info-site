@@ -1,5 +1,7 @@
 {% assign params = include.params|default:include %}
 
+{% assign playground_text = "Experiment!" %}
+
 {% assign layout = params.layout|default:"single-line" %}
 
 {% assign background = params.background|default:"transparent" %}
@@ -10,6 +12,7 @@
     {% for line in params.lines %}
         {% include specimen.html params=line %}
     {% endfor %}
+    <button type='button' class='open-playground'>{{playground_text}}</button>
     </figure>
 {% else %}
 
@@ -64,8 +67,8 @@
     {% endif %}
 {% endfor %}
 
-<{{element}} class='specimen {{layout}} {{params.class}}' style='color:{{foreground}};background:{{background}};font-family:"{{fontfamily}}";font-size:{{fontsize}}px;line-height:{{lineheight}}px;font-variation-settings:{{fvs_verbose|join:","}};'>
-    {{params.text|default:"Example"}}
+<{{element}} class='specimen {{layout}} {{params.class}}'>
+    <span class='rendered' style='color:{{foreground}};background:{{background}};font-family:"{{fontfamily}}";font-size:{{fontsize}}px;line-height:{{lineheight}}px;font-variation-settings:{{fvs_verbose|join:","}};'>{{params.text|default:"Example"}}</span>
     {% if element == "figure" %}
         <figcaption>
             {% if params.label %}
@@ -90,6 +93,8 @@
     </ul>
 {% if element == "figure" %}
     </figcaption>
+
+    <button type='button' class='open-playground'>{{playground_text}}</button>
     </figure>
 {% endif %}
 
