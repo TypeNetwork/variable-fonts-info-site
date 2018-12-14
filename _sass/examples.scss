@@ -63,6 +63,7 @@
         position: absolute;
         bottom: 0;
         width: $output-width;
+        transition: height 0.25s ease-in-out;
     }
     
     #size-benefit-singles-bar {
