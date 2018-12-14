@@ -15,6 +15,7 @@ os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 
 data = []
 
+section_title = None
 for row in docs:
     if not row['Published URL'] or not row['Link on site']:
         continue
@@ -26,7 +27,12 @@ for row in docs:
     doc = resp.read().decode(resp.info().get_content_charset('utf-8'))
 
     title_title = re.search(r'<div id="header">(.*?)</div>', doc).group(1)
-    sidebar_title = row['Title'] if is_heading else title_title
+    
+    if is_heading:
+        sidebar_title = row['Title']
+        section_title = row['Title']
+    else:
+        sidebar_title = title_title
 
     #lots of stuff to clean up
     doc = re.sub(r'<script.+?</script>', '', doc, flags=re.S)
@@ -87,14 +93,12 @@ for row in docs:
     if re.search(r'\w+/\w+', dest_file):
         outfile = 'topics/{}'.format(outfile)
 
-    section = re.search('topics/([^/]+)', outfile).group(1) if outfile.startswith('topics') else 'overview'
-
     data.append({
         'url': '/' + re.sub('(index)?\.md$', '', outfile),
         'sidebar': sidebar_title,
         'title': title_title,
         'heading': is_heading,
-        'section': section,
+        'section': section_title,
     })
 
     print(outfile, sidebar_title, title_title)
@@ -106,7 +110,7 @@ for row in docs:
     with open(outfile, 'w', encoding='utf-8') as f:
         f.write("---\n")
         f.write("layout: article\n")
-        f.write("breadcrumbs: [\"{}\"]\n".format(section)),
+        f.write("breadcrumbs: [\"{}\"]\n".format(section_title)),
         f.write("sidebar: \"{}\"\n".format(sidebar_title))
         f.write("title: \"{}\"\n".format(title_title))
         f.write("---\n")

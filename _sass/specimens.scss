@@ -1,8 +1,12 @@
 
-.specimen {
+figure.specimen {
     figcaption {
         margin-top: 0;
         padding-top: 0;
+        
+        label {
+            color: $pink;
+        }
     }
 }
 
@@ -24,7 +28,7 @@
         }
         
         &.highlight {
-            color: $pink;
+//             color: $pink;
         }
         
         &.non-default {

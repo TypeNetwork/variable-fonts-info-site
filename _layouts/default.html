@@ -91,7 +91,8 @@
             {% for link in site.data.sidebar %}
                 {% if link.heading %}
                     {% unless forloop.first %}
-                        {% assign examples = allexamples.docs|where_exp:"doc","doc.url contains section" %}
+                        {% assign segment = '/'|append:section|append:'/' %}
+                        {% assign examples = allexamples.docs|where_exp:"doc","doc.url contains segment" %}
                         {% assign has_examples = examples|size %}
                         {% if has_examples > 0 %}
                             <li>Examples: <ul>
@@ -102,7 +103,7 @@
                         {% endif %}
                         </ul>
                     {% endunless %}
-                    {% assign section = link.section %}
+                    {% assign section = link.section|downcase %}
                     <h3><a href="{{link.url}}">{{link.sidebar}}</a></h3>
                     <ul>
                 {% else %}
