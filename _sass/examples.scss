@@ -12,6 +12,16 @@
 }
 
 #size-benefit-demo {
+    position: relative;
+    
+    fieldset {
+        position: relative;
+        display: inline-block;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
     label {
         display: block;
         font-family: inherit;
@@ -44,5 +54,26 @@
                 content: " KB";
             }
         }
+    }
+
+    $output-width: 3em;
+
+    output.bar {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        width: $output-width;
+    }
+    
+    #size-benefit-singles-bar {
+        background: black;
+        height: 3em;
+        left: calc(100% + 2em);
+    }
+    
+    #size-benefit-VF-bar {
+        background: $pink;
+        height: 3em;
+        left: calc(100% + 2em + #{$output-width} + 2em);
     }
 }
