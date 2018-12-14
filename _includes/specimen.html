@@ -1,6 +1,6 @@
 {% assign params = include.params|default:include %}
 
-{% assign playground_text = "Experiment!" %}
+{% assign playground_button = "<form class='playground-butt'><button type='button' class='open-playground'>Experiment!</button></form>" %}
 
 {% assign layout = params.layout|default:"single-line" %}
 
@@ -12,7 +12,7 @@
     {% for line in params.lines %}
         {% include specimen.html params=line %}
     {% endfor %}
-    <button type='button' class='open-playground'>{{playground_text}}</button>
+    {{playground_button}}
     </figure>
 {% else %}
 
@@ -94,7 +94,7 @@
 {% if element == "figure" %}
     </figcaption>
 
-    <button type='button' class='open-playground'>{{playground_text}}</button>
+    {{playground_button}}
     </figure>
 {% endif %}
 

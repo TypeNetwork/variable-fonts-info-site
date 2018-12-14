@@ -1,5 +1,7 @@
 
 figure.specimen {
+    position: relative;
+    
     figcaption {
         margin-top: 0;
         padding-top: 0;
@@ -7,6 +9,17 @@ figure.specimen {
         label {
             color: $pink;
         }
+    }
+    
+    form.playground-butt {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    
+    &:hover form.playground-butt {
+        display: block;
     }
 }
 
