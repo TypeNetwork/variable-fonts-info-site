@@ -104,11 +104,10 @@
                         </ul>
                     {% endunless %}
                     {% assign section = link.section|downcase %}
-                    <h3><a href="{{link.url}}">{{link.sidebar}}</a></h3>
+                    <h3>{{link.sidebar}}</h3>
                     <ul>
-                {% else %}
-                    <li><a href="{{link.url}}">{{link.sidebar}}</a></li>
                 {% endif %}
+                    <li><a href="{{link.url}}">{{link.title}}</a></li>
             {% endfor %}
             </ul>
 
