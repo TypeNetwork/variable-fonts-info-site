@@ -91,12 +91,12 @@ function setupExamples() {
                         var subspec = span.closest('.specimen');
                         style.tag = subspec.tagName.toLowerCase();
                         style.className = subspec.className;
-                        style.css = span.getAttribute('style').split(/\s*;\s*/);
+                        style.css = span.getAttribute('style').trim().split(/\s*;\s*/);
                         styles.push(style);
-                        
+ 
                         codes.push('<' + style.tag + ' class="' + subspec.className + '">\n  ' + span.innerHTML.trim() + '\n</' + style.tag + '>');
                     });
-                    
+ 
                     styles.forEach(function(style, i) {
                         styles[i] = style.tag + '.' + style.className.trim().replace(/\s+/g, '.') + ' {\n  ' + style.css.join(";\n  ").replace(/:(\S)/g, ": $1").trim() + ';\n}';
                     });
