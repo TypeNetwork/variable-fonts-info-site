@@ -4,13 +4,11 @@ breadcrumbs: ["overview"]
 sidebar: "Overview"
 title: "Variable fonts: thirty to three billion users in three years"
 ---
-<img alt="" src="https://lh6.googleusercontent.com/3JAcRlx-lTA4wrHiUz6RLPqQx84VULcmEgE8SrKpLTNznC6Y_1Jzs2ZtNxpTKmFFEXeG9J7Jur6P1z2E5HA-BvJ5qR69LUucjsvdD3iS8JQbpH8l6jAUC1_NbnFDc1bhYQ" style="width: 624.00px; height: 309.33px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
-
-Lede Visual: Chart for VF overview
+<img alt="" src="https://lh3.googleusercontent.com/I1W_CSy1KpyGCBsXcdwjinfvEnJjOUWxFVutMQafgLckI9NqK2CMtmsbigiEDdDN-49NRZ0fKQ3B0hnFidw3illi22LS2dmMbtba-1M_GUsrDYx5GnC_NtQVHcg4O7D57g" style="width: 624.00px; height: 460.00px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
 
 The web has changed the typographer’s role. Typographers no longer decide on typefaces, font sizes, line lengths, line spacing, or margins; they make suggestions via marks and instructions so that text can make those choices for itself, responding to the <em>context</em> of an unknown reader’s environment. And although typographers no longer have access to all of the finished proofs of their work for all of those environments, they can now suggest—along with everything else—variations suited for any environment that imposes undue pressure on a user&#39;s type. 
 
-Visual: Flowchart, print vs web
+<img alt="" src="https://lh4.googleusercontent.com/rziXpAMrbCR6mtHGa-9boEtt2Pve1JgvUcOWrng9_CAMTSFchg-LQYGMj0nDdA4ZGGxaIoZcsF3y4_tS8WLgVQgEYJnJjSSz0Ju79mAFjJt_R2q7wowCtHG9Qx5RNV3dWg" style="width: 624.00px; height: 265.33px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
 
 That kind of detailed suggestion for composition can happen if the role of the type designer changes, too. The type designer, in partnership with the typographer, has to embrace a new model in working for the web, from one of making a few font styles of a typeface that are supposed to work over a wide array of conditions on the web, to making fonts that have at least a proper value system—and, at best, typeface families that have both the proper values and the fluidity of the rest of the web’s variables, like size, line length, line spacing, margins, and the pages themselves. 
 
