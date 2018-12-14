@@ -68,6 +68,9 @@
     {{params.text|default:"Example"}}
     {% if element == "figure" %}
         <figcaption>
+            {% if params.label %}
+                <label>{{ params.label }}</label>
+            {% endif %}
     {% else %}
         <!-- lists can't be inside most text elements -->
         </{{element}}>
