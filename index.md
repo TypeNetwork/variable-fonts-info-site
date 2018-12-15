@@ -2,7 +2,7 @@
 layout: article
 breadcrumbs: ["Overview"]
 sidebar: "Overview"
-title: "Variable fonts: thirty to three billion users in three years"
+title: "Thirty to three billion users in three years"
 ---
 <img alt="" src="https://lh6.googleusercontent.com/uAQHwsqRnqdygNX0sm_OjjQk70Cr2bS8HYvBZr_G8nl0CMdw_2WkE2gvTl_ywcozpS-gSdrKDD8k5K7lIFKPHaR4pY5EfcrVIl3n0notrhmnvj3OmATKBjwLUT-9HZm0zg" style="width: 624.00px; height: 512.00px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
 

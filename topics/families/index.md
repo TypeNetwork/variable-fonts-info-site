@@ -2,7 +2,7 @@
 layout: article
 breadcrumbs: ["Families"]
 sidebar: "Families"
-title: "Families: primer"
+title: "Families primer"
 ---
 <img alt="" src="https://lh6.googleusercontent.com/CmtwG7eR86Oxsn7nckigHRL3rABBa4FJbr5swB8ZTLuemV7x2iMX57He7AJZ5WT1F3wQf1o2LazpNBtCSzSi3qWsnlah1tSnZHP4jbCytS8c_l1MFJrZn0YeNWn9zgoPSA" style="width: 624.00px; height: 325.33px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
 

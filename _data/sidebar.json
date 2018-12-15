@@ -2,7 +2,7 @@
   {
     "url": "/",
     "sidebar": "Overview",
-    "title": "Variable fonts: thirty to three billion users in three years",
+    "title": "Thirty to three billion users in three years",
     "heading": true,
     "section": "Overview"
   },
@@ -51,14 +51,14 @@
   {
     "url": "/topics/families/",
     "sidebar": "Families",
-    "title": "Families: primer",
+    "title": "Families primer",
     "heading": true,
     "section": "Families"
   },
   {
     "url": "/topics/families/variations",
-    "sidebar": "Families: variable fonts",
-    "title": "Families: variable fonts",
+    "sidebar": "Variable families",
+    "title": "Variable families",
     "heading": false,
     "section": "Families"
   },
@@ -99,8 +99,8 @@
   },
   {
     "url": "/topics/size/variations",
-    "sidebar": "Size in variations",
-    "title": "Size in variations",
+    "sidebar": "Fluid size",
+    "title": "Fluid size",
     "heading": false,
     "section": "Size"
   },
@@ -120,8 +120,8 @@
   },
   {
     "url": "/topics/spacing/variations",
-    "sidebar": "Spacing in variable fonts",
-    "title": "Spacing in variable fonts",
+    "sidebar": "Responsive spacing",
+    "title": "Responsive spacing",
     "heading": false,
     "section": "Spacing"
   },

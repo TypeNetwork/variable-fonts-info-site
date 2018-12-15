@@ -1,8 +1,8 @@
 ---
 layout: article
 breadcrumbs: ["Size"]
-sidebar: "Size in variations"
-title: "Size in variations"
+sidebar: "Fluid size"
+title: "Fluid size"
 ---
 A font format with an optical-size axis defined, as OpenType has, gives typographers the ability to trust type developers again, to undo the “san-serifization” of typography, and to reinvest in responsive typography with much better tools. 
 
