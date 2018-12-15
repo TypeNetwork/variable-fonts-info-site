@@ -1,7 +1,7 @@
 {% assign collection = site.collections|where:"label","examples"|first %}
 {% assign example = collection.docs|where_exp:"doc","doc.url contains include.example"|first %}
 
-<figure class='example'>
+<figure class='inline example'>
     {% if example.layout == "example" %}
         {% include example.html example=example %}
     {% else %}

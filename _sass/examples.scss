@@ -15,6 +15,10 @@
         grid-template-columns: 1fr 1fr;
         grid-gap: 1rem;
     }
+    
+    &.inline {
+        margin-bottom: 1in;
+    }
 }
 
 #size-benefit-demo {
