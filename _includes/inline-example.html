@@ -1,14 +1,11 @@
 {% assign collection = site.collections|where:"label","examples"|first %}
 {% assign example = collection.docs|where_exp:"doc","doc.url contains include.example"|first %}
 
-<figure class='inline example'>
-    {% if example.layout == "example" %}
-        {% include example.html example=example %}
-    {% else %}
-        {{example.content}}
-    {% endif %}
+<figure class='example'>
+    {% include example.html example=example %}
     <figcaption>
         <h3>{{example.title}}</h3>
         {{example.description|markdownify}}
+        <p class='permalink'><a href="{{example.url}}">Permalink to this example</a></p>
     </figcaption>
 </figure>

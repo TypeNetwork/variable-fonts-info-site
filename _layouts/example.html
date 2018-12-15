@@ -1,7 +1,5 @@
 ---
 layout: article
+page_id: standalone-example
 ---
-{% if page.description %}
-    {{page.description|markdownify}}
-{% endif %}
-{% include example.html example=page %}
+{% include inline-example.html example=page.url %}

@@ -6,10 +6,18 @@
         margin: 0;
     }
 
-    &.inline {
-        margin: 2rem -2rem;
-        padding: 2rem;
-        background: #F0F0F0;
+    margin: 2rem -2rem;
+    padding: 2rem;
+    background: #F0F0F0;
+
+    .example {
+        margin: 0;
+        padding: 0;
+        background: transparent;
+    }
+    
+    > figcaption {
+        margin-bottom: 0;
     }
 
     ul.comparison {
@@ -46,6 +54,10 @@
     
     &.inline {
     }
+}
+
+#standalone-example .example .permalink {
+    display: none;
 }
 
 #size-benefit-demo {

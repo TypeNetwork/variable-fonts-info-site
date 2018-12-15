@@ -5,7 +5,8 @@
             <li>{% include specimen.html params=entry %}</li>
         {% endfor %}
         </ul>
-    {% else %}
+    {% elsif include.example.text %}
         {% include specimen.html params=include.example %}
     {% endif %}
+    {{include.example.content}}
 </div>
