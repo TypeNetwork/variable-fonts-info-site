@@ -55,6 +55,10 @@
     {% assign tagsize = tag|size %}
     {% if tag == "wght" %}
         {% assign fontweight = params.axes[tag]|default:axis.default %}
+        {% assign specified = specified|push:tag %}
+        {% if fontweight != axis.default %}
+            {% assign non_default = non_default|push:tag %}
+        {% endif %}
     {% elsif tagsize == 4 %}
         {% if params.axes[tag] %}
             {% capture fvsentry %}"{{tag}}" {{params.axes[tag]}}{% endcapture %}
@@ -85,6 +89,9 @@
 
     {% unless params.label %}
         <ul class='axes'>
+        {% unless fontweight == "inherit" %}
+            <li class="{% if specified contains "wght" %}highlight{% endif %} {% if non_default contains "wght" %}non-default{% endif %}">wght {{fontweight}}</li>
+        {% endunless %}
         {% for rule in fvs_verbose %}
             {% assign tag = rule|slice:1,4 %}
             {% assign pointzero = rule|slice:-2,2 %}
