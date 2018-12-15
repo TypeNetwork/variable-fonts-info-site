@@ -79,18 +79,20 @@
         </{{element}}>
     {% endif %}
 
-    <ul class='axes'>
-    {% for rule in fvs_verbose %}
-        {% assign tag = rule|slice:1,4 %}
-        {% assign pointzero = rule|slice:-2,2 %}
-        {% if pointzero == ".0" %}
-            {% assign ruleint = rule|replace:".0","" %}
-        {% else %}
-            {% assign ruleint = rule %}
-        {% endif %}
-        <li class="{% if specified contains tag %}highlight{% endif %} {% if non_default contains tag %}non-default{% endif %}">{{ruleint|replace:'"',''}}</li>
-    {% endfor %}
-    </ul>
+    {% unless params.label %}
+        <ul class='axes'>
+        {% for rule in fvs_verbose %}
+            {% assign tag = rule|slice:1,4 %}
+            {% assign pointzero = rule|slice:-2,2 %}
+            {% if pointzero == ".0" %}
+                {% assign ruleint = rule|replace:".0","" %}
+            {% else %}
+                {% assign ruleint = rule %}
+            {% endif %}
+            <li class="{% if specified contains tag %}highlight{% endif %} {% if non_default contains tag %}non-default{% endif %}">{{ruleint|replace:'"',''}}</li>
+        {% endfor %}
+        </ul>
+    {% endunless %}
 {% if element == "figure" %}
     </figcaption>
 
