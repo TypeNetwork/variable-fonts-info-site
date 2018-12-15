@@ -47,11 +47,15 @@
 {% assign specified = site.emptyArray %}
 {% assign non_default = site.emptyArray %}
 
+{% assign fontweight = "inherit" %}
+
 {% for kv in allaxes %}
     {% assign tag = kv[0] %}
     {% assign axis = kv[1] %}
     {% assign tagsize = tag|size %}
-    {% if tagsize == 4 %}
+    {% if tag == "wght" %}
+        {% assign fontweight = params.axes[tag]|default:axis.default %}
+    {% elsif tagsize == 4 %}
         {% if params.axes[tag] %}
             {% capture fvsentry %}"{{tag}}" {{params.axes[tag]}}{% endcapture %}
             {% assign fvs = fvs|push:fvsentry %}
@@ -68,7 +72,7 @@
 {% endfor %}
 
 <{{element}} class='specimen {{layout}} {{params.class}}'>
-    <span class='rendered' style='color:{{foreground}};background:{{background}};font-family:"{{fontfamily}}";font-size:{{fontsize}}px;line-height:{{lineheight}}px;font-variation-settings:{{fvs_verbose|join:","}};'>{{params.text|default:"Example"}}</span>
+    <span class='rendered' style='color:{{foreground}};background:{{background}};font-family:"{{fontfamily}}";font-size:{{fontsize}}px;line-height:{{lineheight}}px;font-weight:{{fontweight}};font-variation-settings:{{fvs_verbose|join:","}};'>{{params.text|default:"Example"}}</span>
     {% if element == "figure" %}
         <figcaption>
             {% if params.label %}

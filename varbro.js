@@ -100,12 +100,15 @@ function setupExamples() {
                     styles.forEach(function(style, i) {
                         var classes = '.' + style.className.trim().replace(/\s+/g, '.');
                         classes = classes.replace(/\.(specimen|single-line|editorial|paragraph)/g, '');
+                        if (classes === '.') {
+                            classes = '';
+                        }
                         styles[i] = style.tag + classes + ' {\n  ' + style.css.join(";\n  ").replace(/:(\S)/g, ": $1").trim() + ';\n}';
                     });
                     
                     cssFrame.textContent = styles.join("\n\n");
 
-                    htmlFrame.textContent = codes.join("\n\n");
+                    htmlFrame.textContent = codes.join("\n\n").replace(/\. \{/g, ' {').replace(/ class=""/g, '');
 
                     doOverlay(playground);
                     
