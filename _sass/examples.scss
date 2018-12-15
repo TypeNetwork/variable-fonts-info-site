@@ -70,17 +70,36 @@
         bottom: 0;
         width: $output-width;
         transition: height 0.25s ease-in-out;
+        
+        span {
+            position: absolute;
+            bottom: 0;
+            left: 2em;
+            transform: rotateZ(-90deg);
+            transform-origin: left bottom;
+            white-space: nowrap;
+            padding: 0.5em;
+            font-family: "Roboto-VF";
+            font-variation-settings: "wdth" 80;
+        }
     }
     
     #size-benefit-singles-bar {
         background: black;
         height: 3em;
         left: calc(100% + 2em);
+        span {
+            color: white;
+            text-shadow: 0 0 1px black;
+        }
     }
     
     #size-benefit-VF-bar {
         background: $pink;
         height: 3em;
         left: calc(100% + 2em + #{$output-width} + 2em);
+        span {
+            color: white;
+        }
     }
 }
