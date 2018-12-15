@@ -1,12 +1,25 @@
 
 .example {
+    max-width: none;
+
+    &.inline {
+        margin: 2rem -2rem;
+        padding: 2rem;
+        background: #F0F0F0;
+    }
+
     ul.comparison {
         margin: 0;
         padding: 0;
         > li {
             list-style: none;
             margin: 0;
-            padding: 0;
+            padding: 1rem;
+            background: white;
+            
+            + li {
+                margin-top: 1rem;
+            }
         }
     }
     
@@ -14,10 +27,13 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 1rem;
+        
+        li {
+            margin: 0;
+        }
     }
     
     &.inline {
-        margin-bottom: 1in;
     }
 }
 
