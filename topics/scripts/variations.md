@@ -1,8 +1,8 @@
 ---
 layout: article
 breadcrumbs: ["Scripts"]
-sidebar: "Scripts: variable fonts"
-title: "Scripts: variable fonts"
+sidebar: "Multiple scripts"
+title: "Multiple scripts"
 ---
 <img alt="" src="https://lh6.googleusercontent.com/WqtUxZPhobNjx2wskNJCh5xBHDlwc4Gr_Mb4GqIQ0qOXw9KhUziCxOJ4fXj1jmI84j2zM4GxMGve4xp3Gm48wD4Wi75CMkWoqigZ6pRX3Pv29cIa6zJYibaHCmVegrwaKA" style="width: 624.00px; height: 210.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
 

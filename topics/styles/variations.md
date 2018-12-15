@@ -1,8 +1,8 @@
 ---
 layout: article
 breadcrumbs: ["Styles"]
-sidebar: "Styles in variable fonts"
-title: "Styles in variable fonts"
+sidebar: "Styles, meet instances"
+title: "Styles, meet instances"
 ---
 A variable font file contains a minimum of one axis, which typically provides a fluid variation of styles that are visually congruent versions of a single design. Such a file can just contain width (<strong>wdth</strong>) and weight (<strong>wght</strong>) axes like many font families today, while making that range the basis for a “design space” of a font family with “instances,” rather than discrete styles. 
 
