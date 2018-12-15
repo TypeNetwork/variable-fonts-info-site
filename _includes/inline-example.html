@@ -2,7 +2,11 @@
 {% assign example = collection.docs|where_exp:"doc","doc.url contains include.example"|first %}
 
 <figure class='example'>
-    {% include example.html example=example %}
+    {% if example.layout == "example" %}
+        {% include example.html example=example %}
+    {% else %}
+        {{example.content}}
+    {% endif %}
     <figcaption>
         <h3>{{example.title}}</h3>
         {{example.description|markdownify}}
