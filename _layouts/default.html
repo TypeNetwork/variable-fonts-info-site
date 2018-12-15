@@ -86,24 +86,11 @@
         <aside class="content-filters">
             <a class="content-filters-close" href="#">Close</a>
 
-            {% assign allexamples = site.collections|where:"label","examples"|first %}
-            {% assign section = "" %}
             {% for link in site.data.sidebar %}
                 {% if link.heading %}
                     {% unless forloop.first %}
-                        {% assign segment = '/'|append:section|append:'/' %}
-                        {% assign examples = allexamples.docs|where_exp:"doc","doc.url contains segment" %}
-                        {% assign has_examples = examples|size %}
-                        {% if has_examples > 0 %}
-                            <li>Examples: <ul>
-                            {% for example in examples %}
-                                <li><a href='{{example.url}}'>{{example.title|default:"Example"}}</a></li>
-                            {% endfor %}
-                            </ul></li>
-                        {% endif %}
                         </ul>
                     {% endunless %}
-                    {% assign section = link.section|downcase %}
                     <h3>{{link.sidebar}}</h3>
                     <ul>
                 {% endif %}

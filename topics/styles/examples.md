@@ -6,10 +6,8 @@ title: "Styles/Examples"
 ---
 Styles/Examples
 
-[example:1] Amstelvar II demo font: https://github.com/TypeNetwork/variable-fonts-info-site/issues/11
+{% include inline-example.html example="roboto-instances-vs-interpolated" %}
 
-[example:2] Roboto.vf
+{% include inline-example.html example="amstelvar-editorial" %}
 
-https://github.com/TypeNetwork/variable-fonts-info-site/issues/10
-
-[example:3] Decovar.vf
+{% include inline-example.html example="decovar-editorial" %}
