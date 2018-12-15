@@ -36,8 +36,8 @@
   },
   {
     "url": "/topics/scripts/variations",
-    "sidebar": "Scripts: variable fonts",
-    "title": "Scripts: variable fonts",
+    "sidebar": "Multiple scripts",
+    "title": "Multiple scripts",
     "heading": false,
     "section": "Scripts"
   },
@@ -78,8 +78,8 @@
   },
   {
     "url": "/topics/styles/variations",
-    "sidebar": "Styles in variable fonts",
-    "title": "Styles in variable fonts",
+    "sidebar": "Styles, meet instances",
+    "title": "Styles, meet instances",
     "heading": false,
     "section": "Styles"
   },
