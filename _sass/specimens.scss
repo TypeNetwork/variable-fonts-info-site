@@ -59,6 +59,10 @@ figure.specimen {
 
     .specimen:hover + ul.axes {
         display: block;
+        padding: 0.5em;
+        margin: 1em -0.5em;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid #999;
     }
 }
 
