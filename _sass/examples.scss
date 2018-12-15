@@ -2,6 +2,10 @@
 .example {
     max-width: none;
 
+    figure {
+        margin: 0;
+    }
+
     &.inline {
         margin: 2rem -2rem;
         padding: 2rem;
@@ -20,6 +24,13 @@
             + li {
                 margin-top: 1rem;
             }
+        }
+    }
+    
+    &.block ul.comparison {
+        > li + li {
+            padding-top: 0;
+            margin-top: 0;
         }
     }
     
