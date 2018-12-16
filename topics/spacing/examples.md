@@ -1,8 +1,8 @@
 ---
 layout: article
 breadcrumbs: ["Spacing"]
-sidebar: "Spacing examples"
-title: "Spacing examples"
+sidebar: "Examples"
+title: "Examples"
 ---
 Example A: line length/linespacing/descenders
 
