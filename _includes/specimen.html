@@ -1,23 +1,42 @@
 {% assign params = include.params|default:include %}
 
-{% include _specimen-vars.html params=params %}
-
 {% assign playground_button = "<form class='playground-butt'><button type='button' class='open-playground'>Experiment!</button></form>" %}
 
 {% assign layout = params.layout|default:"single-line" %}
 
 {% if params.lines %}
+    {% assign line_labels = site.emptyArray %}
+    {% assign line_axes = site.emptyArray %}
     <figure class="specimen {{layout}}"{% if params.css %} style="{% for kv in params.css %}{{kv[0]}}:{{kv[1]}};{% endfor %}"{% endif %}>
-    {% for line in params.lines %}
-        {% include specimen.html params=line %}
-    {% endfor %}
+        <ul class='lines'>
+        {% for line in params.lines %}
+            <li>{% include specimen.html params=line record_axes=true %}</li>
+        {% endfor %}
+        </ul>
+        <figcaption>
+            <dl class='line-axes'>
+            {% assign i = 0 %}
+            {% for ll in line_labels %}
+                <dt>{{ll}}</dt>
+                <dd>{{line_axes[i]}}</dd>
+                {% assign i = i|plus:1 %}
+            {% endfor %}
+            </dl>
+        </figcaption>
     {{playground_button}}
     </figure>
 {% else %}
 
+    {% include _specimen-vars.html params=params %}
+    
+    {% if include.record_axes %}
+        {% assign line_labels = line_labels|push:params.label %}
+        {% assign line_axes = line_axes|push:axis_listing %}
+    {% endif %}
+
     {% assign element = params.element|default:"figure" %}
     
-    <{{element}} class='specimen {{layout}} {{params.class}}'>
+    <{{element}} class='specimen {{layout}} {{params.class}} {% if params.label %}has-label{% endif %}'>
         <span class='rendered' style='{{specimen_css}}'>{{params.text|default:"Example"}}</span>
         {% if element == "figure" %}
             <figcaption>
@@ -26,6 +45,9 @@
                 {% endif %}
         {% else %}
             <!-- lists can't be inside most text elements -->
+            {% if params.label %}
+                <label>{{ params.label }}</label>
+            {% endif %}
             </{{element}}>
         {% endif %}
     

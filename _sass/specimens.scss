@@ -2,6 +2,12 @@
 figure.specimen {
     position: relative;
     
+    ul, li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
     figcaption {
         margin-top: 0;
         padding-top: 0;
@@ -51,30 +57,56 @@ figure.specimen {
 }
 
 .specimen.editorial {
-    ul.axes {
-         display: none;
-         position: absolute;
-         margin-top: -0.5em;
-    }
+    ul.lines {
+        background: white;
+        padding: 1rem;
+        li {
+            list-style: none;
 
-    .specimen:hover + ul.axes {
-        display: block;
-        padding: 0.5em;
-        margin: 1em -0.5em;
-        background: rgba(255, 255, 255, 0.9);
-        border: 1px solid #999;
+            margin: 1rem 0 -0.2em;
+            padding: 0;
+            
+            &:first-child {
+                margin-top: -0.1em;
+            }
+            
+            > * {
+                position: relative;
+                margin: 0;
+                padding: 0;
+                
+                &.has-label {
+                    padding-left: 2rem;
+                }
+        
+                label {
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    transform: translateY(-50%);
+                    font-size: 1rem;
+                    font-family: MomentumSansVariable, sans-serif;
+                    font-size: 12px;
+                    font-weight: normal;
+                    color: #999;
+                }
+            }
+        }
     }
-}
-
-h1.specimen, h2.specimen, p.specimen {
-    margin: 1rem 0 -0.2em;
-    padding: 0;
     
-    &:first-child {
-        margin-top: -0.1em;
-    }
-    
-    + ul.axes {
-        margin-top: 0.5em;
+    dl.line-axes {
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: max-content auto;
+        grid-gap: 0.5em 1em;
+        align-items: center;
+        
+        dt {
+            grid-column: 1;
+        }
+        
+        dd {
+            grid-column: 2;
+        }
     }
 }
