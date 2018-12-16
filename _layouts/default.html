@@ -86,17 +86,7 @@
         <aside class="content-filters">
             <a class="content-filters-close" href="#">Close</a>
 
-            {% for link in site.data.sidebar %}
-                {% if link.heading %}
-                    {% unless forloop.first %}
-                        </ul>
-                    {% endunless %}
-                    <h3>{{link.sidebar}}</h3>
-                    <ul>
-                {% endif %}
-                    <li><a href="{{link.url}}">{{link.title}}</a></li>
-            {% endfor %}
-            </ul>
+            {% include sidebar.html %}
 
         </aside>
     
