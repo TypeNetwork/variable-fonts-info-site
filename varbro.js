@@ -14,6 +14,7 @@ if (!window.doOnReady) {
 
 function varbroSetup() {
     overrideTNJS();
+    addNav();
     setupExamples();
     setupPlaygrounds();
 }
@@ -28,6 +29,39 @@ function overrideTNJS() {
             }
         });
     });
+}
+
+function addNav() {
+    //add prev/next links to article pages by walking the sidebar
+    var prev, next;
+    var links = document.querySelectorAll('aside.content-filters li a');
+    links.forEach(function(a, i) {
+        if (a.href === window.location.href) {
+            if (i > 0) {
+                prev = links[i-1];
+            }
+            if (i < links.length-1) {
+                next = links[i+1];
+            }
+        }
+    });
+
+    var nav = document.getElementById('varbro-article-nav');
+    var ul = document.createElement('ul');
+    var li;
+    if (prev) {
+        li = document.createElement('li');
+        li.textContent = "Previous: ";
+        li.appendChild(prev.cloneNode(true));
+        ul.appendChild(li);
+    }
+    if (next) {
+        li = document.createElement('li');
+        li.textContent = "Next: ";
+        li.appendChild(next.cloneNode(true));
+        ul.appendChild(li);
+    }
+    nav.appendChild(ul);
 }
 
 function doOverlay(content) {
