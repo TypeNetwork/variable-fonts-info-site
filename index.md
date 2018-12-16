@@ -4,15 +4,25 @@ breadcrumbs: ["Overview"]
 sidebar: "Overview"
 title: "Thirty to three billion users in three years"
 ---
-<img alt="" src="https://lh6.googleusercontent.com/uAQHwsqRnqdygNX0sm_OjjQk70Cr2bS8HYvBZr_G8nl0CMdw_2WkE2gvTl_ywcozpS-gSdrKDD8k5K7lIFKPHaR4pY5EfcrVIl3n0notrhmnvj3OmATKBjwLUT-9HZm0zg" style="width: 624.00px; height: 512.00px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
+
+<figure>
+    <img src="{{baseurl}}/images/articles/kinetic-potential.svg" alt="Graph of “kinetic” vs. “potential” variable type users from 1980s through 2010s">
+    <figcaption>Evolution over time of the number of users actively engaging with variable type technology (“kinetic”) compared with those who benefit from variable type more indirectly (“potential”).</figcaption>
+</figure>
 
 The web has changed the typographer’s role. Typographers no longer decide on typefaces, font sizes, line lengths, line spacing, or margins; they make suggestions via marks and instructions so that text can make those choices for itself, responding to the <em>context</em> of an unknown reader’s environment. And although typographers no longer have access to all of the finished proofs of their work for all of those environments, they can now suggest—along with everything else—variations suited for any environment that imposes undue pressure on a user&#39;s type. 
 
-<img alt="" src="https://lh4.googleusercontent.com/rziXpAMrbCR6mtHGa-9boEtt2Pve1JgvUcOWrng9_CAMTSFchg-LQYGMj0nDdA4ZGGxaIoZcsF3y4_tS8WLgVQgEYJnJjSSz0Ju79mAFjJt_R2q7wowCtHG9Qx5RNV3dWg" style="width: 624.00px; height: 265.33px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
+<figure>
+    <img src="{{baseurl}}/images/articles/typography-flowchart.svg" alt="Diagram of traditional vs. variable typographic decision making process">
+    <figcaption>Variable fonts move some typographic decision making from the type designer to the type user.</figcaption>
+</figure>
 
 That kind of detailed suggestion for composition can happen if the role of the type designer changes, too. The type designer, in partnership with the typographer, has to embrace a new model in working for the web, from one of making a few font styles of a typeface that are supposed to work over a wide array of conditions, to making fonts that have at least a proper value system—and, at best, typeface families that have both the proper values and the fluidity of the rest of the web’s variables, like size, line length, line spacing, margins, and the pages themselves. 
 
-<img alt="" src="https://lh6.googleusercontent.com/wh1PlEVjzE7ucWVf4TbC8o28sq1pCjV5mbZsr_97zv1yuH_pNPLZWZbTsVaAoaCi9xUW46aax1u5nbEhGa7YlPwZyrx6jjtGgLWUiX9amGDNKaSNfXeS5AfrIpAQSfP8vg" style="width: 624.00px; height: 192.00px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
+<figure>
+    <img src="{{baseurl}}/images/articles/type-users.svg" alt="Type users: Type Designer, Typographer, Designer, Web/App Developer, Reader">
+    <figcaption>Job roles that a font may pass through during its lifetime</figcaption>
+</figure>
 
 When we talk about “proper values” for typeface families, we mean values in the font expressed in the same system as the values just listed, which give the typographer parameters that interoperate fluidly with every variable, from type size to page size. Type size to page size, with lines, line spacing, and margins in between, are the values typographers have always had and used for composition. These values were based on systems of measure culminating in point sizes per em, which itself was the source of all measures within the typeface family. Now, for the web, the em itself is the central measure, so parts of the em (or, in our system, thousandths of an em) integrate perfectly. 
 
