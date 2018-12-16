@@ -1,6 +1,6 @@
 {% assign params = include.params|default:include %}
 
-{% assign playground_button = "<form class='playground-butt'><button type='button' class='open-playground'>Experiment!</button></form>" %}
+{% assign playground_button = "<a href='#playground' class='open-playground'>Experiment with these values</a>" %}
 
 {% assign layout = params.layout|default:"single-line" %}
 
@@ -23,7 +23,9 @@
             {% endfor %}
             </dl>
         </figcaption>
-    {{playground_button}}
+    {% if include.playground %}
+        {{playground_button}}
+    {% endif %}
     </figure>
 {% else %}
 
@@ -57,7 +59,9 @@
     {% if element == "figure" %}
         </figcaption>
     
-        {{playground_button}}
+        {% if include.playground %}
+            {{playground_button}}
+        {% endif %}
         </figure>
     {% endif %}
 

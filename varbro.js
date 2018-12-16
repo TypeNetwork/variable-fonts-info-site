@@ -106,9 +106,10 @@ function setupExamples() {
     </div>
 </div>
 */
-    document.querySelectorAll('button.open-playground').forEach(function(button) {
+    document.querySelectorAll('a.open-playground').forEach(function(button) {
         var specimen = button.closest('.specimen');
         button.addEventListener('click', function(evt) {
+            evt.preventDefault();
             window.doAjax("/playground-template.html", {
                 'complete': function(xhr) {
                     var temp = document.createElement('div');
@@ -120,6 +121,9 @@ function setupExamples() {
 
                     var styles = [];
                     var codes = [];
+                    
+                    outputFrame.style.maxWidth = specimen.getBoundingClientRect().width + 'px';
+                    
                     specimen.querySelectorAll('span.rendered').forEach(function(span) {
                         var style = {};
                         var subspec = span.closest('.specimen');
@@ -133,7 +137,7 @@ function setupExamples() {
  
                     styles.forEach(function(style, i) {
                         var classes = '.' + style.className.trim().replace(/\s+/g, '.');
-                        classes = classes.replace(/\.(specimen|single-line|editorial|paragraph)/g, '');
+                        classes = classes.replace(/\.(specimen|single-line|editorial|paragraph|has-label)/g, '');
                         if (classes === '.') {
                             classes = '';
                         }
@@ -159,7 +163,7 @@ function setupPlaygrounds() {
             return;
         }
 
-        var output = playground.querySelector('.output.frame');
+        var output = playground.querySelector('.output.frame .wrapper');
         var html = playground.querySelector('.html.frame');
         var css = playground.querySelector('.css.frame');
 
@@ -167,18 +171,21 @@ function setupPlaygrounds() {
         var style = document.getElementById(styleid);
         if (!style) {
             style = document.createElement('style');
+            style.id = styleid;
             document.head.appendChild(style);
         }
 
         var updatetimeout;
         var oldHTML, oldCSS;
         function update() {
-            var newHTML = "<div class='wrapper'>" + html.textContent + "</div>";;
-            var newCSS = css.textContent;
+            var newHTML = html.textContent;
+            var newCSS = css.textContent.replace(/^.+\{/gm, function(rules) {
+                return rules.replace(/(^|,\s*)/g, '$1 .playground .output.frame .wrapper ');
+            });
 
             if (oldHTML !== newHTML || oldCSS !== newCSS) {
                 output.innerHTML = oldHTML = newHTML;
-                style.textContent = oldCSS = css.textContent;
+                style.textContent = oldCSS = newCSS;
             }
 
             updatetimeout = null;

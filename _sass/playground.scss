@@ -63,6 +63,7 @@
         left: 0;
         right: 0;
         height: 50%;
+        background: #F0F0F0;
         
         &::after {
             content: "Output";
@@ -76,6 +77,9 @@
             bottom: 0;
             padding: 0.5em;
             overflow: auto;
+            background: white;
+            margin-left: auto;
+            margin-right: auto;
         }
     }
     .html {

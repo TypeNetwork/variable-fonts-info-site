@@ -2,7 +2,7 @@
     {% if include.example.comparison %}
         <ul class='comparison'>
         {% for entry in include.example.comparison %}
-            <li>{% include specimen.html params=entry %}</li>
+            <li>{% include specimen.html params=entry playground=forloop.last %}</li>
         {% endfor %}
         </ul>
     {% elsif include.example.text %}
