@@ -9,4 +9,3 @@ On any new operating system running any up-to-date browser, the demonstration of
 This example is discussed in detail elsewhere (link to topic/example(s)); most of the demonstrations here will take the form of coded examples below with the typographic results shown above. This will allow the user to see precisely which instances from our sample variable fonts and their values are being used, and in more complex examples, how multiple instances and code can interact in suggesting better typography. 
 
 Nearly all of the examples chosen here are intended to demonstrate that it’s the job of the contemporary type designer to develop fonts with fluid values for a complete interoperable set of parametric axes appropriate to each font family’s intended uses. Such fonts can easily be programmed to interact with the other fluid values of web typography having to do with the spaces in and among the glyphs and stretching to the margins of pages. 
-

@@ -1,8 +1,8 @@
 ---
 layout: article
 breadcrumbs: ["Styles"]
-sidebar: "Styles/Examples"
-title: "Styles/Examples"
+sidebar: "Examples"
+title: "Examples"
 ---
 Styles/Examples
 

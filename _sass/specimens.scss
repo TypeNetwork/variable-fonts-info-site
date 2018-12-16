@@ -29,34 +29,35 @@ figure.specimen {
     &:hover form.playground-butt {
         display: block;
     }
-}
 
-.specimen ul.axes, .specimen + ul.axes {
-    margin: 0;
-    padding: 0;
-    font-weight: 600;
-    font-size: 0.625rem;
-    > li {
-        list-style: none;
+    ul.axes {
         margin: 0;
         padding: 0;
-        display: inline;
-        white-space: nowrap;
-        color: #444;
-        
-        &:not(:last-child)::after {
-            content: ", ";
-        }
-        
-        &.highlight {
-//             color: $pink;
-        }
-        
-        &.non-default {
-            color: $pink;
+        font-weight: 600;
+        font-size: 0.625rem;
+        > li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: inline;
+            white-space: nowrap;
+            color: #444;
+            
+            &:not(:last-child)::after {
+                content: ", ";
+            }
+            
+            &.highlight {
+    //             color: $pink;
+            }
+            
+            &.non-default {
+                color: $pink;
+            }
         }
     }
 }
+
 
 .specimen.editorial {
     padding: 0;
@@ -67,14 +68,13 @@ figure.specimen {
         padding: 1rem;
         li {
             list-style: none;
-
-            margin: 1rem 0 -0.2em;
             padding: 0;
+            margin: 0;
             
-            &:first-child {
-                margin-top: -0.1em;
+            + li {
+                margin-top: 0.333em;
             }
-            
+
             > * {
                 position: relative;
                 margin: 0;

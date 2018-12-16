@@ -1,8 +1,8 @@
 ---
 layout: article
 breadcrumbs: ["Size"]
-sidebar: "Size: examples"
-title: "Size: examples"
+sidebar: "Examples"
+title: "Examples"
 ---
 {% include inline-example.html example="headings-with-and-without-opsz" %}
 
