@@ -1,8 +1,8 @@
 ---
 layout: article
 breadcrumbs: ["Scripts"]
-sidebar: "Scripts: Example 1"
-title: "Scripts: Example 1"
+sidebar: "Example: alignment"
+title: "Example: alignment"
 ---
 <img alt="" src="https://lh3.googleusercontent.com/HVorZBiz7S2GIFXcK_5m1Gw7MKRQPaOHE59rk-keyqB9iSxLHKkzvujdD3fCVc4c6qFm3JIeV6Our9M84bTCsRzmNGG6OjJylAm_jKwVeIE_TsqsxGwh_pAz9SpVn8YCLA" style="width: 624.00px; height: 204.00px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
 
