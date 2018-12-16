@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
-import csv, re, os, json
+import csv, re, os, json, sys
 from io import StringIO
 from urllib.request import urlopen
+
+print("Docs are now updated directly in git.")
+sys.exit()
 
 docsurl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRtiV1tDjGUCRzWr3DWKZ1FC_-hifc-k3Dr6gCGyyb153ukcU1Kw0SRZdr4dXbia8-URHwtIV8dW2-s/pub?gid=0&single=true&output=csv"
 
