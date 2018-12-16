@@ -1,11 +1,10 @@
 {% assign params = include.params|default:include %}
 
+{% include _specimen-vars.html params=params %}
+
 {% assign playground_button = "<form class='playground-butt'><button type='button' class='open-playground'>Experiment!</button></form>" %}
 
 {% assign layout = params.layout|default:"single-line" %}
-
-{% assign background = params.background|default:"transparent" %}
-{% assign foreground = params.foreground|default:"inherit" %}
 
 {% if params.lines %}
     <figure class="specimen {{layout}}"{% if params.css %} style="{% for kv in params.css %}{{kv[0]}}:{{kv[1]}};{% endfor %}"{% endif %}>
@@ -16,99 +15,28 @@
     </figure>
 {% else %}
 
-{% assign element = params.element|default:"figure" %}
-
-{% assign nicefont = params.font|default:"Amstelvar-Alpha" %}
-
-{% if site.data.fonts.axes[nicefont] %}
-    {% assign fontfamily = nicefont %}
-{% elsif site.data.fonts.names[nicefont] %}
-    {% assign fontfamily = site.data.fonts.names[nicefont] %}
-{% else %}
-    {% assign fontfamily = "AmstelvarAlpha-VF" %}
-{% endif %}
-
-{% assign allaxes = site.data.fonts.axes[fontfamily] %}
-
-{% assign fontsize = params.size|default:72|abs %}
-
-{% if params.leading %}
-    {% if params.leading < 6 %}
-        {% assign lineheight = fontsize|times:params.leading %}
-    {% else %}
-        {% assign lineheight = params.leading|abs %}
-    {% endif %}
-{% else %}
-    {% assign lineheight = fontsize|times:1.2 %}
-{% endif %}
-
-{% assign fvs_verbose = site.emptyArray %}
-{% assign fvs = site.emptyArray %}
-{% assign specified = site.emptyArray %}
-{% assign non_default = site.emptyArray %}
-
-{% assign fontweight = "inherit" %}
-
-{% for kv in allaxes %}
-    {% assign tag = kv[0] %}
-    {% assign axis = kv[1] %}
-    {% assign tagsize = tag|size %}
-    {% if tag == "wght" %}
-        {% assign fontweight = params.axes[tag]|default:axis.default %}
-        {% assign specified = specified|push:tag %}
-        {% if fontweight != axis.default %}
-            {% assign non_default = non_default|push:tag %}
-        {% endif %}
-    {% elsif tagsize == 4 %}
-        {% if params.axes[tag] %}
-            {% capture fvsentry %}"{{tag}}" {{params.axes[tag]}}{% endcapture %}
-            {% assign fvs = fvs|push:fvsentry %}
-            {% assign fvs_verbose = fvs_verbose|push:fvsentry %}
-            {% assign specified = specified|push:tag %}
-            {% if params.axes[tag] != axis.default %}
-                {% assign non_default = non_default|push:tag %}
-            {% endif %}
+    {% assign element = params.element|default:"figure" %}
+    
+    <{{element}} class='specimen {{layout}} {{params.class}}'>
+        <span class='rendered' style='{{specimen_css}}'>{{params.text|default:"Example"}}</span>
+        {% if element == "figure" %}
+            <figcaption>
+                {% if params.label %}
+                    <label>{{ params.label }}</label>
+                {% endif %}
         {% else %}
-            {% capture fvsentry %}"{{tag}}" {{axis.default}}{% endcapture %}
-            {% assign fvs_verbose = fvs_verbose|push:fvsentry %}
+            <!-- lists can't be inside most text elements -->
+            </{{element}}>
         {% endif %}
-    {% endif %}
-{% endfor %}
-
-<{{element}} class='specimen {{layout}} {{params.class}}'>
-    <span class='rendered' style='color:{{foreground}};background:{{background}};font-family:"{{fontfamily}}";font-size:{{fontsize}}px;line-height:{{lineheight}}px;font-weight:{{fontweight}};font-variation-settings:{{fvs_verbose|join:","}};'>{{params.text|default:"Example"}}</span>
-    {% if element == "figure" %}
-        <figcaption>
-            {% if params.label %}
-                <label>{{ params.label }}</label>
-            {% endif %}
-    {% else %}
-        <!-- lists can't be inside most text elements -->
-        </{{element}}>
-    {% endif %}
-
-    {% unless params.label %}
-        <ul class='axes'>
-        {% unless fontweight == "inherit" %}
-            <li class="{% if specified contains "wght" %}highlight{% endif %} {% if non_default contains "wght" %}non-default{% endif %}">wght {{fontweight}}</li>
+    
+        {% unless params.label %}
+            {{axis_listing}}
         {% endunless %}
-        {% for rule in fvs_verbose %}
-            {% assign tag = rule|slice:1,4 %}
-            {% assign pointzero = rule|slice:-2,2 %}
-            {% if pointzero == ".0" %}
-                {% assign ruleint = rule|replace:".0","" %}
-            {% else %}
-                {% assign ruleint = rule %}
-            {% endif %}
-            <li class="{% if specified contains tag %}highlight{% endif %} {% if non_default contains tag %}non-default{% endif %}">{{ruleint|replace:'"',''}}</li>
-        {% endfor %}
-        </ul>
-    {% endunless %}
-{% if element == "figure" %}
-    </figcaption>
-
-    {{playground_button}}
-    </figure>
-{% endif %}
+    {% if element == "figure" %}
+        </figcaption>
+    
+        {{playground_button}}
+        </figure>
+    {% endif %}
 
 {% endif %}
