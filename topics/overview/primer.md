@@ -8,7 +8,7 @@ Before the introduction of variations in <a href="https://docs.microsoft.com/en-
 
 <figure>
     <img src="{{baseurl}}/images/articles/format-timeline.svg" alt="Timeline of font formats, 1980s through 2010s">
-    <figcaption>Font formats over time</figcaption>
+    <figcaption>Font formats over time.</figcaption>
 </figure>
 
 This evolution has been possible because OpenType is based on the extendable Spline Font format (<a href="https://en.wikipedia.org/wiki/SFNT">SFNT</a>), originally developed by Apple and renamed TrueType in the late 1980s. This format allows tables to be added that don’t disturb preexisting applications and users, as well as allowing new things for new tables, and letting each operating system and application define which tables are required and which are optional.
