@@ -20,6 +20,7 @@ $pink: #EB008B;
 
 #varbro-site {
     
+    // override some TN stuff
     figure, figcaption {
         display: block;
         background: transparent;
@@ -27,6 +28,7 @@ $pink: #EB008B;
         padding: 0;
         border: 0;
         text-align: left;
+        font-size: inherit;
     }
     
     .content-filters h3 a {
@@ -77,5 +79,4 @@ $pink: #EB008B;
 @import "playground";
 @import "specimens";
 @import "examples";
-
 }

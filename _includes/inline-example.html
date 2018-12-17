@@ -5,9 +5,7 @@
     {% include example.html example=example %}
     <figcaption>
         <h3>{{example.title}}</h3>
-        <div class='description'>
-            {{example.description|markdownify}}
-        </div>
+        {{example.description|markdownify}}
         <ul class='example-links'>
             <li class="permalink"><a href="{{example.url}}">Permalink to this example</a></li>
             {% if playground_button %}

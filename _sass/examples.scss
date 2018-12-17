@@ -18,6 +18,7 @@
     
     > figcaption {
         margin-bottom: 0;
+        line-height: 1.4;
     }
 
     ul.comparison {
@@ -79,7 +80,7 @@
             display: inline;
             
             + li::before {
-                content: " — ";
+                content: " | ";
             }
         }
     }
