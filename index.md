@@ -7,7 +7,7 @@ title: "Thirty to three billion users in three years"
 
 <figure>
     <img src="{{baseurl}}/images/articles/kinetic-potential.svg" alt="Graph of “kinetic” vs. “potential” variable type users from 1980s through 2010s">
-    <figcaption>Evolution over time of the number of users actively engaging with variable type technology (“kinetic”) compared with those who benefit from variable type more indirectly (“potential”).</figcaption>
+    <figcaption>Distribution of potential versus kinetic users of variable fonts over time. Potential users encounter variable fonts, but either can’t use them (by dint of the operating system or app employed) or don’t know to use them. Kinetic users actually <em>use</em> variable fonts, either because the operating system and/or app they are running is capable of parsing them, or because they themselves know how to manipulate them. The number of potential users will always be greater than the number of kinetic users.</figcaption>
 </figure>
 
 The web has changed the typographer’s role. Typographers no longer decide on typefaces, font sizes, line lengths, line spacing, or margins; they make suggestions via marks and instructions so that text can make those choices for itself, responding to the <em>context</em> of an unknown reader’s environment. And although typographers no longer have access to all of the finished proofs of their work for all of those environments, they can now suggest—along with everything else—variations suited for any environment that imposes undue pressure on a user&#39;s type. 
