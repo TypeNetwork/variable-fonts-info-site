@@ -8,11 +8,13 @@ figure.specimen {
         display: inline-block;
     }
     
+/*
     ul, li {
         list-style: none;
         margin: 0;
         padding: 0;
     }
+*/
     
     figcaption {
         margin-top: 0;
@@ -70,7 +72,7 @@ figure.specimen {
     ul.lines {
         background: white;
         padding: 1rem;
-        li {
+        > li {
             list-style: none;
             padding: 0;
             margin: 0;

@@ -4,6 +4,7 @@
 {% endcomment %}
 
 {% assign params = include.params|default:include %}
+{% assign input_axes = params.axes|default:params %}
 
 {% assign layout = params.layout|default:"single-line" %}
 
@@ -51,17 +52,17 @@
     {% assign axis = kv[1] %}
     {% assign tagsize = tag|size %}
     {% if tagsize == 4 %}
-        {% if params.axes[tag] %}
+        {% if input_axes[tag] %}
             {% if tag == "wght" %}
                 {% comment %} Special case, use font-weight instead of fvs wght {% endcomment %}
-                {% assign fontweight = params.axes[tag] %}
+                {% assign fontweight = input_axes[tag] %}
             {% else %}
-                {% capture fvsentry %}"{{tag}}" {{params.axes[tag]}}{% endcapture %}
+                {% capture fvsentry %}"{{tag}}" {{input_axes[tag]}}{% endcapture %}
                 {% assign fvs = fvs|push:fvsentry %}
                 {% assign fvs_verbose = fvs_verbose|push:fvsentry %}
             {% endif %}
             {% assign specified = specified|push:tag %}
-            {% if params.axes[tag] != axis.default %}
+            {% if input_axes[tag] != axis.default %}
                 {% assign non_default = non_default|push:tag %}
             {% endif %}
         {% else %}
@@ -104,4 +105,5 @@
     font-variation-settings: {{fvs_verbose|join:", "}};
 {% endcapture %}
 
-{% assign specimen_css = css_whole|replace:"\n    "," " %}
+{% assign specimen_css = css_whole|replace:"
+    "," " %}
