@@ -6,7 +6,7 @@ title: "Families primer"
 ---
 <figure>
     <img src="{{baseurl}}/images/articles/family-flowchart.svg" alt="Traditional family/style choosing flowchart">
-    <figcaption>The traditional process of choosing a family and then selecting styles</figcaption>
+    <figcaption>The traditional process of choosing a family and then selecting styles.</figcaption>
 </figure>
 
 Presentation of typeface families on the desktop is based on family and style data in the font files presented to the operating system and then interpreted into menu selections for use. And on the web, typeface families and styles have been identified generically, or by file name, and then assigned properties and called whenever a run of text requires that family.
