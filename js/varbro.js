@@ -1,3 +1,5 @@
+---
+---
 (function() {
 "use strict";
 
@@ -17,6 +19,37 @@ function varbroSetup() {
     addNav();
     setupExamples();
     setupPlaygrounds();
+    window.addEventListener('load', setupFitToWidth);
+    window.addEventListener('resize', setupFitToWidth);
+}
+
+function setupFitToWidth() {
+    var spans = document.querySelectorAll('.specimen.fit-to-width span.rendered');
+    var specimens = [];
+
+    //write pass
+    spans.forEach(function(span) {
+        var specimen = span.closest('.specimen.fit-to-width');
+        specimens.push(specimen);
+        specimen.style.overflow = 'hidden';
+        span.style.whiteSpace = 'nowrap';
+    });
+
+    //read pass
+    var ratios = [];
+    spans.forEach(function(span, i) {
+        var specimen = specimens[i];
+        var specimenStyle = getComputedStyle(specimen);
+        var currentWidth = span.getBoundingClientRect().width;
+        var fullWidth = specimen.getBoundingClientRect().width - parseFloat(specimenStyle.paddingLeft) - parseFloat(specimenStyle.paddingRight);
+        var fitratio = parseFloat(specimen.getAttribute('data-fit-ratio')) || 1.0;
+        ratios.push(fullWidth / currentWidth * fitratio);
+    });
+    
+    //write pass
+    spans.forEach(function(span, i) {
+        span.style.fontSize = Math.floor(parseFloat(getComputedStyle(span).fontSize) * ratios[i]) + 'px';
+    });
 }
 
 function overrideTNJS() {

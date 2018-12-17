@@ -22,16 +22,20 @@
 
 {% assign allaxes = site.data.fonts.axes[fontfamily] %}
 
-{% assign fontsize = params.size|default:72|abs %}
+{% if params.size == 'fit' %}
+    {% assign fontsize = 20 %}
+{% else %}
+    {% assign fontsize = params.size|default:72|abs %}
+{% endif %}
 
 {% if params.leading %}
     {% if params.leading < 6 %}
-        {% assign lineheight = fontsize|times:params.leading %}
+        {% assign lineheight = params.leading %}
     {% else %}
-        {% assign lineheight = params.leading|abs %}
+        {% assign lineheight = params.leading|abs|append:"px" %}
     {% endif %}
 {% else %}
-    {% assign lineheight = fontsize|times:1.2 %}
+    {% assign lineheight = 1.2 %}
 {% endif %}
 
 {% assign css_rules = site.emptyArray %}
@@ -88,11 +92,14 @@
 {% endcapture %}
 
 {% capture css_whole %}
+    {% if params.css %}{% for kv in params.css %}
+    {{kv[0]}}: {{kv[1]}};
+    {% endfor %}{% endif %}
     color: {{foreground}};
     background: {{background}};
     font-family: "{{fontfamily}}";
     font-size: {{fontsize}}px;
-    line-height: {{lineheight}}px;
+    line-height: {{lineheight}};
     font-weight: {{fontweight}};
     font-variation-settings: {{fvs_verbose|join:", "}};
 {% endcapture %}
