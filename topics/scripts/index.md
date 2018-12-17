@@ -8,7 +8,7 @@ What fonts containing multiple scripts have in common is that compromises have b
 
 <figure>
     <img src="{{baseurl}}/images/articles/zephyr.svg" alt="是Zéphyre">
-    <figcaption>Traditional Latin vertical measures don't map directly onto other scripts</figcaption>
+    <figcaption>Traditional Latin vertical measures don’t map directly onto non-Latin scripts.</figcaption>
 </figure>
 
 So a Latin type designer designing an ideal Latin typeface family who adds Chinese glyphs to the font family will very likely come to a different design conclusion, presenting different typography, than a Chinese designer designing ideal Chinese glyphs and adding Latin glyphs to the font family. This is not because of the type designers’ preferences, but because of the needs of their ideal readers versus the practicality of a single font for both. Supplying multiple versions of a multiscript font family is possible, but not always practical.
