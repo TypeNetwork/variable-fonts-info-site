@@ -8,5 +8,10 @@
     {% elsif include.example.text %}
         {% include specimen.html params=include.example %}
     {% endif %}
-    {{include.example.content}}
+    {% assign contentlength = include.example.content|trim|size %}
+    {% if contentlength > 0 %}
+        <div class='extra-content'>
+            {{include.example.content}}
+        </div>
+    {% endif %}
 </div>

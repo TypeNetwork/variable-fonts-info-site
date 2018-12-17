@@ -72,7 +72,7 @@
 {% capture axis_listing %}
     <ul class='axes'>
     {% unless fontweight == "inherit" %}
-        <li class="{% if specified contains "wght" %}highlight{% endif %} {% if non_default contains "wght" %}non-default{% endif %}">wght {{fontweight}}</li>
+        <li class="{% if specified contains "wght" %}specified{% endif %} {% if non_default contains "wght" %}non-default{% endif %}">wght {{fontweight}}</li>
     {% endunless %}
     {% for rule in fvs_verbose %}
         {% assign tag = rule|slice:1,4 %}
@@ -82,7 +82,7 @@
         {% else %}
             {% assign ruleint = rule %}
         {% endif %}
-        <li class="{% if specified contains tag %}highlight{% endif %} {% if non_default contains tag %}non-default{% endif %}">{{ruleint|replace:'"',''}}</li>
+        <li class="{% if specified contains tag %}specified{% endif %} {% if non_default contains tag %}non-default{% endif %}">{{ruleint|replace:'"',''}}</li>
     {% endfor %}
     </ul>
 {% endcapture %}
@@ -94,7 +94,7 @@
     font-size: {{fontsize}}px;
     line-height: {{lineheight}}px;
     font-weight: {{fontweight}};
-    font-variation-settings: {{fvs_verbose|join:","}};
+    font-variation-settings: {{fvs_verbose|join:", "}};
 {% endcapture %}
 
 {% assign specimen_css = css_whole|replace:"\n    "," " %}

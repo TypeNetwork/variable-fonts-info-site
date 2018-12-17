@@ -107,9 +107,14 @@ function setupExamples() {
 </div>
 */
     document.querySelectorAll('a.open-playground').forEach(function(button) {
-        var specimen = button.closest('.specimen');
+        var specimen = document.querySelector(button.getAttribute('href')) || button.closest('.specimen');
         button.addEventListener('click', function(evt) {
             evt.preventDefault();
+            if (!specimen) {
+                console.log(button);
+                alert("No specimen found!");
+                return;
+            }
             window.doAjax("/playground-template.html", {
                 'complete': function(xhr) {
                     var temp = document.createElement('div');
@@ -122,7 +127,9 @@ function setupExamples() {
                     var styles = [];
                     var codes = [];
                     
-                    outputFrame.style.maxWidth = specimen.getBoundingClientRect().width + 'px';
+                    if (specimen.hasClass('editorial')) {
+                        outputFrame.style.maxWidth = specimen.getBoundingClientRect().width + 'px';
+                    }
                     
                     specimen.querySelectorAll('span.rendered').forEach(function(span) {
                         var style = {};
@@ -141,7 +148,7 @@ function setupExamples() {
                         if (classes === '.') {
                             classes = '';
                         }
-                        styles[i] = style.tag + classes + ' {\n  ' + style.css.join(";\n  ").replace(/:(\S)/g, ": $1").trim() + ';\n}';
+                        styles[i] = style.tag + classes + ' {\n  ' + style.css.join(";\n  ").replace(/:(\S)/g, ": $1").trim() + '\n}';
                     });
                     
                     cssFrame.textContent = styles.join("\n\n");

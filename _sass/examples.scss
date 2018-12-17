@@ -61,10 +61,35 @@
     
     &.inline {
     }
+    
+    .extra-content:not(:empty) {
+        background: white;
+        padding: 1rem;
+    }
+    
+    ul.example-links {
+        margin: 0;
+        padding: 0;
+        
+        li {
+            font-size: 90%;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: inline;
+            
+            + li::before {
+                content: " — ";
+            }
+        }
+    }
 }
 
 #standalone-example .example .permalink {
     display: none;
+    + li::before {
+        content: none;
+    }
 }
 
 #size-benefit-demo {

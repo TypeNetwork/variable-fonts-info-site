@@ -6,6 +6,11 @@
     <figcaption>
         <h3>{{example.title}}</h3>
         {{example.description|markdownify}}
-        <p class='permalink'><a href="{{example.url}}">Permalink to this example</a></p>
+        <ul class='example-links'>
+            <li class="permalink"><a href="{{example.url}}">Permalink to this example</a></li>
+            {% if playground_button %}
+            <li>{{playground_button}}</li>
+            {% endif %}
+        </ul>
     </figcaption>
 </figure>

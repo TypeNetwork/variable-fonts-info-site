@@ -1,13 +1,18 @@
 {% assign params = include.params|default:include %}
 
-{% assign playground_button = "<a href='#playground' class='open-playground'>Experiment with these values</a>" %}
+{% assign total_specimen_count = total_specimen_count|default:0|plus:1 %}
+{% assign specimen_id = "unique-specimen-"|append:total_specimen_count %}
+
+{% if include.playground %}
+    {% capture playground_button %}<a href='#{{specimen_id}}' class='open-playground'>Experiment with this example</a>{% endcapture %}
+{% endif %}
 
 {% assign layout = params.layout|default:"single-line" %}
 
 {% if params.lines %}
     {% assign line_labels = site.emptyArray %}
     {% assign line_axes = site.emptyArray %}
-    <figure class="specimen {{layout}}"{% if params.css %} style="{% for kv in params.css %}{{kv[0]}}:{{kv[1]}};{% endfor %}"{% endif %}>
+    <figure id='{{specimen_id}}' class="specimen {{layout}}"{% if params.css %} style="{% for kv in params.css %}{{kv[0]}}:{{kv[1]}};{% endfor %}"{% endif %}>
         <ul class='lines'>
         {% for line in params.lines %}
             <li>{% include specimen.html params=line record_axes=true %}</li>
@@ -23,9 +28,6 @@
             {% endfor %}
             </dl>
         </figcaption>
-    {% if include.playground %}
-        {{playground_button}}
-    {% endif %}
     </figure>
 {% else %}
 
@@ -38,7 +40,7 @@
 
     {% assign element = params.element|default:"figure" %}
     
-    <{{element}} class='specimen {{layout}} {{params.class}} {% if params.label %}has-label{% endif %}'>
+    <{{element}} id='{{specimen_id}}' class='specimen {{layout}} {{params.class}} {% if params.label %}has-label{% endif %}'>
         <span class='rendered' style='{{specimen_css}}'>{{params.text|default:"Example"}}</span>
         {% if element == "figure" %}
             <figcaption>
@@ -58,10 +60,6 @@
         {% endunless %}
     {% if element == "figure" %}
         </figcaption>
-    
-        {% if include.playground %}
-            {{playground_button}}
-        {% endif %}
         </figure>
     {% endif %}
 
