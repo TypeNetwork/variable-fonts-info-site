@@ -21,7 +21,7 @@ That kind of detailed suggestion for composition can happen if the role of the t
 
 <figure>
     <img src="{{baseurl}}/images/articles/type-users.svg" alt="Type users: Type Designer, Typographer, Designer, Web/App Developer, Reader">
-    <figcaption>Job roles a font may pass through during its lifetime.</figcaption>
+    <figcaption>Various roles a font encounters during its lifetime.</figcaption>
 </figure>
 
 When we talk about “proper values” for typeface families, we mean values in the font expressed in the same system as the values just listed, which give the typographer parameters that interoperate fluidly with every variable, from type size to page size. Type size to page size, with lines, line spacing, and margins in between, are the values typographers have always had and used for composition. These values were based on systems of measure culminating in point sizes per em, which itself was the source of all measures within the typeface family. Now, for the web, the em itself is the central measure, so parts of the em (or, in our system, thousandths of an em) integrate perfectly. 
