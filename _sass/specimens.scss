@@ -42,23 +42,22 @@ figure.specimen {
         font-weight: 600;
         font-size: 0.625rem;
         > li {
+            display: none;
             list-style: none;
             margin: 0;
             padding: 0;
-            display: inline;
             white-space: nowrap;
             color: #444;
             
             &:not(:last-child)::after {
-                content: ", ";
+                content: "  ";
             }
             
-            &.specified {
-    //             color: $pink;
-            }
-            
-            &.non-default {
-                color: $pink;
+            &.specified, &.non-default {
+                display: inline;
+                span {
+                    color: $pink;
+                }
             }
         }
     }

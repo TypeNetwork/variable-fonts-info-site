@@ -77,7 +77,7 @@
 {% capture axis_listing %}
     <ul class='axes'>
     {% unless fontweight == "inherit" %}
-        <li class="{% if specified contains "wght" %}specified{% endif %} {% if non_default contains "wght" %}non-default{% endif %}">wght {{fontweight}}</li>
+        <li class="{% if specified contains "wght" %}specified{% endif %} {% if non_default contains "wght" %}non-default{% endif %}">wght <span>{{fontweight}}</span></li>
     {% endunless %}
     {% for rule in fvs_verbose %}
         {% assign tag = rule|slice:1,4 %}
@@ -87,7 +87,8 @@
         {% else %}
             {% assign ruleint = rule %}
         {% endif %}
-        <li class="{% if specified contains tag %}specified{% endif %} {% if non_default contains tag %}non-default{% endif %}">{{ruleint|replace:'"',''}}</li>
+        {% assign justval = ruleint|replace:'"',''|slice:5,100 %}
+        <li class="{% if specified contains tag %}specified{% endif %} {% if non_default contains tag %}non-default{% endif %}">{{tag}} <span>{{justval}}</span></li>
     {% endfor %}
     </ul>
 {% endcapture %}
