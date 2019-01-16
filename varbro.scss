@@ -31,12 +31,12 @@ $pink: #EB008B;
 //         font-size: inherit;
     }
     
-	.header-article-intro h1 {
-		font-variation-settings: "opsz" 42;
-	    @media (min-width: 45rem) {
-		    font-variation-settings: "opsz" 64;
-		}
-	}
+    .header-article-intro h1 {
+        font-variation-settings: "opsz" 42;
+        @media (min-width: 45rem) {
+            font-variation-settings: "opsz" 64;
+        }
+    }
     
     .content-filters h3 a {
         padding-left: 0;
