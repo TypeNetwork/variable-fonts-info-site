@@ -3,19 +3,55 @@
     display: block;
     position: relative;
 
-    .timeline-years {
-        display: grid;
+    @mixin varwidth {
         margin-left: auto;
+        width: 360px;
+        min-width: calc(100% - 3em);
+        max-width: 100%;
+    }
+
+    .timeline-years {
+        @include varwidth;
+        display: grid;
+        position: relative;
         grid-template-columns: repeat(6, 1fr);
-        border-bottom: 1px solid black;
+        padding-bottom: 0.25em;
+        border-bottom: 2px solid black;
         margin-bottom: 0.5em;
         time {
             display: block;
         }
+        
+        &::before {
+            display: block;
+            position: absolute;
+            content: "";
+            $size: 0.5em;
+            left: -($size / 2);
+            bottom: calc(-#{$size} / 2 - 1px);
+            height: 0;
+            width: 0;
+            border: ($size / 2) solid black;
+            border-radius: $size;
+        }
+        
+        &::after {
+            display: block;
+            position: absolute;
+            content: "";
+            $size: 0.75em;
+            left: 100%;
+            height: 0;
+            width: 0;
+            bottom: calc(-#{$size} / 2 - 1px);
+            border-top: ($size / 2) solid transparent;
+            border-bottom: ($size / 2) solid transparent;
+            border-left: ($size / 2) solid black;
+        }
     }
     
     dl {
-        margin-left: auto;
+        @include varwidth;
         dt {
             position: absolute;
             z-index: 2;
