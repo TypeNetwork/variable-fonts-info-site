@@ -6,6 +6,7 @@ figure.specimen {
     
     span.rendered {
         display: inline-block;
+        margin-bottom: -0.125em;
     }
     
 /*
@@ -17,8 +18,8 @@ figure.specimen {
 */
     
     figcaption {
-        margin-top: 0;
-        padding-top: 0;
+        margin: 0;
+        padding: 0;
         
         label {
             color: $pink;
