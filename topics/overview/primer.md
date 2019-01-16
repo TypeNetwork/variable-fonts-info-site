@@ -6,10 +6,7 @@ title: "An old and stable font format"
 ---
 Before the introduction of variations in <a href="https://docs.microsoft.com/en-us/typography/opentype/spec/#opentype-specification-version-180">OpenType 1.8</a>, the OpenType standard font format had evolved from Mac-specific TrueType to include Microsoft-specific TrueType, which merged with Adobe PostScript to form OpenType 1.0. OpenType can contain either TrueType or compressed PostScript (CFF), and it has since evolved into several webfont formats, and ultimately into the WOFF standard. 
 
-<figure>
-    <img src="{{baseurl}}/images/articles/format-timeline.svg" alt="Timeline of font formats, 1980s through 2010s">
-    <figcaption>Font formats over time.</figcaption>
-</figure>
+{% include inline-example.html example="font-format-timeline" %}
 
 This evolution has been possible because OpenType is based on the extendable Spline Font format (<a href="https://en.wikipedia.org/wiki/SFNT">SFNT</a>), originally developed by Apple and renamed TrueType in the late 1980s. This format allows tables to be added that don’t disturb preexisting applications and users, as well as allowing new things for new tables, and letting each operating system and application define which tables are required and which are optional.
 

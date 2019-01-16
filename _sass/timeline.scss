@@ -1,0 +1,72 @@
+
+#font-format-timeline {
+	display: block;
+	position: relative;
+
+	.timeline-years {
+		display: grid;
+		margin-left: auto;
+		grid-template-columns: repeat(6, 1fr);
+		border-bottom: 1px solid black;
+		margin-bottom: 0.5em;
+		time {
+			display: block;
+		}
+	}
+	
+	dl {
+		margin-left: auto;
+		dt {
+			position: absolute;
+			z-index: 2;
+			line-height: 2;
+			font-weight: bold;
+			left: 0;
+		}
+		
+		dd {
+			display: block;
+			background-color: #CCC;
+			overflow: hidden;
+			white-space: nowrap;
+			line-height: 2;
+ 			color: transparent;
+			z-index: 1;
+			margin-bottom: 0.5em;
+		}
+		
+		#timeline-sfnt + dd {
+			margin-left: 0;
+		}
+		
+		#timeline-tt + dd {
+			margin-left: 3.333%;
+		}
+		
+		#timeline-gx + dd {
+			margin-left: calc(4 * 3.333%);
+			width: calc(7 * 3.333%);
+		}
+		
+		#timeline-tto + dd {
+			margin-left: calc(4 * 3.333%);
+			width: calc(2 * 3.333%);
+		}
+		
+		#timeline-ot + dd {
+			margin-left: calc(5 * 3.333%);
+		}
+		
+		#timeline-woff + dd {
+			margin-left: calc(22 * 3.333%);
+		}
+		
+		#timeline-colr + dd {
+			margin-left: calc(25 * 3.333%);
+		}
+		
+		#timeline-vf + dd {
+			margin-left: calc(26 * 3.333%);
+		}
+	}
+}
