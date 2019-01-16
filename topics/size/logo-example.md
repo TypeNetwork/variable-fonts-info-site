@@ -5,7 +5,7 @@ sidebar: "Logo sizing"
 title: "Logo sizing"
 ---
 
-A company called MOSCOSO needs a new logotype, which they want to be in all caps. They seek something “narrower, bolder, and more elegant” than their reference serif. The logo will be used at three sizes: full size (display), half size, and quarter size.
+A company called Moscoso needs a new logotype, which they want to be in all caps. They seek something “narrower, bolder, and more elegant” than their reference serif. The logo will be used at three sizes: full size (display), half size, and quarter size.
 
 The designer finds a suitable “narrow, bold, and elegant” serif to use as a starting point. Houston, we have a problem: at smaller sizes, the finer details of this font start to disappear.
 
