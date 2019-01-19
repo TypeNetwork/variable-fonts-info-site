@@ -48,25 +48,27 @@
 {% endcomment %}
 <{{element}} id='{{specimen_id}}' class='specimen {{layout}} {{params.class}} {% if params.label %}has-label{% endif %} {% if params.size == "fit" %}fit-to-width{% endif %}' {% if params.fit %}data-fit-ratio="{{params.fit}}"{% endif %}>
     <span class='rendered' style='{{specimen_css}}'>{{params.text|default:"Example"}}</span>
-    {% if element == "figure" %}
-        <figcaption>
+    {% if layout != "compact" %}
+        {% if element == "figure" %}
+            <figcaption>
+                {% if params.label %}
+                    <label>{{ params.label }}</label>
+                {% endif %}
+        {% else %}
+            <!-- lists can't be inside most text elements -->
             {% if params.label %}
                 <label>{{ params.label }}</label>
             {% endif %}
-    {% else %}
-        <!-- lists can't be inside most text elements -->
-        {% if params.label %}
-            <label>{{ params.label }}</label>
+            </{{element}}>
         {% endif %}
-        </{{element}}>
+    
+        {% unless params.label %}
+            {{axis_listing}}
+        {% endunless %}
+        {% if element == "figure" %}
+            </figcaption>
+        {% endif %}
     {% endif %}
-
-    {% unless params.label %}
-        {{axis_listing}}
-    {% endunless %}
-{% if element == "figure" %}
-    </figcaption>
-    </figure>
-    {% endif %}
+</{{element}}>
 
 {% endif %}
