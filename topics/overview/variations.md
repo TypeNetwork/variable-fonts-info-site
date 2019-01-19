@@ -12,7 +12,13 @@ In the process of experimenting with variations for font compression, Apple beca
 
 Not until years later, after Microsoft had undertaken (and Adobe and Google were starting to undertake) international font-family development, did the thinking and conversation about what would become OpenType 1.8 begin, leading to the <a href="https://medium.com/variable-fonts/https-medium-com-tiro-introducing-opentype-variable-fonts-12ba6cd2369">2016 release</a> of a specification that included variable fonts. This initial pursuit of font-family file compression, besides having a new aspect relevant to performance of international font families on the web, rekindled interest in variations for extended, old, new, and different uses.
 
+{% include specimen.html layout="compact" font="Amstelvar-Alpha" size="fit" text="Amstelvar Alpha" %}
+{% include specimen.html layout="compact" font="Amstelvar-Alpha" size="fit" text="An Experimental 17-Axis Variable" %}
+
 Font Bureau began public variable development in late 2016, when we started alpha designs of <a href="https://github.com/TypeNetwork/Amstelvar">Amstelvar</a> and <a href="https://github.com/TypeNetwork/Decovar">Decovar</a>  for Google, which, along with other companies, had done significant work on a variable-font generator. Microsoft and Apple had developed variable-font system extensions for their upcoming operating systems. Microsoft had also developed huge amounts of documentation and provided wise specification management. And Adobe had gone to work on what would become the PostScript extension for variable fonts in CFF2. WebKit rapidly updated to the spec, which Apple quickly put into a version of Safari.
+
+{% include specimen.html layout="compact" font="Decovar" size="fit" text="Decovar Alpha" TRMF="114" SKLD="100" BLDA="204" %}
+{% include specimen.html layout="compact" font="Decovar" size="fit" text="An Experimental 15-Axis Variable" %}
 
 We at Font Bureau, when trying to demonstrate much of what was possible in our alpha designs, quickly realized, thanks both to our partners developing fonts and web content at Type Network and to our clients at Google, that there were still performance and/or presentation difficulties with variable fonts. A world with only one or two desktop browsers that could handle variations forced our site to fall back to large movie files, lots of font styles for not-yet-compliant browsers, and ultimately users being directed to variations-compatible browsers. 
 
