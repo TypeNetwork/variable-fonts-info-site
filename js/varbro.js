@@ -21,6 +21,8 @@ function varbroSetup() {
     setupPlaygrounds();
     window.addEventListener('load', setupFitToWidth);
     window.addEventListener('resize', setupFitToWidth);
+    //and once more just to make sure the fonts are loaded
+    setTimeout(setupFitToWidth, 1000);
 }
 
 function setupFitToWidth() {
@@ -33,23 +35,45 @@ function setupFitToWidth() {
         specimens.push(specimen);
         specimen.style.overflow = 'hidden';
         span.style.whiteSpace = 'nowrap';
+        //make bigger for more accurate math
+        span.style.fontSize = "72px";
     });
 
-    //read pass
-    var ratios = [];
-    spans.forEach(function(span, i) {
-        var specimen = specimens[i];
-        var specimenStyle = getComputedStyle(specimen);
-        var currentWidth = span.getBoundingClientRect().width;
-        var fullWidth = specimen.getBoundingClientRect().width - parseFloat(specimenStyle.paddingLeft) - parseFloat(specimenStyle.paddingRight);
-        var fitratio = parseFloat(specimen.getAttribute('data-fit-ratio')) || 1.0;
-        ratios.push(fullWidth / currentWidth * fitratio);
-    });
+    var doIt = function() {
+        //read pass
+        var ratios = [];
+        var fvs = [];
+        var oldsize = [];
+        spans.forEach(function(span, i) {
+            var specimen = specimens[i];
+            var specimenStyle = getComputedStyle(specimen);
+            var spanStyle = getComputedStyle(span);
+            var currentWidth = span.getBoundingClientRect().width;
+            var fullWidth = specimen.getBoundingClientRect().width - parseFloat(specimenStyle.paddingLeft) - parseFloat(specimenStyle.paddingRight);
+            var fitratio = parseFloat(specimen.getAttribute('data-fit-ratio')) || 1.0;
+            ratios.push(fullWidth / currentWidth * fitratio);
+            fvs.push(spanStyle.fontVariationSettings);
+            oldsize.push(parseFloat(spanStyle.fontSize));
+        });
+        
+        //write pass
+        spans.forEach(function(span, i) {
+            console.log(oldsize[i], ratios[i]);
+            var newsize = Math.floor(oldsize[i] * ratios[i]);
+            span.style.fontSize = newsize + "px";
+            if (fvs[i].indexOf('opsz') >= 0) {
+                span.style.fontVariationSettings = fvs[i].replace(/(.)opsz(.)\s+[\d\.\-]+/g, '$1opsz$2 ' + newsize);
+            } else {
+                var opszrule = '"opsz" ' + newsize;
+                span.style.fontVariationSettings = fvs[i] ? fvs[i] + ', ' + opszrule : opszrule; 
+            }
+        });
+    };
     
-    //write pass
-    spans.forEach(function(span, i) {
-        span.style.fontSize = Math.floor(parseFloat(getComputedStyle(span).fontSize) * ratios[i]) + 'px';
-    });
+    //recalculate a few times because opsz changes width
+    doIt();
+    doIt();
+    doIt();
 }
 
 function overrideTNJS() {
