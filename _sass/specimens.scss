@@ -4,6 +4,14 @@ figure.specimen {
     background: white;
     padding: 1rem;
     
+    &.compact {
+        padding: 0 1rem;
+        margin-top: 0;
+        + .specimen.compact {
+            margin-top: -1rem;
+        }
+    }
+    
     span.rendered {
         display: inline-block;
         margin-bottom: -0.125em;
