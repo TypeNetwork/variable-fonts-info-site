@@ -10,8 +10,8 @@ A company called Moscoso has designed a new logotype, which they plan to use at 
 {% include inline-example.html example='size/logo-3' %}
 
 In the absence of designed optical sizes for this family, a common reaction
-might be to redesign the logotype using a “sturdier” typeface, like a flavorless sans, that can survive
-display at smaller sizes or rough environments.
+might be to redesign the logotype using a “sturdier” typeface, like a flavorless sans, that can weather
+rough environments or display at smaller sizes.
 
 {% include inline-example.html example='size/logo-4' %}
 
