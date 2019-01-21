@@ -47,7 +47,9 @@
     HTML can't be indented or it will be escaped
 {% endcomment %}
 <{{element}} id='{{specimen_id}}' class='specimen {{layout}} {{params.class}} {% if params.label %}has-label{% endif %} {% if params.size == "fit" %}fit-to-width{% endif %}' {% if params.fit %}data-fit-ratio="{{params.fit}}"{% endif %}>
-    <span class='rendered' style='{{specimen_css}}'>{{params.text|default:"Example"}}</span>
+    {% if params.link %}<a href="{{params.link}}">{% endif %}
+        <span class='rendered' style='{{specimen_css}}'>{{params.text|default:"Example"}}</span>
+    {% if params.link %}</a>{% endif %}
     {% if element == "figure" %}
         <figcaption>
     {% endif %}
