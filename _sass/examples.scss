@@ -6,9 +6,17 @@
         margin: 0;
     }
 
-    margin: 2rem -2rem;
-    padding: 2rem;
-    background: #F0F0F0;
+    &:not(.compact) {
+        margin: 2rem -2rem;
+        padding: 2rem;
+        background: #F0F0F0;
+    }
+
+    ul, li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
 
     .example {
         margin: 0;
@@ -22,16 +30,16 @@
     }
 
     ul.comparison {
-        margin: 0;
-        padding: 0;
         > li {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            
             + li {
                 margin-top: 1rem;
             }
+        }
+    }
+    
+    &.compact {
+        > figcaption {
+            display: none;
         }
     }
     
@@ -69,14 +77,8 @@
     }
     
     ul.example-links {
-        margin: 0;
-        padding: 0;
-        
         li {
             font-size: 90%;
-            margin: 0;
-            padding: 0;
-            list-style: none;
             display: inline;
             
             + li::before {
