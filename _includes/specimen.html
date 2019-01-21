@@ -51,17 +51,10 @@
     {% if layout != "compact" %}
         {% if element == "figure" %}
             <figcaption>
-                {% if params.label %}
-                    <label>{{ params.label }}</label>
-                {% endif %}
-        {% else %}
-            <!-- lists can't be inside most text elements -->
-            {% if params.label %}
-                <label>{{ params.label }}</label>
-            {% endif %}
-            </{{element}}>
         {% endif %}
-    
+        {% if params.label %}
+            <label>{{ params.label }}</label>
+        {% endif %}
         {% unless params.label %}
             {{axis_listing}}
         {% endunless %}
