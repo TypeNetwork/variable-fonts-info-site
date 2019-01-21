@@ -5,15 +5,13 @@ sidebar: "Logo sizing"
 title: "Logo sizing"
 ---
 
-A company called Moscoso needs a new logotype, which they want to be in all caps. They seek something “narrower, bolder, and more elegant” than their reference serif. The logo will be used at three sizes: full size (display), half size, and quarter size.
-
-The designer finds a suitable “narrow, bold, and elegant” serif to use as a starting point. Houston, we have a problem: at smaller sizes, the finer details of this font start to disappear.
+A company called Moscoso has designed a new logotype, which they plan to use at three sizes: full size (display), half size, and quarter size. But there’s a problem: at smaller sizes, the finer details of this font start to disappear.
 
 {% include inline-example.html example='size/logo-3' %}
 
 In the absence of designed optical sizes for this family, a common reaction
 might be to redesign the logotype using a “sturdier” typeface, like a flavorless sans, that can survive
-being displayed at smaller sizes.
+display at smaller sizes or rough environments.
 
 {% include inline-example.html example='size/logo-4' %}
 
