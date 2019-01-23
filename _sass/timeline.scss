@@ -16,11 +16,18 @@
         position: relative;
         grid-template-columns: repeat(6, 1fr);
         padding-bottom: 0.25em;
-        border-bottom: 2px solid black;
+        
+        $years-weight: 700;
+        
+        //do you trust me
+        $arrow-thickness: (($years-weight - 100) / (900 - 100) * (250 - 38) + 38) / 1000;
+        
+        border-bottom: ($arrow-thickness + em) solid black;
         margin-bottom: 0.5em;
+        
         time {
             display: block;
-            font-weight: bold;
+            font-weight: $years-weight;
         }
         
         &::before {
