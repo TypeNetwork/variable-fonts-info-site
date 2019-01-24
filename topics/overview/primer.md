@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Overview"]
+breadcrumbs: ["Overview / Before variable fonts"]
 sidebar: "An old and stable font format"
 title: "An old and stable font format"
 ---
