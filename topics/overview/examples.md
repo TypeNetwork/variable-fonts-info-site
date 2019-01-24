@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Overview"]
+breadcrumbs: ["Overview / Examples"]
 sidebar: "Suggestions for using variable fonts"
 title: "Suggestions for using variable fonts"
 ---
