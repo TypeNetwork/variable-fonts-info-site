@@ -4,7 +4,7 @@ breadcrumbs: ["Overview / Variable fonts"]
 sidebar: "Typographic enhancement"
 title: "Typographic enhancement"
 ---
-To give a brief history of OpenType 1.8 with variable fonts: the 1989 SFNT font format Apple defined for TrueType allowed more than 256 characters per font style, and was able to rely on Unicode. This led to the ability to make font styles including Apple’s system user-interface fonts, containing the many scripts required for the growing linguistic breadth of Apple’s personal-computer market.
+To give a brief history of OpenType 1.8 with variable fonts: the 1989 <a href="https://en.wikipedia.org/wiki/SFNT">SFNT</a> font format Apple defined for TrueType allowed more than 256 characters per font style, and was able to rely on Unicode. This led to the ability to make font styles including Apple’s system user-interface fonts, containing the many scripts required for the growing linguistic breadth of Apple’s personal-computer market.
 
 This in turn led to easily imagining “international font families,” sometimes of six to ten styles, containing four to eleven thousand characters each, kerning, glyph substitution, hints, and more—becoming large files to move around and store. So before Apple TrueType 1.0 was even out the door, as part of the first commercial operating system that could ship all over the world (Mac OS 7), TrueType GX variations were under development to tame the file sizes of font families. 
 
