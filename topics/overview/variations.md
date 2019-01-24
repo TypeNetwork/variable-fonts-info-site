@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Overview"]
+breadcrumbs: ["Overview / Variable fonts"]
 sidebar: "Typographic enhancement with variable fonts"
 title: "Typographic enhancement with variable fonts"
 ---
