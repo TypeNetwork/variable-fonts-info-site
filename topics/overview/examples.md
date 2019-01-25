@@ -1,8 +1,9 @@
 ---
 layout: article
-breadcrumbs: ["Overview / Examples"]
+breadcrumbs: ["Overview / Examples…"]
 sidebar: "Suggestions for using variable fonts"
 title: "Suggestions for using variable fonts"
+subtitle: "After more than thirty years as an extensible font format, the SFNT does it again"
 ---
 On any new operating system running any up-to-date browser, the demonstration of variable fonts on this site has already started. After the code of this website serves the Momentum Sans variable font and loads it as one of the fonts the system can use, the user’s computer becomes a font factory, generating the styles from the variable-font file that are called for by the web code, scaling them to the sizes needed, and rendering them for the resolution of the device. 
 
