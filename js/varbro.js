@@ -108,13 +108,13 @@ function addNav() {
     var li;
     if (prev) {
         li = document.createElement('li');
-        li.textContent = "Previous: ";
+        li.innerHTML = "<label>Previous</label> ";
         li.appendChild(prev.cloneNode(true));
         ul.appendChild(li);
     }
     if (next) {
         li = document.createElement('li');
-        li.textContent = "Next: ";
+        li.innerHTML = "<label>Next</label> ";
         li.appendChild(next.cloneNode(true));
         ul.appendChild(li);
     }
