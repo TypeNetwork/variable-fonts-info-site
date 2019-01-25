@@ -17,7 +17,7 @@ figure.specimen {
     }
     
     &.compact {
-        padding: 0 1rem;
+        padding: 0;
         margin-top: 0;
         + .specimen.compact {
             margin-top: -1rem;
