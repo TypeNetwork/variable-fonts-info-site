@@ -1,8 +1,9 @@
 ---
 layout: article
-breadcrumbs: ["Overview / Before variable fonts"]
+breadcrumbs: ["Overview / Before variables…"]
 sidebar: "An old and stable font format"
 title: "An old and stable font format"
+subtitle: "More than thirty years later, SFNT still serves the needs of users and software developers"
 ---
 Before the introduction of variations in <a href="https://docs.microsoft.com/en-us/typography/opentype/spec/#opentype-specification-version-180">OpenType 1.8</a>, the OpenType standard font format had evolved from Mac-specific TrueType to include Microsoft-specific TrueType, which merged with Adobe PostScript to form OpenType 1.0. OpenType can contain either TrueType or compressed PostScript (CFF), and it has since evolved into several webfont formats, and ultimately into the WOFF standard. 
 
