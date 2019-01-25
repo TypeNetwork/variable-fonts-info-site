@@ -19,6 +19,7 @@ layout: default
         <div class="header-article-intro">
 <!--                             <p class="metadata"><date>September 10, 2018</date></p> -->
             <h1>{{page.title}}</h1>
+            {% if page.subtitle %}<h2>{{page.subtitle}}</h2>{% endif %}
             {% if page.deck %}
                 <p class="header-article-deck">{{page.deck|markdownify}}</p>
             {% endif %}

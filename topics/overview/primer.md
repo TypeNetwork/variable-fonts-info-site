@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Overview / Before variables…"]
+breadcrumbs: ["Overview", "Before variables…"]
 sidebar: "An old and stable font format"
 title: "An old and stable font format"
 subtitle: "More than thirty years later, SFNT still serves the needs of users and software developers"
