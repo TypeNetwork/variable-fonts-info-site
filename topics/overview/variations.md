@@ -28,7 +28,7 @@ Font Bureau began public variable development in late 2016, when we started alph
   <figcaption>Font Bureau’s second project for Google: <a href="https://www.github.com/typenetwork/fb-decovar">Decovar</a>, a modular parametric display font.</figcaption>
   </figure>
 
-<h2>Thinking and designing ahead</h2>
+<h2>Thinking (and designing) ahead</h2>
 We at Font Bureau, when trying to demonstrate much of what was possible in our alpha designs, quickly realized, thanks both to our partners developing fonts and web content at Type Network and to our clients at Google, that there were still performance and/or presentation difficulties with variable fonts. A world with only one or two desktop browsers that could handle variations forced our site to fall back to large movie files, lots of font styles for not-yet-compliant browsers, and ultimately users being directed to variations-compatible browsers. 
 
 We demonstrated what we could do then, and started thinking, designing, and planning forward to what is a now a world where all of the latest browsers support variable fonts. While this version of our demonstrations does not obviate the need on the part of web typographers to account for fallback to whatever presentation a web user chooses, now at least many aspects of variable fonts can be demonstrated to a much broader audience, most of whom are likely using browsers that lean forward to variable fonts.
