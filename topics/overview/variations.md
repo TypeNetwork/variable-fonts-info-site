@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Overview / Variable fonts"]
+breadcrumbs: ["Overview / With variables…"]
 sidebar: "Enhancing typographic experience"
 title: "Enhancing typographic experience"
 subtitle: "After more than thirty years as an extensible font format, the SFNT does it again"
