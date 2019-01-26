@@ -45,6 +45,7 @@ $pink: #69f;
         h1 {
             font-weight: 800;
             font-variation-settings: "opsz" 42;
+            margin: 0;
             @media (min-width: 45rem) {
                 font-variation-settings: "opsz" 64;
             }
