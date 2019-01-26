@@ -62,6 +62,10 @@ $pink: #69f;
         text-decoration: none;
     }
     
+    .content-filters a.current {
+        color: #777;
+    }
+    
     .content-main-full-height {
         min-height: calc(100vh - 5.625rem);
     }

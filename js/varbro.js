@@ -17,12 +17,23 @@ if (!window.doOnReady) {
 function varbroSetup() {
     overrideTNJS();
     addNav();
+    setupSidebar();
     setupExamples();
     setupPlaygrounds();
     window.addEventListener('load', setupFitToWidth);
     window.addEventListener('resize', setupFitToWidth);
     //and once more just to make sure the fonts are loaded
     setTimeout(setupFitToWidth, 1000);
+}
+
+function setupSidebar() {
+    // style current link
+    document.querySelectorAll('.content-filters li a').forEach(function(a) {
+        console.log(a.href, window.location.href);
+        if (a.href === window.location.href) {
+            a.className += ' current';
+        }
+    });
 }
 
 function setupFitToWidth() {
