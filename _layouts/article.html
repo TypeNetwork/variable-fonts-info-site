@@ -3,8 +3,8 @@ layout: default
 ---
 <article class="article-news ">
     {% if page.breadcrumbs %}
-        <header class="header-article-archive">
-            <h1><span>{{ page.breadcrumbs|join:" / " }}</span></h1>
+        <header class="header-article-archive breadcrumbs">
+            <h1><span>{{ page.breadcrumbs|join:"</span><span>" }}</span></h1>
         </header>
     {% endif %}
     <header class="header-article">

@@ -31,6 +31,16 @@ $pink: #69f;
 //         font-size: inherit;
     }
     
+    header.breadcrumbs span {
+        + span::before {
+            content: " / ";
+        }
+        
+        &:last-child:not(:first-child) {
+            text-transform: none;
+        }
+    }
+    
     .header-article-intro {
         h1 {
             font-weight: 800;
