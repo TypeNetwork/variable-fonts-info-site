@@ -3,7 +3,7 @@ layout: article
 breadcrumbs: ["Overview"]
 sidebar: "Overview"
 title: "Thirty to three billion users in three years"
-subtitle: "With the fastest adoption of font technology in history come lots of questions"
+subtitle: "The fastest adoption of font technology in history sparks lots of questions"
 ---
 
 The web has changed the typographer’s role. Typographers no longer decide on typefaces, font sizes, line lengths, line spacing, or margins; they make suggestions via marks and instructions so that text can make those choices for itself, responding to the <em>context</em> of an unknown reader’s environment. And although typographers no longer have access to all of the finished proofs of their work for all of those environments, they can now suggest—along with everything else—variations suited for any environment that imposes undue pressure on a user&#39;s type. 
