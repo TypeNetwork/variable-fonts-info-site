@@ -31,30 +31,41 @@ $pink: #69f;
 //         font-size: inherit;
     }
     
-    header.breadcrumbs span {
-        + span::before {
-            content: " / ";
-        }
-        
-        &:last-child:not(:first-child) {
-            text-transform: none;
-        }
-    }
-    
-    .header-article-intro {
-        h1 {
-            font-weight: 800;
-            font-variation-settings: "opsz" 42;
-            margin: 0;
-            @media (min-width: 45rem) {
-                font-variation-settings: "opsz" 64;
+    article.article-news {
+        header.breadcrumbs span {
+            + span::before {
+                content: " / ";
+            }
+            
+            &:last-child:not(:first-child) {
+                text-transform: none;
             }
         }
-        h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            font-variation-settings: "opsz" 24;
-            margin: 0;
+        
+        .header-article-intro {
+            h1 {
+                font-weight: 800;
+                font-variation-settings: "opsz" 42;
+                margin: 0;
+                @media (min-width: 45rem) {
+                    font-variation-settings: "opsz" 64;
+                }
+            }
+            h2 {
+                font-size: 1.2rem;
+                font-weight: 600;
+                font-variation-settings: "opsz" 24;
+                margin: 0;
+            }
+        }
+    
+        section.section-article {
+            h3 { //same as h2 above
+                font-size: 1.2rem;
+                font-weight: 600;
+                font-variation-settings: "opsz" 24;
+                margin: 0 0 0.2em;
+            }
         }
     }
     
