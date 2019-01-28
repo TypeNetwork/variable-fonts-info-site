@@ -11,7 +11,7 @@ And that, in turn, led to easily imagining “international font families,” so
 
 In the process of experimenting with variations for font compression, Apple became interested in other uses, like multiple font families in a variable font, optical font sizes, animations, design experiments, and typographic effects. But during the period of 1992–96, there wasn’t enough computing power, screen resolution, audience size, or stability at Apple, and it was not the time for Microsoft or Adobe to adopt TrueType GX variations, or any of its parts.
 
-<h3>Sooner or later, something had to happen</h3>
+<h2>Sooner or later, something had to happen</h2>
 Not until years later, after Microsoft had undertaken (and Adobe and Google were starting to undertake) international font-family development, did the thinking and conversation about what would become OpenType 1.8 begin, leading to the <a href="https://medium.com/variable-fonts/https-medium-com-tiro-introducing-opentype-variable-fonts-12ba6cd2369">2016 release</a> of a specification that included variable fonts. This initial pursuit of font-family file compression, besides having a new aspect relevant to performance of international font families on the web, rekindled interest in variations for extended, old, new, and different uses.
 
 <figure>
