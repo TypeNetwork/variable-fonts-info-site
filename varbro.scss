@@ -51,16 +51,10 @@ $pink: #69f;
                     font-variation-settings: "opsz" 64;
                 }
             }
-            h2 {
-                font-size: 1.2rem;
-                font-weight: 600;
-                font-variation-settings: "opsz" 24;
-                margin: 0;
-            }
         }
     
         section.section-article {
-            h3 { //same as h2 above
+            h2 {
                 font-size: 1.2rem;
                 font-weight: 600;
                 font-variation-settings: "opsz" 24;
