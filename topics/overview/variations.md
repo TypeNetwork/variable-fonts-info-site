@@ -3,7 +3,7 @@ layout: article
 breadcrumbs: ["Overview", "With variables…"]
 sidebar: "Enhancing typographic experience"
 title: "Enhancing typographic experience"
-subtitle: "After more than thirty years as an extensible font format, the SFNT does it again"
+subtitle: "The SFNT does it again"
 ---
 To give a brief history of OpenType 1.8 with variable fonts: the 1989 <a href="https://en.wikipedia.org/wiki/SFNT">SFNT</a> font format Apple defined for TrueType allowed more than 256 characters per font style, and was able to rely on Unicode. This led to the ability to make font styles including Apple’s system user-interface fonts, containing the many scripts required for the growing linguistic breadth of Apple’s personal-computer market.
 
