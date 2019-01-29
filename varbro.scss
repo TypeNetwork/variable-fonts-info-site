@@ -41,25 +41,25 @@ $pink: #69f;
                 text-transform: none;
             }
         }
-        
+
         .header-article-intro {
             h1 {
                 line-height: 1;
                 font-weight: 800;
-                font-variation-settings: "opsz" 42;
+                font-size: 3rem;
+                font-variation-settings: "opsz" 64;
+                letter-spacing: 0;
                 margin: 0;
-                @media (min-width: 45rem) {
-                    font-variation-settings: "opsz" 64;
-                }
             }
         }
     
         section.section-article {
             h2 {
-                font-size: 1.2rem;
+                font-size: 1.5rem;
                 font-weight: 600;
                 font-variation-settings: "opsz" 24;
                 margin: 0 0 0.2em;
+                letter-spacing: 0;
             }
 
             img {
