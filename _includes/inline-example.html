@@ -1,7 +1,7 @@
 {% assign collection = site.collections|where:"label","examples"|first %}
 {% assign example = collection.docs|where_exp:"doc","doc.url contains include.example"|first %}
 
-<figure class='example'>
+<figure class='example {{example.class}}'>
     {% include example.html example=example %}
     <figcaption>
         <h3>{{example.title}}</h3>

@@ -1,0 +1,116 @@
+
+#font-format-timeline {
+    display: block;
+    position: relative;
+
+    @mixin varwidth {
+        margin-left: auto;
+        width: 360px;
+        min-width: calc(100% - 3em);
+        max-width: 100%;
+    }
+
+    .timeline-years {
+        @include varwidth;
+        display: grid;
+        position: relative;
+        grid-template-columns: repeat(6, 1fr);
+        padding-bottom: 0.25em;
+        
+        $years-weight: 700;
+        
+        //do you trust me
+        $arrow-thickness: (($years-weight - 100) / (900 - 100) * (250 - 38) + 38) / 1000;
+        
+        border-bottom: ($arrow-thickness + em) solid black;
+        margin-bottom: 0.5em;
+        
+        time {
+            display: block;
+            font-weight: $years-weight;
+        }
+        
+        &::before {
+            display: block;
+            position: absolute;
+            content: "";
+            $size: 0.5em;
+            left: -($size / 2);
+            bottom: calc(-#{$size} / 2 - 1px);
+            height: 0;
+            width: 0;
+            border: ($size / 2) solid black;
+            border-radius: $size;
+        }
+        
+        &::after {
+            display: block;
+            position: absolute;
+            content: "";
+            $size: 0.75em;
+            left: 100%;
+            height: 0;
+            width: 0;
+            bottom: calc(-#{$size} / 2 - 1px);
+            border-top: ($size / 2) solid transparent;
+            border-bottom: ($size / 2) solid transparent;
+            border-left: ($size / 2) solid black;
+        }
+    }
+    
+    dl {
+        @include varwidth;
+        dt {
+            position: absolute;
+            z-index: 2;
+            line-height: 2;
+            font-weight: bold;
+            left: 0;
+        }
+        
+        dd {
+            display: block;
+            background-color: #CCC;
+            overflow: hidden;
+            white-space: nowrap;
+            line-height: 2;
+            color: transparent;
+            z-index: 1;
+            margin-bottom: 0.5em;
+        }
+        
+        #timeline-sfnt + dd {
+            margin-left: 0;
+        }
+        
+        #timeline-tt + dd {
+            margin-left: 3.333%;
+        }
+        
+        #timeline-gx + dd {
+            margin-left: calc(4 * 3.333%);
+            width: calc(7 * 3.333%);
+        }
+        
+        #timeline-tto + dd {
+            margin-left: calc(4 * 3.333%);
+            width: calc(2 * 3.333%);
+        }
+        
+        #timeline-ot + dd {
+            margin-left: calc(5 * 3.333%);
+        }
+        
+        #timeline-woff + dd {
+            margin-left: calc(22 * 3.333%);
+        }
+        
+        #timeline-colr + dd {
+            margin-left: calc(25 * 3.333%);
+        }
+        
+        #timeline-vf + dd {
+            margin-left: calc(26 * 3.333%);
+        }
+    }
+}

@@ -1,0 +1,118 @@
+---
+breadcrumbs: ["Size", "Examples"]
+title: Optical size in headings
+description: Tweak your own custom headline using weight, width, and optical size
+class: side-by-side three-level-headline
+comparison:
+    -
+        layout: compact
+        css:
+            text-align: right
+        lines:
+            -
+                font: Amstelvar-Alpha
+                size: 48
+                text: HEADLINE
+                element: h1
+                axes:
+                    opsz: 12
+                    wght: 550
+                    wdth: 100
+            -
+                font: Amstelvar-Alpha
+                size: 30
+                text: HEADLINE TWO
+                element: h2
+                axes:
+                    opsz: 12
+                    wght: 550
+                    wdth: 100
+            -
+                font: Amstelvar-Alpha
+                size: 21
+                text: Subheadline Three
+                element: h3
+                axes:
+                    opsz: 12
+                    wght: 550
+                    wdth: 100
+    -
+        layout: compact
+        css:
+            text-align: left
+        lines:
+            -
+                font: Amstelvar-Alpha
+                size: 48
+                text: HEADLINE
+                element: h1
+                axes:
+                    opsz: 48
+                    wght: 550
+                    wdth: 100
+            -
+                font: Amstelvar-Alpha
+                size: 30
+                text: HEADLINE TWO
+                element: h2
+                axes:
+                    opsz: 30
+                    wght: 550
+                    wdth: 100
+            -
+                font: Amstelvar-Alpha
+                size: 21
+                text: Subheadline Three
+                element: h3
+                axes:
+                    opsz: 21
+                    wght: 550
+                    wdth: 100
+---
+<script>
+(function() {
+    if (!window.threeLevelHeadlineUpdateOpsz) {
+        var labelstyle = [
+            'color: red',
+            'font-size: 1rem',
+            'font-weight: 500',
+            'position: absolute',
+            'left: -2rem',
+            'width: 2rem',
+            'bottom: 0',
+            'text-align: center'
+        ];
+        var styleEl = document.createElement('style');
+        styleEl.textContent = ".example.three-level-headline .comparison { grid-gap: 2rem !important; } .example.three-level-headline .specimen.single-line { position: relative; } .example.three-level-headline .specimen label.opsz { " + labelstyle.join('; ') + ' }';
+        document.head.appendChild(styleEl);
+        
+        window.threeLevelHeadlineUpdateOpsz = function() {
+            document.querySelectorAll('.example.three-level-headline').forEach(function(example) {
+                var leftlines = example.querySelectorAll('.comparison > li:first-child .specimen .rendered');
+                var rightlines = example.querySelectorAll('.comparison > li:last-child .specimen .rendered');
+                rightlines.forEach(function(line) {
+                    var label = line.parentNode.querySelector('label.opsz');
+                    if (!label) {
+                        label = document.createElement('label');
+                        label.className = 'opsz';
+                        line.parentNode.appendChild(label);
+                    }
+                    var css = getComputedStyle(line);
+                    var opsz = parseInt(line.fontSize);
+                    if (css.fontVariationSettings) {
+                        var m = css.fontVariationSettings.match(/['"]opsz['"]\s+(\d+)/);
+                        if (m) {
+                            opsz = parseInt(m[1]);
+                        }
+                    }
+                    label.textContent = opsz;
+                });
+            });
+        }
+        
+        document.addEventListener('keyup', window.threeLevelHeadlineUpdateOpsz);
+        window.addEventListener('resize', window.threeLevelHeadlineUpdateOpsz);
+        setTimeout(window.threeLevelHeadlineUpdateOpsz, 100);
+    }
+})();
+</script>

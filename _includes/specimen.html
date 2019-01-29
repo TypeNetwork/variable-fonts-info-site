@@ -12,23 +12,26 @@
 {% if params.lines %}
     {% assign line_labels = site.emptyArray %}
     {% assign line_axes = site.emptyArray %}
-    <figure id='{{specimen_id}}' class="specimen {{layout}}"{% if params.css %} style="{% for kv in params.css %}{{kv[0]}}:{{kv[1]}};{% endfor %}"{% endif %}>
-        <ul class='lines'>
-        {% for line in params.lines %}
-            <li>{% include specimen.html params=line record_axes=true %}</li>
+{% comment %}
+    HTML can't be indented or it will be escaped
+{% endcomment %}
+<figure id='{{specimen_id}}' class="specimen {{layout}}"{% if params.css %} style="{% for kv in params.css %}{{kv[0]}}:{{kv[1]}};{% endfor %}"{% endif %}>
+    <ul class='lines'>
+    {% for line in params.lines %}
+        <li>{% include specimen.html params=line record_axes=true %}</li>
+    {% endfor %}
+    </ul>
+    <figcaption>
+        <dl class='line-axes'>
+        {% assign i = 0 %}
+        {% for ll in line_labels %}
+            <dt>{{ll}}</dt>
+            <dd>{{line_axes[i]}}</dd>
+            {% assign i = i|plus:1 %}
         {% endfor %}
-        </ul>
-        <figcaption>
-            <dl class='line-axes'>
-            {% assign i = 0 %}
-            {% for ll in line_labels %}
-                <dt>{{ll}}</dt>
-                <dd>{{line_axes[i]}}</dd>
-                {% assign i = i|plus:1 %}
-            {% endfor %}
-            </dl>
-        </figcaption>
-    </figure>
+        </dl>
+    </figcaption>
+</figure>
 {% else %}
 
     {% include _specimen-vars.html params=params %}
@@ -40,27 +43,25 @@
 
     {% assign element = params.element|default:"figure" %}
     
-    <{{element}} id='{{specimen_id}}' class='specimen {{layout}} {{params.class}} {% if params.label %}has-label{% endif %} {% if params.size == "fit" %}fit-to-width{% endif %}' {% if params.fit %}data-fit-ratio="{{params.fit}}"{% endif %}>
+{% comment %}
+    HTML can't be indented or it will be escaped
+{% endcomment %}
+<{{element}} id='{{specimen_id}}' class='specimen {{layout}} {{params.class}} {% if params.label %}has-label{% endif %} {% if params.size == "fit" %}fit-to-width{% endif %}' {% if params.fit %}data-fit-ratio="{{params.fit}}"{% endif %}>
+    {% if params.link %}<a href="{{params.link}}">{% endif %}
         <span class='rendered' style='{{specimen_css}}'>{{params.text|default:"Example"}}</span>
-        {% if element == "figure" %}
-            <figcaption>
-                {% if params.label %}
-                    <label>{{ params.label }}</label>
-                {% endif %}
-        {% else %}
-            <!-- lists can't be inside most text elements -->
-            {% if params.label %}
-                <label>{{ params.label }}</label>
-            {% endif %}
-            </{{element}}>
-        {% endif %}
-    
-        {% unless params.label %}
-            {{axis_listing}}
-        {% endunless %}
+    {% if params.link %}</a>{% endif %}
+    {% if element == "figure" %}
+        <figcaption>
+    {% endif %}
+    {% if params.label %}
+        <label>{{ params.label }}</label>
+    {% endif %}
+    {% unless params.label %}
+        {{axis_listing}}
+    {% endunless %}
     {% if element == "figure" %}
         </figcaption>
-        </figure>
     {% endif %}
+</{{element}}>
 
 {% endif %}

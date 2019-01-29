@@ -2,7 +2,7 @@
 layout: article
 breadcrumbs: ["Size", "Examples"]
 sidebar: "Examples"
-title: "The magic of <code>opsz</code>"
+title: "The magic of optical size"
 ---
 {% include inline-example.html example="headings-with-and-without-opsz" %}
 

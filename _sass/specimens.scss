@@ -4,21 +4,37 @@ figure.specimen {
     background: white;
     padding: 1rem;
     
-    span.rendered {
-        display: inline-block;
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+        padding: 0;
+        line-height: 1;
     }
     
-/*
     ul, li {
         list-style: none;
         margin: 0;
         padding: 0;
     }
-*/
+    
+    &.compact {
+        padding: 0;
+        margin-top: 0;
+        + .specimen.compact {
+            margin-top: -1rem;
+        }
+        figcaption, ul.axes {
+            display: none;
+        }
+    }
+    
+    span.rendered {
+        display: inline-block;
+        margin-bottom: -0.125em;
+    }
     
     figcaption {
-        margin-top: 0;
-        padding-top: 0;
+        margin: 0;
+        padding: 0;
         
         label {
             color: $pink;
@@ -37,28 +53,22 @@ figure.specimen {
     }
 
     ul.axes {
-        margin: 0;
-        padding: 0;
         font-weight: 600;
         font-size: 0.625rem;
         > li {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: inline;
+            display: none;
             white-space: nowrap;
             color: #444;
             
             &:not(:last-child)::after {
-                content: ", ";
+                content: "  ";
             }
             
-            &.specified {
-    //             color: $pink;
-            }
-            
-            &.non-default {
-                color: $pink;
+            &.specified, &.non-default {
+                display: inline;
+                span {
+                    color: $pink;
+                }
             }
         }
     }
@@ -73,10 +83,6 @@ figure.specimen {
         background: white;
         padding: 1rem;
         > li {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-
             > * {
                 position: relative;
                 margin: 0;
