@@ -61,26 +61,73 @@ $pink: #69f;
                 font-variation-settings: "opsz" 24;
                 margin: 0 0 0.2em;
             }
+
+            img {
+                width: 100% !important;
+                height: auto !important;
+            }
         }
     }
     
-    .content-filters h3 a {
-        padding-left: 0;
-        &::before {
-            display: none;
+    /* sidebar! */
+    aside.content-filters {
+        
+        h2, h3, ul, li, a, #varbro-contents {
+            font-size: 12px;
+            font-weight: 400;
+            font-variation-settings: "opsz" 12;
+            letter-spacing: 0;
+            line-height: 1.25;
+            color: inherit;
         }
-    }
-    
-    .content-filters ul ul {
-        margin-bottom: 0;
-    }
-    
-    .content-filters a {
-        text-decoration: none;
-    }
-    
-    .content-filters a.current {
-        color: #777;
+
+        a {
+            text-decoration: none;
+        }
+        
+        h2 {
+            font-weight: bold;
+            padding: 0;
+            margin: 0 0 1em;
+            border: none;
+            text-transform: uppercase;
+            
+            + #varbro-contents {
+                padding-left: 1em;
+            }
+        }
+
+        h3 {
+            border: 0;
+            margin-bottom: 0;
+            a {
+                padding-left: 0;
+                &::before {
+                    display: none;
+                }
+            }
+        }
+
+        ul {
+            margin-bottom: 0;
+
+            li {
+                text-indent: 0;
+                padding-left: 1.25em;
+                margin-bottom: 1.25em;
+                
+                ul li:last-child {
+                    margin-bottom: 0;
+                }
+
+                label {
+                    font-weight: 600;
+                }
+            }
+            a.current {
+                color: #888;
+            }
+        }
     }
     
     .content-main-full-height {
@@ -98,13 +145,6 @@ $pink: #69f;
     
     .header-foundry ul {
         margin-left: 0.5rem;
-    }
-    
-    .article-news .section-article {
-        img {
-            width: 100% !important;
-            height: auto !important;
-        }
     }
     
     @media screen and (min-width: 56.25rem) {
