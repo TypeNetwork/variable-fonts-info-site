@@ -28,12 +28,14 @@ function varbroSetup() {
 
 function setupSidebar() {
     // style current link
+/*
     document.querySelectorAll('.content-filters li a').forEach(function(a) {
         console.log(a.href, window.location.href);
         if (a.href === window.location.href) {
             a.className += ' current';
         }
     });
+*/
 }
 
 function setupFitToWidth() {
