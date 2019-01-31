@@ -201,11 +201,12 @@ function setupExamples() {
                         outputFrame.style.maxWidth = specimen.getBoundingClientRect().width + 'px';
                     }
                     
+                    var ignoreClasses = /\b(specimen|single-line|editorial|paragraph|has-label|fit-to-width)\b/g;
                     specimen.querySelectorAll('span.rendered').forEach(function(span) {
                         var style = {};
                         var subspec = span.closest('.specimen');
                         style.tag = subspec.tagName.toLowerCase();
-                        style.className = subspec.className.replace(/\b(specimen|single-line|editorial|paragraph)\b/g, '').replace(/\s+/g, ' ').trim();
+                        style.className = subspec.className.replace(ignoreClasses, '').replace(/\s+/g, ' ').trim();
                         style.css = span.getAttribute('style').trim().split(/\s*;\s*/);
                         styles.push(style);
  
@@ -214,7 +215,7 @@ function setupExamples() {
  
                     styles.forEach(function(style, i) {
                         var classes = '.' + style.className.trim().replace(/\s+/g, '.');
-                        classes = classes.replace(/\.(specimen|single-line|editorial|paragraph|has-label)/g, '');
+                        classes = classes.replace(ignoreClasses, '');
                         if (classes === '.') {
                             classes = '';
                         }

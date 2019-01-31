@@ -4,10 +4,12 @@ figure.specimen {
     background: white;
     padding: 1rem;
     
-    h1, h2, h3, h4, h5, h6 {
-        margin: 0;
-        padding: 0;
-        line-height: 1;
+    h1, h2, h3, h4, h5, h6, p {
+        &.specimen.single-line { //just to make it more specific
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+        }
     }
     
     ul, li {
@@ -30,6 +32,12 @@ figure.specimen {
     span.rendered {
         display: inline-block;
         margin-bottom: -0.125em;
+    }
+    
+    ul.lines {
+        > li + li {
+            margin-top: 0.5em;
+        }
     }
     
     figcaption {
@@ -76,6 +84,10 @@ figure.specimen {
 
 
 .specimen.editorial {
+    label {
+        display: none;
+    }
+/*
     padding: 0;
     background: transparent;
     
@@ -122,4 +134,5 @@ figure.specimen {
             grid-column: 2;
         }
     }
+*/
 }

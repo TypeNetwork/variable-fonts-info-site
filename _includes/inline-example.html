@@ -2,15 +2,16 @@
 {% assign example = collection.docs|where_exp:"doc","doc.url contains include.example"|first %}
 
 <figure class='example {{example.class}}'>
-    {% include example.html example=example %}
     <figcaption>
         <h3>{{example.title}}</h3>
         {{example.description|markdownify}}
-        <ul class='example-links'>
-            <li class="permalink"><a href="{{example.url}}">Permalink to this example</a></li>
-            {% if playground_button %}
-            <li>{{playground_button}}</li>
-            {% endif %}
-        </ul>
     </figcaption>
+    {% include example.html example=example %}
+
+    <ul class='example-links'>
+        <li class="permalink"><a href="{{example.url}}">Permalink to this example</a></li>
+        {% if playground_button %}
+        <li>{{playground_button}}</li>
+        {% endif %}
+    </ul>
 </figure>
