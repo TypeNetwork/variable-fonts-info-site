@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Families"]
+breadcrumbs: ["Families", "With variables…"]
 sidebar: "Variable families"
 title: "Variable families"
 ---

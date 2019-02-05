@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Size", "Examples"]
+breadcrumbs: ["Size", "Examples…"]
 sidebar: "Logo sizing"
 title: "Logo sizing"
 ---

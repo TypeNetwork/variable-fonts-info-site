@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Scripts"]
+breadcrumbs: ["Scripts", "Examples…"]
 sidebar: "Example"
 title: "Example"
 ---

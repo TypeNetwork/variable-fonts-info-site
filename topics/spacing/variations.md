@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Spacing"]
+breadcrumbs: ["Spacing", "With variables…"]
 sidebar: "Responsive spacing"
 title: "Responsive spacing"
 ---

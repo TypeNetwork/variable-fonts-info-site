@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Scripts"]
+breadcrumbs: ["Scripts", "With variations…"]
 sidebar: "Multiple scripts"
 title: "Multiple scripts"
 ---

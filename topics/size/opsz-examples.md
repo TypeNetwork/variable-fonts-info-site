@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Size", "Examples"]
+breadcrumbs: ["Size", "Examples…"]
 sidebar: "Examples"
 title: "The magic of optical size"
 ---

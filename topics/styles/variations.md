@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Styles"]
+breadcrumbs: ["Styles", "With variables…"]
 sidebar: "Styles, meet instances"
 title: "Styles, meet instances"
 ---

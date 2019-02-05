@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Families", "Variable families"]
+breadcrumbs: ["Families", "Before variables…"]
 sidebar: "Families / variable families"
 title: "One file, many fonts"
 ---

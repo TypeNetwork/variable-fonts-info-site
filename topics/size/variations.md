@@ -1,6 +1,6 @@
 ---
 layout: article
-breadcrumbs: ["Size"]
+breadcrumbs: ["Size", "With variables…"]
 sidebar: "Fluid size"
 title: "Fluid size"
 ---
