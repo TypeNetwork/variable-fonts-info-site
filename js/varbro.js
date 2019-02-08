@@ -465,38 +465,23 @@ function setupPlaygrounds() {
 var sizeWeightAxisRanges = {
     // these are point values for now
     'AmstelvarAlpha': {
-        6: {
+        10: {
             400: {
-                XTRA: [1, 2, 3],
-                XOPQ: [4, 5, 6]
+                XTRA: [10, 20, 30]
             },
             700: {
-                XTRA: [7, 8, 9],
-                XOPQ: [10, 11, 12],
+                XTRA: [20, 40, 60]
             }
         },
         
-        14: {
+        20: {
             400: {
-                XTRA: [13, 14, 15],
-                XOPQ: [16, 17, 18]
+                XTRA: [5, 10, 15]
             },
             700: {
-                XTRA: [19, 20, 21],
-                XOPQ: [22, 23, 24],
+                XTRA: [10, 20, 30]
             }
         },
-        
-        144: {
-            400: {
-                XTRA: [25, 26, 27],
-                XOPQ: [28, 29, 30]
-            },
-            700: {
-                XTRA: [31, 32, 33],
-                XOPQ: [34, 35, 36],
-            }
-        }
     }
 };
 
@@ -584,36 +569,47 @@ var font = 'AmstelvarAlpha';
     //okay, now we have our lower and upper anchors!
 
     //how far bewteen lower and upper are we
-    var sizeratio = upper[0] === lower[0] ? -1 : Math.max(0, Math.min(1, (targetsize - lower[0]) / (upper[0] - lower[0])));
-    var weightratio = upper[1] === lower[1] ? -1 : Math.max(0, Math.min(1, (targetweight - lower[1]) / (upper[1] - lower[1])));
+    var sizeratio = upper[0] === lower[0] ? 0 : Math.max(0, Math.min(1, (targetsize - lower[0]) / (upper[0] - lower[0])));
+    var weightratio = upper[1] === lower[1] ? 0 : Math.max(0, Math.min(1, (targetweight - lower[1]) / (upper[1] - lower[1])));
     
-    var ratio = null;
-    if (sizeratio < 0) {
-        //we are at a size anchor, scale by weight
-        ratio = weightratio;
-    }
-    if (weightratio < 0) {
-        //we are at a weight anchor, scale by size
-        ratio = sizeratio;
-    }
-    if (ratio === null) {
-        //we are somewhere between both, average the ratios
-        ratio = (sizeratio + weightratio) / 2;
-    } else if (ratio < 0) {
-        //we are at a size and weight anchor, just use it
-        ratio = 0;
-    }
+    //get axis values for the four corners
+    var corners = {
+        'șẉ': sizeWeightAxisRanges[font][lower[0]][lower[1]],
+        'ŝẉ': sizeWeightAxisRanges[font][upper[0]][lower[1]],
+        'șẇ': sizeWeightAxisRanges[font][lower[0]][upper[1]],
+        'ŝẇ': sizeWeightAxisRanges[font][upper[0]][upper[1]]
+    };
+    
+    //now we need to interpolate along the four edges
+    var edges = {
+        'ș': ['șẇ', 'șẉ', weightratio],
+        'ŝ': ['ŝẇ', 'ŝẉ', weightratio],
+        'ẉ': ['ŝẉ', 'șẉ', sizeratio],
+        'ẇ': ['ŝẇ', 'șẇ', sizeratio]
+    };
 
-    //now transform lower and upper points into axis ranges
-    window.lower = lower = sizeWeightAxisRanges[font][lower[0]][lower[1]];
-    window.upper = upper = sizeWeightAxisRanges[font][upper[0]][upper[1]];
-
-    var result = {};
-    Object.keys(lower).forEach(function(k) {
-        result[k] = [];
-        lower[k].forEach(function(v, i) {
-            result[k].push(lower[k][i] + (upper[k][i] - lower[k][i]) * ratio);
+    edges.forEach(function(hlr, edge) {
+        var high = corners[hlr[0]];
+        var low = corners[hlr[1]];;
+        var ratio = hlr[2];
+        var middle = {};
+        high.forEach(function(sml, axis) {
+            middle[axis] = [];
+            for (var i=0; i<3; i++) {
+                middle[axis].push(low[axis][i] + (high[axis][i] - low[axis][i]) * ratio);
+            }
         });
+        edges[edge] = middle;
+    });
+
+    //now we can inter-interpolate between the interpolated edge values
+    var axes = Object.keys(corners.șẉ);
+    var result = {};
+    axes.forEach(function(axis) {
+        result[axis] = [];
+        for (var i=0; i<3; i++) {
+            result[axis].push(edges.ẉ[axis][i] + (edges.ẇ[axis][i] - edges.ẉ[axis][i]) * weightratio);
+        }
     });
 
     return result;
@@ -621,11 +617,11 @@ var font = 'AmstelvarAlpha';
 
 window.testRanges = function() {
     var el = document.querySelector('#unique-specimen-8 span.rendered');
-    var sizes = [4, 6, 12, 14, 36, 144, 288];
-    var weights = [300, 400, 500, 700, 800];
+    var sizes = [9, 10, 11, 15, 19, 20, 21];
+    var weights = [300, 400, 430, 550, 670, 700, 800];
     sizes.forEach(function(size) {
         weights.forEach(function(weight) {
-            console.log(size, weight, getAxisRanges(size, weight));
+            console.log(size, weight, JSON.stringify(getAxisRanges(size, weight)));
         });
     });
 };
