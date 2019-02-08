@@ -3,17 +3,6 @@
 (function() {
 "use strict";
 
-if (!window.doOnReady) {
-    (function() { 
-        var s = document.createElement('script');
-        s.addEventListener('load', function() { doOnReady(varbroSetup); });
-        s.src = "https://chrislewis.codes/js/polyfill.js";
-        document.head.appendChild(s);
-    })();
-} else {
-    doOnReady(varbroSetup);
-}
-
 function varbroSetup() {
     overrideTNJS();
     addNav();
@@ -25,6 +14,197 @@ function varbroSetup() {
     //and once more just to make sure the fonts are loaded
     setTimeout(setupFitToWidth, 1000);
 }
+
+doOnReady(varbroSetup);
+
+//handy polyfills and utility functions
+
+// forEach on nodes, from MDN
+if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = function (callback, thisArg) {
+        thisArg = thisArg || window;
+        for (var i = 0; i < this.length; i++) {
+            callback.call(thisArg, this[i], i, this);
+        }
+    };
+}
+
+// and why not forEach on objects
+if (!Object.prototype.forEach) {
+    Object.prototype.forEach = function(callback) {
+        var thiss = this;
+        Object.keys(thiss).forEach(function(k) {
+            callback(thiss[k], k);
+        });
+    }
+}
+
+// jQuery-style addClass/removeClass are not canon, but more flexible than ClassList
+if (!HTMLElement.prototype.hasClass) {
+    HTMLElement.prototype.hasClass = function(str) {
+        var el = this;
+        var words = str.split(/\s+/);
+        var found = true;
+        words.forEach(function(word) {
+            found = found && el.className.match(new RegExp("(^|\\s)" + word + "($|\\s)"));
+        });
+        return !!found;
+    }
+}
+
+var spacere = /\s{2,}/g;
+if (!HTMLElement.prototype.addClass) {
+    HTMLElement.prototype.addClass = function(cls) {
+        this.className += ' ' + cls;
+        this.className = this.className.trim().replace(spacere, ' ');
+        return this;
+    }
+}
+
+if (!HTMLElement.prototype.removeClass) {
+    HTMLElement.prototype.removeClass = function(cls) {
+        var i, words = cls.split(/\s+/);
+        if (words.length > 1) {
+            for (var i=0; i < words.length; i++) {
+                this.removeClass(words[i]);
+            }
+        } else {
+            var classre = new RegExp('(^|\\s)' + cls + '($|\\s)', 'g');
+            while (classre.test(this.className)) {
+                this.className = this.className.replace(classre, ' ').trim().replace(spacere, '');
+            }
+        }
+        return this;
+    }
+}
+
+//synthetic events
+if (!HTMLElement.prototype.trigger) {
+    HTMLElement.prototype.trigger = function(type) {
+        var evt;
+        if (typeof window.Event === "function"){ 
+            evt = new Event(type);
+        } else { 
+            evt = document.createEvent('Event');
+            evt.initEvent(type, true, true);
+        }
+        return this.dispatchEvent(evt);
+    }
+}
+
+// closest, from MDN
+if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector || 
+                                Element.prototype.webkitMatchesSelector;
+}
+
+if (!Element.prototype.closest) {
+    Element.prototype.closest = function(s) {
+        var el = this;
+        if (!document.documentElement.contains(el)) return null;
+        do {
+            if (el.matches(s)) return el;
+            el = el.parentElement || el.parentNode;
+        } while (el !== null && el.nodeType === 1); 
+        return null;
+    };  
+}
+
+// not in the spec, but seems weird to be able to do it on elements but not text nodes
+if (!Node.prototype.closest) {
+    Node.prototype.closest = function(s) {
+        return this.parentNode && this.parentNode.closest(s);
+    }
+}
+
+// my own invention
+if (!RegExp.escape) {
+    RegExp.escape= function(s) {
+        return s.replace(/[\-\/\\\^\$\*\+\?\.\(\)\|\[\]\{\}]/g, '\\$&');
+    };
+}
+
+
+
+//like jQuery function
+function doOnReady(func, thisArg) {
+    if (thisArg) {
+        func = func.bind(thisArg);
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', func);
+    } else {
+        func();
+    }
+}
+
+// shortcuts to get dimensions of element minus padding, equivalent to jQuery width() and height()
+if (!Element.prototype.contentWidth) {
+    Element.prototype.contentWidth = function() {
+        var fullwidth = this.getBoundingClientRect().width;
+        var css = getComputedStyle(this);
+        return fullwidth - parseFloat(css.paddingLeft) - parseFloat(css.paddingRight);
+    }
+}
+
+if (!Element.prototype.contentHeight) {
+    Element.prototype.contentHeight = function() {
+        var fullheight = this.getBoundingClientRect().height;
+        var css = getComputedStyle(this);
+        return fullheight - parseFloat(css.paddingTop) - parseFloat(css.paddingBottom);
+    }
+}
+
+
+if (!HTMLFormElement.prototype.serialize) {
+    HTMLFormElement.prototype.serialize = function() {
+        var form = this;
+        var req = [];
+        form.querySelectorAll('input:enabled').forEach(function(input) {
+            if ((input.type === 'checkbox' || input.type === 'radio') && !input.checked) {
+                return;
+            }
+            req.push(encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value));
+        });
+
+        form.querySelectorAll('select:enabled').forEach(function(select) {
+            var options = select.querySelectorAll('option:checked');
+            if (options) {
+                options.forEach(function(opt) {
+                    req.push(encodeURIComponent(select.name) + '=' + encodeURIComponent(opt.value));
+                });
+            }
+        });
+        return req.join("&");
+    };
+}
+
+
+function doAjax(url, options) {
+    var xhr = new XMLHttpRequest();
+    if (options.complete) {
+        xhr.addEventListener("load", function() { options.complete(xhr); });
+    }
+    xhr.open(options.method || 'GET', url);
+    
+    if (options.data) {
+        if (!options.headers) {
+            options.headers = {};
+        }
+        options.headers['Content-type'] = 'application/x-www-form-urlencoded';
+    }
+    
+    if (options.headers) {
+        console.log(options);
+        options.headers.forEach(function (v, k) {
+            xhr.setRequestHeader(k, v);
+        });
+    }
+    xhr.send(options.data);
+};
+
+// END POLYFILLS
+
 
 function setupSidebar() {
     // style current link
