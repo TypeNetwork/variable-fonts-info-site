@@ -282,4 +282,172 @@ function setupPlaygrounds() {
     });
 }
 
+var sizeWeightAxisRanges = {
+    // these are point values for now
+    'AmstelvarAlpha': {
+        6: {
+            400: {
+                XTRA: [1, 2, 3],
+                XOPQ: [4, 5, 6]
+            },
+            700: {
+                XTRA: [7, 8, 9],
+                XOPQ: [10, 11, 12],
+            }
+        },
+        
+        14: {
+            400: {
+                XTRA: [13, 14, 15],
+                XOPQ: [16, 17, 18]
+            },
+            700: {
+                XTRA: [19, 20, 21],
+                XOPQ: [22, 23, 24],
+            }
+        },
+        
+        144: {
+            400: {
+                XTRA: [25, 26, 27],
+                XOPQ: [28, 29, 30]
+            },
+            700: {
+                XTRA: [31, 32, 33],
+                XOPQ: [34, 35, 36],
+            }
+        }
+    }
+};
+
+window.getAxisRanges = function(targetsize, targetweight) {
+//    var css = getComputedStyle(el);
+//    var font = css.fontFamily.split(',')[0].trim().replace(/^['"]\s*/, '').replace(/\s*['"]$/, '').replace(/-VF$/, '').replace(/[\s\-]/g, '');
+//    var targetsize = parseFloat(css.fontSize) * 3/4; //multiply by 3/4 if calibrated on points
+//    var targetweight;
+//    switch (css.fontWeight) {
+//        case 'normal': targetweight=400; break;
+//        case 'bold': targetweight=700; break;
+//        default: targetweight = parseFloat(css.fontWeight) | 400; break;
+//    }
+
+var font = 'AmstelvarAlpha';
+    
+    if (!(font in sizeWeightAxisRanges)) {
+        return {};
+    }
+    
+    var numsort = function(a,b) { return a - b; };
+
+    //now we need to find the "anchor" sizes and weights on either side of the actual size and weight
+    // so if our size/weight is 36/600, the anchors might be 14/400 and 72/700
+    var sizes = Object.keys(sizeWeightAxisRanges[font]);
+    sizes.sort(numsort);
+    sizes.forEach(function(v,i) { sizes[i] = parseInt(v); });
+
+    var lower = [sizes[0], 0], upper = [sizes[sizes.length-1], Infinity];
+    var done = false;
+    sizes.forEach(function(anchorsize) {
+        if (done) {
+            return;
+        }
+
+        var weights, weightdone;
+
+        if (anchorsize <= targetsize) {
+            //set lower and keep looking
+            lower[0] = anchorsize;
+        }
+
+        if (anchorsize >= targetsize || anchorsize === upper[0]) {
+            //found our upper size! Now search weights
+            upper[0] = anchorsize;
+
+            //find lower weight
+            weights = Object.keys(sizeWeightAxisRanges[font][lower[0]]);
+            weights.sort(numsort);
+            weights.forEach(function(v,i) { weights[i] = parseInt(v); });
+            weightdone = false;
+            lower[1] = weights[0];
+            weights.forEach(function(anchorweight) {
+                if (weightdone) {
+                    return;
+                }
+                if (anchorweight <= targetweight) {
+                    lower[1] = anchorweight;
+                }
+                if (anchorweight >= targetweight) {
+                    weightdone = true;
+                }
+            });
+
+            //find upper weight
+            weights = Object.keys(sizeWeightAxisRanges[font][upper[0]]);
+            weights.sort(numsort);
+            weights.forEach(function(v,i) { weights[i] = parseInt(v); });
+            weightdone = false;
+            upper[1] = weights[weights.length-1];
+            weights.forEach(function(anchorweight) {
+                if (weightdone) {
+                    return;
+                }
+                if (anchorweight >= targetweight) {
+                    upper[1] = anchorweight;
+                    weightdone = true;
+                }
+            });
+            
+            done = true;
+        }
+    });
+
+    //okay, now we have our lower and upper anchors!
+
+    //how far bewteen lower and upper are we
+    var sizeratio = upper[0] === lower[0] ? -1 : Math.max(0, Math.min(1, (targetsize - lower[0]) / (upper[0] - lower[0])));
+    var weightratio = upper[1] === lower[1] ? -1 : Math.max(0, Math.min(1, (targetweight - lower[1]) / (upper[1] - lower[1])));
+    
+    var ratio = null;
+    if (sizeratio < 0) {
+        //we are at a size anchor, scale by weight
+        ratio = weightratio;
+    }
+    if (weightratio < 0) {
+        //we are at a weight anchor, scale by size
+        ratio = sizeratio;
+    }
+    if (ratio === null) {
+        //we are somewhere between both, average the ratios
+        ratio = (sizeratio + weightratio) / 2;
+    } else if (ratio < 0) {
+        //we are at a size and weight anchor, just use it
+        ratio = 0;
+    }
+
+    //now transform lower and upper points into axis ranges
+    window.lower = lower = sizeWeightAxisRanges[font][lower[0]][lower[1]];
+    window.upper = upper = sizeWeightAxisRanges[font][upper[0]][upper[1]];
+
+    var result = {};
+    Object.keys(lower).forEach(function(k) {
+        result[k] = [];
+        lower[k].forEach(function(v, i) {
+            result[k].push(lower[k][i] + (upper[k][i] - lower[k][i]) * ratio);
+        });
+    });
+
+    return result;
+};
+
+window.testRanges = function() {
+    var el = document.querySelector('#unique-specimen-8 span.rendered');
+    var sizes = [4, 6, 12, 14, 36, 144, 288];
+    var weights = [300, 400, 500, 700, 800];
+    sizes.forEach(function(size) {
+        weights.forEach(function(weight) {
+            console.log(size, weight, getAxisRanges(size, weight));
+        });
+    });
+};
+
 })();
