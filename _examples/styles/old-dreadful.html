@@ -1,0 +1,195 @@
+---
+---
+{% capture css %}
+{% raw %}
+    @font-face {
+        font-family: "Eldowoffle";
+        src: url("/fonts/EldoradoText-Roman.woff2") format("woff2"), url("/fonts/EldoradoText-Roman.woff") format("woff");
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: "Eldowoffle";
+        src: url("/fonts/EldoradoText-Italic.woff2") format("woff2"), url("/fonts/EldoradoText-Italic.woff") format("woff");
+        font-weight: normal;
+        font-style: italic;
+    }
+
+    @font-face {
+        font-family: "Eldowoffle";
+        src: url("/fonts/EldoradoText-Bold.woff2") format("woff2"), url("/fonts/EldoradoText-Bold.woff") format("woff");
+        font-weight: bold;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: "Eldowoffle";
+        src: url("/fonts/EldoradoText-BoldItalic.woff2") format("woff2"), url("/fonts/EldoradoText-BoldItalic.woff") format("woff");
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    #styles-primer-illustrations {
+        font-size: 24px;
+        table {
+            width: 100%;
+        }
+        
+        #faux-bold-oblique, #four-member-family {
+            td:nth-child(2) {
+                font-weight: bold;
+            }
+        
+            td:nth-child(3) {
+                font-style: italic;
+            }
+        
+            td:nth-child(4) {
+                font-weight: bold;
+                font-style: italic;
+            }
+        }
+        
+        #faux-bold-oblique {
+            font-family: Monaco, "Andale Mono", fantasy;
+            font-size: 90%;
+        }
+        
+        #four-member-family {
+            font-family: "Eldowoffle", "Times New Roman", serif;
+            font-size: 120%;
+        }
+        
+        #titling-gothic {
+            font-family: "MomentumSansVariable", sans-serif;
+            tr:nth-child(1) {
+                font-weight: 200;
+            }
+            tr:nth-child(2) {
+                font-weight: 400;
+            }
+            tr:nth-child(3) {
+                font-weight: 500;
+            }
+            tr:nth-child(4) {
+                font-weight: 700;
+            }
+            tr:nth-child(5) {
+                font-weight: 900;
+            }
+            td:nth-child(1) {
+                font-variation-settings: "wdth" 100;
+            }
+            td:nth-child(2) {
+                font-variation-settings: "wdth" 90;
+            }
+            td:nth-child(3) {
+                font-variation-settings: "wdth" 75;
+            }
+        }
+
+        #momentum-sans {
+            font-family: "MomentumSansVariable", sans-serif;
+            tr:nth-child(1) {
+                font-weight: 400;
+            }
+            tr:nth-child(2) {
+                font-weight: 700;
+            }
+            tr:nth-child(3) {
+                font-weight: 900;
+            }
+            td:nth-child(1) {
+                font-variation-settings: "opsz" 14;
+            }
+            td:nth-child(2) {
+                font-variation-settings: "opsz" 36;
+            }
+            td:nth-child(3) {
+                font-variation-settings: "opsz" 64;
+            }
+        }
+    }
+{% endraw %}
+{% endcapture %}
+
+<style>{{css|scssify}}</style>
+
+<figure id='styles-primer-illustrations'>
+    <figure id='faux-bold-oblique'>
+        <figcaption>A semi-fictional “OldDreadful” typeface family that could be generated from the “regular” by computerized bolding and obliqueing.</figcaption>
+        <table>
+            <tr>
+                <td>OldDreadful</td>
+                <td>OldDreadful</td>
+                <td>OldDreadful</td>
+                <td>OldDreadful</td>
+            </tr>
+        </table>
+    </figure>
+    
+    <figure id='four-member-family'>
+        <figcaption>The Eldorado typeface family contains four styles as individually designed fonts.</figcaption>
+        <table>
+            <tr>
+                <td>Eldorado</td>
+                <td>Eldorado</td>
+                <td>Eldorado</td>
+                <td>Eldorado</td>
+            </tr>
+        </table>
+    </figure>
+
+    <figure id='titling-gothic'>
+        <figcaption>The Titling Gothic family is separated by widths, e.g. the subfamily TitlingGothicCondensed-, contains the five weights in the right-hand column.</figcaption>
+        <table>
+            <tr>
+                <td>Titling Gothic</td>
+                <td>Titling Gothic</td>
+                <td>Titling Gothic</td>
+            </tr>
+            <tr>
+                <td>Titling Gothic</td>
+                <td>Titling Gothic</td>
+                <td>Titling Gothic</td>
+            </tr>
+            <tr>
+                <td>Titling Gothic</td>
+                <td>Titling Gothic</td>
+                <td>Titling Gothic</td>
+            </tr>
+            <tr>
+                <td>Titling Gothic</td>
+                <td>Titling Gothic</td>
+                <td>Titling Gothic</td>
+            </tr>
+            <tr>
+                <td>Titling Gothic</td>
+                <td>Titling Gothic</td>
+                <td>Titling Gothic</td>
+            </tr>
+        </table>
+    </figure>
+    
+    <figure id='momentum-sans'>
+        <figcaption>The Momentum family is separated by size, e.g. each of three subfamilies; MomentumSansText-, MomentumSansDeck-, and MomentumSansDisplay-, contain the weights and widths of that size master.</figcaption>
+        <table>
+            <tr>
+                <td>MomentumText</td>
+                <td>MomentumDeck</td>
+                <td>MomentumDisplay</td>
+            </tr>
+            <tr>
+                <td>MomentumText</td>
+                <td>MomentumDeck</td>
+                <td>MomentumDisplay</td>
+            </tr>
+            <tr>
+                <td>MomentumText</td>
+                <td>MomentumDeck</td>
+                <td>MomentumDisplay</td>
+            </tr>
+        </table>
+    </figure>
+</figure>
