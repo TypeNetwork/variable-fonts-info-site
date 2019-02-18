@@ -1,42 +1,35 @@
 ---
+title: Families go their own ways
+stylesheets:
+ - "https://cloud.typenetwork.com/projects/3023/fontface.css/"
+class: grey
 ---
 {% capture css %}
 {% raw %}
-    @font-face {
-        font-family: "Eldowoffle";
-        src: url("/fonts/EldoradoText-Roman.woff2") format("woff2"), url("/fonts/EldoradoText-Roman.woff") format("woff");
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    @font-face {
-        font-family: "Eldowoffle";
-        src: url("/fonts/EldoradoText-Italic.woff2") format("woff2"), url("/fonts/EldoradoText-Italic.woff") format("woff");
-        font-weight: normal;
-        font-style: italic;
-    }
-
-    @font-face {
-        font-family: "Eldowoffle";
-        src: url("/fonts/EldoradoText-Bold.woff2") format("woff2"), url("/fonts/EldoradoText-Bold.woff") format("woff");
-        font-weight: bold;
-        font-style: normal;
-    }
-
-    @font-face {
-        font-family: "Eldowoffle";
-        src: url("/fonts/EldoradoText-BoldItalic.woff2") format("woff2"), url("/fonts/EldoradoText-BoldItalic.woff") format("woff");
-        font-weight: bold;
-        font-style: italic;
-    }
-
     #styles-primer-illustrations {
         font-size: 24px;
         table {
             width: 100%;
         }
         
-        #faux-bold-oblique, #four-member-family {
+        #faux-bold-oblique {
+            font-family: Courier, monospace;
+            td[data-faux] {
+                position: relative;
+                &::after {
+                    position: absolute;
+                    left: 1px;
+                    content: attr(data-faux);
+                }
+            }
+            td:nth-child(3), td:nth-child(4) {
+                font-style: italic;
+            }
+        }
+        
+        #four-member-family {
+            font-family: "Eldorado Text", "Times New Roman", serif;
+            font-size: 110%;
             td:nth-child(2) {
                 font-weight: bold;
             }
@@ -51,20 +44,19 @@
             }
         }
         
-        #faux-bold-oblique {
-            font-family: Monaco, "Andale Mono", fantasy;
-            font-size: 90%;
-        }
-        
-        #four-member-family {
-            font-family: "Eldowoffle", "Times New Roman", serif;
-            font-size: 120%;
-        }
-        
         #titling-gothic {
-            font-family: "MomentumSansVariable", sans-serif;
+            font-size: 110%;
+            td:nth-child(1) {
+                font-family: "Titling Gothic";
+            }
+            td:nth-child(2) {
+                font-family: "TG Condensed";
+            }
+            td:nth-child(3) {
+                font-family: "TG Compressed";
+            }
             tr:nth-child(1) {
-                font-weight: 200;
+                font-weight: 300;
             }
             tr:nth-child(2) {
                 font-weight: 400;
@@ -73,19 +65,10 @@
                 font-weight: 500;
             }
             tr:nth-child(4) {
-                font-weight: 700;
+                font-weight: 600;
             }
             tr:nth-child(5) {
-                font-weight: 900;
-            }
-            td:nth-child(1) {
-                font-variation-settings: "wdth" 100;
-            }
-            td:nth-child(2) {
-                font-variation-settings: "wdth" 90;
-            }
-            td:nth-child(3) {
-                font-variation-settings: "wdth" 75;
+                font-weight: 700;
             }
         }
 
@@ -118,13 +101,13 @@
 
 <figure id='styles-primer-illustrations'>
     <figure id='faux-bold-oblique'>
-        <figcaption>A semi-fictional “OldDreadful” typeface family that could be generated from the “regular” by computerized bolding and obliqueing.</figcaption>
+        <figcaption>The Courier typeface family that could be generated from the “regular” by computerized bolding and obliqueing.</figcaption>
         <table>
             <tr>
-                <td>OldDreadful</td>
-                <td>OldDreadful</td>
-                <td>OldDreadful</td>
-                <td>OldDreadful</td>
+                <td>COURIER</td>
+                <td data-faux="COURIER">COURIER</td>
+                <td>COURIER</td>
+                <td data-faux="COURIER">COURIER</td>
             </tr>
         </table>
     </figure>

@@ -66,6 +66,13 @@
         background: white;
         padding: 1rem;
     }
+
+    &.grey {
+        ul.comparison, .extra-content {
+            background: transparent;
+            padding: 0;
+        }
+    }
     
     ul.example-links {
         margin-top: 1rem;
