@@ -5,9 +5,8 @@ sidebar: "Animation"
 title: "Animation primer"
 ---
 
-before vars _ style made custom to need or one style's requirements in printing.
+I'm looking for a "before and after" variable...
 
-After cars _ styles avaiable to the entire design space. 
+text, and exmaples of animations 
 
-(note to editor: please find example and cover that in the after, and please embelish to 
-as many "before" and after issues as possible)
+to be created for review of candidate site pages. 
