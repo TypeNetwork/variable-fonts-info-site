@@ -8,7 +8,7 @@ The presentation of typeface families on the desktop is based on family and styl
 
 <figure>
     <img src="{{baseurl}}/images/articles/family-selection.svg" alt="Traditional family/style choosing vs. with variable fonts">
-    <figcaption>The traditional process of choosing a family and then selecting styles.</figcaption>
+    <figcaption>The old-school, interface-bending method of selecting a family and style from a desktop menu (left) versus the more intuitive, streamlined process of selection possible with variable fonts (right).</figcaption>
 </figure>
 
 If a “font family” is just one one style, the file contains the whole family. But even if a font family contains just weights and widths, names and menus can start to bewilder minds and stretch user interfaces: <i>OldDreadful-ExtraBoldCondendsedItalic.</i> And more complex families—those including extremely large style menus, size masters, “pro” glyph sets, weights, widths, and italics in the same family—have forced font developers to break the family into subfamiily names like <i>OldDreadfulText-ExtraBoldCondendsedItalic</i> for easier use via subfamily grouping in menus.
