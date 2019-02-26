@@ -90,27 +90,26 @@ element: p
             
             if (pivot >= cvalue) {
                 //first time this happens we can stop
-                if (!upperPivot) {
+                if (isNaN(upperPivot)) {
                     upperPivot = pivot;
                     upperAxes = paxes;
                 }
             }
             
-            if (!lowerPivot || !upperPivot) {
+            if (isNaN(lowerPivot) || isNaN(upperPivot)) {
                 //first runthru OR we still haven't found the top of the range
                 lowerPivot = pivot;
                 lowerAxes = paxes;
             }
         });
     
-        var result = {};
-        if (!upperPivot) {
+        if (isNaN(upperPivot)) {
             upperPivot = lowerPivot;
             upperAxes = lowerAxes;
-        } else if (!lowerPivot) {
-            lowerPivot = upperPivot;
-            lowerAxes = upperAxes;
         }
+
+        var result = {};
+        
         allAxes.forEach(function(dflt, axis) {
             var u = axis in upperAxes ? upperAxes[axis] : dflt;
             var l = axis in lowerAxes ? lowerAxes[axis] : dflt;
@@ -121,6 +120,58 @@ element: p
             }
         });
 
+        return result;
+    }
+
+    //given a value for a parametric axis, back-calculate the composite value that would produce it
+    function parametricToComposite(paxis, pvalue, caxis) {
+        if (!(caxis in composites)) {
+            return null;
+        }
+    
+        pvalue = parseFloat(pvalue);
+
+        var mydefault = axes[paxis].default;
+        
+        var lowerC, upperC;
+        var lowerP, upperP;
+
+        //pivot value and axes
+        composites[caxis].forEach(function(paxes, pivot) {
+            pivot = parseFloat(pivot);
+            
+            var myval = paxis in paxes ? paxes[paxis] : mydefault;
+
+            if (myval >= pvalue) {
+                //first time this happens we can stop
+                if (isNaN(upperC)) {
+                    upperC = pivot;
+                    upperP = myval;
+                }
+            }
+            
+            if (isNaN(lowerC) || isNaN(upperC)) {
+                //first runthru OR we still haven't found the top of the range
+                lowerC = pivot;
+                lowerP = myval;
+            }
+        });
+    
+        if (!upperC) {
+            upperC = lowerC;
+            upperP = lowerP;
+        }
+
+        if (upperC === lowerC) {
+            return upperC;
+        }
+
+        var result = lowerC + (pvalue - lowerP)/(upperP - lowerP) * (upperC - lowerC);
+
+        if (axes[caxis].max - axes[caxis].min > 50) {
+            return Math.round(result);
+        }
+        
         return result;
     }
 
@@ -135,46 +186,64 @@ element: p
         axesDisplay.appendChild(li);
     });
     extraContent.appendChild(axesDisplay);
-
+    
     //set everything to default
     para.style.fontSize = '14pt';
     para.style.fontWeight = 'normal';
     para.style.fontVariationSettings = obj2fvs(defaults);
     
+    var opszOutput = axesDisplay.querySelector('li.opsz output');
+    var wghtOutput = axesDisplay.querySelector('li.wght output');
+    
     var sliders = document.querySelector('ul.parambuliders');
     var sizeSlider = sliders.querySelector('input[name=size]');
     var weightSlider = sliders.querySelector('input[name=relweight]');
 
-    function updateFVS(k, v) {
+    function doSizeWeight() {
         var fvs = fvs2obj(para.style.fontVariationSettings);
-        compositeToParametric(k, v).forEach(function(v, k) {
-            fvs[k] = v;
+        var axisDeltas = {};
+        var opsz = parseFloat(sizeSlider.value);
+
+        para.style.fontSize = opsz + 'pt';
+
+        //apply opsz deltas
+        compositeToParametric('opsz', opsz).forEach(function(v, k) {
+            axisDeltas[k] = v - axes[k].default;
+        });
+
+        //calculate adjusted weight as % of default XOPQ
+        var baseXOPQ = axes.XOPQ.default + (axisDeltas.XOPQ || 0);
+        var targetXOPQ = Math.round(baseXOPQ * weightSlider.value/100);
+
+        //back-figure wght value from XOPQ
+        var targetWght = parametricToComposite('XOPQ', targetXOPQ, 'wght');
+        
+        //apply wght deltas
+        compositeToParametric('wght', targetWght).forEach(function(v, k) {
+            if (!(k in axisDeltas)) {
+                axisDeltas[k] = 0;
+            }
+            axisDeltas[k] += v - axes[k].default;
+        });
+
+        axisDeltas.forEach(function(v, k) {
+            fvs[k] = axes[k].default + v;
             var output = axesDisplay.querySelector('li.' + k);
-            output.querySelector('output').textContent = v;
-            if (v === axes[k].default) {
+            output.querySelector('output').textContent =  v;
+            if (v == 0) {
                 output.className = k;
             } else {
                 output.className = k + " changed";
             }
         });
+        
+        opszOutput.textContent = fvs.opsz + " (" + sizeSlider.value + ")";
+        wghtOutput.textContent = fvs.wght + " (" + weightSlider.value + "%)";
+        
         para.style.fontVariationSettings = obj2fvs(fvs);
     }
     
-    function doSize(evt) {
-        para.style.fontSize = this.value + 'pt';
-        updateFVS('opsz', this.value);
-    }
-    sizeSlider.addEventListener('input', doSize);
-    sizeSlider.addEventListener('change', doSize);
-    
-    function doWeight(evt) {
-        //input is a percentage of the default XOPQ
-        var targetXOPQ = Math.round(axes.XOPQ.default * this.value/100);
-        
-        //figure out what wght equates to this XOPQ
-        
-    }
-    weightSlider.addEventListener('input', doWeight);
-    weightSlider.addEventListener('change', doWeight);
+    sliders.addEventListener('input', doSizeWeight);
+    sliders.addEventListener('change', doSizeWeight);
 })();
 </script>
