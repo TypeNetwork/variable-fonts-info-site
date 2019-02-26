@@ -205,6 +205,24 @@ function doAjax(url, options) {
 
 // END POLYFILLS
 
+window.obj2fvs = function(fvs) {
+    var clauses = [];
+    fvs.forEach(function(v, k) {
+        clauses.push('"' + k + '" ' + v);
+    });
+    return clauses.join(", ");
+};
+
+window.fvs2obj = function(css) {
+    var result = {};
+    css.split(',').forEach(function(clause) {
+        var m = clause.match(/['"](....)['"]\s+(\-?[0-9\.]+)/);
+        if (m) {
+            result[m[1]] = parseFloat(m[2]);
+        }
+    });
+    return result;
+};
 
 function setupSidebar() {
     // style current link
@@ -574,23 +592,23 @@ var font = 'AmstelvarAlpha';
     
     //get axis values for the four corners
     var corners = {
-        'șẉ': sizeWeightAxisRanges[font][lower[0]][lower[1]],
-        'ŝẉ': sizeWeightAxisRanges[font][upper[0]][lower[1]],
-        'șẇ': sizeWeightAxisRanges[font][lower[0]][upper[1]],
-        'ŝẇ': sizeWeightAxisRanges[font][upper[0]][upper[1]]
+        șẉ: sizeWeightAxisRanges[font][lower[0]][lower[1]],
+        ŝẉ: sizeWeightAxisRanges[font][upper[0]][lower[1]],
+        șẇ: sizeWeightAxisRanges[font][lower[0]][upper[1]],
+        ŝẇ: sizeWeightAxisRanges[font][upper[0]][upper[1]]
     };
     
     //now we need to interpolate along the four edges
     var edges = {
-        'ș': ['șẇ', 'șẉ', weightratio],
-        'ŝ': ['ŝẇ', 'ŝẉ', weightratio],
-        'ẉ': ['ŝẉ', 'șẉ', sizeratio],
-        'ẇ': ['ŝẇ', 'șẇ', sizeratio]
+        ș: [corners.șẇ, corners.șẉ, weightratio],
+        ŝ: [corners.ŝẇ, corners.ŝẉ, weightratio],
+        ẉ: [corners.ŝẉ, corners.șẉ, sizeratio],
+        ẇ: [corners.ŝẇ, corners.șẇ, sizeratio]
     };
 
     edges.forEach(function(hlr, edge) {
-        var high = corners[hlr[0]];
-        var low = corners[hlr[1]];;
+        var high = hlr[0];
+        var low = hlr[1];;
         var ratio = hlr[2];
         var middle = {};
         high.forEach(function(sml, axis) {

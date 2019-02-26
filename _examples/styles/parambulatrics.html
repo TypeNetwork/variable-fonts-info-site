@@ -1,0 +1,180 @@
+---
+breadcrumbs: ["Styles", "Examples…"]
+title: Parametric perambulation
+description: 
+font: Amstelvar-Alpha
+size: 14
+class: compact parambulation
+text: >
+    I'm afraid I still don't understand, sir.
+    A surprise party? Mr. Worf, I hate surprise parties. I would <strong>never</strong> do that to you.
+    Sorry, Data. 
+    When has justice ever been as simple as a rule book? 
+    I'll alert the crew. 
+    Earl Grey tea, watercress sandwiches… and Bularian canapés? Are you up for promotion? 
+    Commander William Riker of the Starship Enterprise. 
+    Yesterday I did not know how to eat gagh. 
+    Yes, absolutely, I do indeed concur, wholeheartedly!
+element: p
+---
+<style>
+    .parambulation .extra-content ul.paraxes {
+        margin: 0;
+        padding: 0;
+    }
+
+    .parambulation .extra-content ul.paraxes > li {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .parambulation .extra-content ul.paraxes > li.changed {
+        font-weight: bold;
+    }
+</style>
+
+<ul class='parambuliders'>
+    <li><label>Size</label> <input type='range' name='size' min='10' max='48' value='14'><label></label></li>
+    <li><label>Weight</label> <input type='range' name='relweight' min='43' max='284' value='100'><label></label></li>
+</ul>
+
+<script>
+(function() {
+    var para = document.querySelector('.parambulation .rendered');
+    var extraContent = document.querySelector('.parambulation .extra-content');
+
+    extraContent.parentNode.insertBefore(extraContent, extraContent.parentNode.firstChild);
+
+    //pull axis info from typetools
+    var axes = {{site.data.fonts.axes[site.data.fonts.names["Amstelvar-Alpha"]]|jsonify}};
+    var defaults = Object.keys(axes).reduce(function(defaults, axis, i) { if ("default" in axes[axis]) { defaults[axis] = axes[axis].default; } return defaults; }, {});
+    var composites = {
+        "opsz":{
+            "10":{"XOPQ":110,"YOPQ":75,"YTLC":525},
+            "14":[],
+            "72":{"XTRA":300,"YOPQ":12,"YTLC":475}
+        },"wdth":{
+            "35":{"XTRA":42,"XOPQ":70,"YOPQ":45,"PWDT":60},
+            "100":[]
+        },"wght":{
+            "100":{"XOPQ":38,"YOPQ":25,"XTRA":375,"YTSE":8,"PWGT":38},
+            "400":[],
+            "900":{"XOPQ":250,"XTRA":250,"YTLC":525,"PWGT":250}
+        }
+    };
+
+    function compositeToParametric(caxis, cvalue) {
+        cvalue = parseFloat(cvalue);
+        
+        if (!(caxis in composites)) {
+            var temp = {};
+            temp[caxis] = cvalue;
+            return temp;
+        }
+    
+        //maintain a list of all axes mentioned in the composite, so we can reset them all
+        var allAxes = {};   
+        
+        var lowerPivot, upperPivot;
+        var lowerAxes, upperAxes;
+        //pivot value and axes
+        composites[caxis].forEach(function(paxes, pivot) {
+            pivot = parseFloat(pivot);
+            
+            //add any new axes to the list
+            paxes.forEach(function(pval, paxis) {
+                if (!(paxis in allAxes)) {
+                    allAxes[paxis] = axes[paxis].default;
+                }
+            });
+            
+            if (pivot >= cvalue) {
+                //first time this happens we can stop
+                if (!upperPivot) {
+                    upperPivot = pivot;
+                    upperAxes = paxes;
+                }
+            }
+            
+            if (!lowerPivot || !upperPivot) {
+                //first runthru OR we still haven't found the top of the range
+                lowerPivot = pivot;
+                lowerAxes = paxes;
+            }
+        });
+    
+        var result = {};
+        if (!upperPivot) {
+            upperPivot = lowerPivot;
+            upperAxes = lowerAxes;
+        } else if (!lowerPivot) {
+            lowerPivot = upperPivot;
+            lowerAxes = upperAxes;
+        }
+        allAxes.forEach(function(dflt, axis) {
+            var u = axis in upperAxes ? upperAxes[axis] : dflt;
+            var l = axis in lowerAxes ? lowerAxes[axis] : dflt;
+            var r = upperPivot === lowerPivot ? 0.0 : (cvalue-lowerPivot)/(upperPivot-lowerPivot);
+            result[axis] = l + r*(u-l);
+            if (axes[axis].max - axes[axis].min > 50) {
+                result[axis] = Math.round(result[axis]);
+            }
+        });
+
+        return result;
+    }
+
+    //set up axis listing
+    var axesDisplay = document.createElement('ul');
+    axesDisplay.className = 'paraxes';
+    defaults.forEach(function(d, axis) {
+        var li = document.createElement('li');
+        li.className = axis;
+        li.setAttribute('data-default', d);
+        li.innerHTML = "<label>" + axis + "</label> <output>" + d + "</output>";
+        axesDisplay.appendChild(li);
+    });
+    extraContent.appendChild(axesDisplay);
+
+    //set everything to default
+    para.style.fontSize = '14pt';
+    para.style.fontWeight = 'normal';
+    para.style.fontVariationSettings = obj2fvs(defaults);
+    
+    var sliders = document.querySelector('ul.parambuliders');
+    var sizeSlider = sliders.querySelector('input[name=size]');
+    var weightSlider = sliders.querySelector('input[name=relweight]');
+
+    function updateFVS(k, v) {
+        var fvs = fvs2obj(para.style.fontVariationSettings);
+        compositeToParametric(k, v).forEach(function(v, k) {
+            fvs[k] = v;
+            var output = axesDisplay.querySelector('li.' + k);
+            output.querySelector('output').textContent = v;
+            if (v === axes[k].default) {
+                output.className = k;
+            } else {
+                output.className = k + " changed";
+            }
+        });
+        para.style.fontVariationSettings = obj2fvs(fvs);
+    }
+    
+    function doSize(evt) {
+        para.style.fontSize = this.value + 'pt';
+        updateFVS('opsz', this.value);
+    }
+    sizeSlider.addEventListener('input', doSize);
+    sizeSlider.addEventListener('change', doSize);
+    
+    function doWeight(evt) {
+        //input is a percentage of the default XOPQ
+        var targetXOPQ = Math.round(axes.XOPQ.default * this.value/100);
+        
+        //figure out what wght equates to this XOPQ
+        
+    }
+    weightSlider.addEventListener('input', doWeight);
+    weightSlider.addEventListener('change', doWeight);
+})();
+</script>
