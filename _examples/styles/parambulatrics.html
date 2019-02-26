@@ -54,12 +54,12 @@ element: p
             "14":[],
             "72":{"XTRA":300,"YOPQ":12,"YTLC":475}
         },"wdth":{
-            "35":{"XTRA":42,"XOPQ":70,"YOPQ":45,"PWDT":60},
+            "35":{"XTRA":42,"XOPQ":70,"YOPQ":45/* ,"PWDT":60 */},
             "100":[]
         },"wght":{
-            "100":{"XOPQ":38,"YOPQ":25,"XTRA":375,"YTSE":8,"PWGT":38},
+            "100":{"XOPQ":38,"YOPQ":25,"XTRA":375,"YTSE":8/* ,"PWGT":38 */},
             "400":[],
-            "900":{"XOPQ":250,"XTRA":250,"YTLC":525,"PWGT":250}
+            "900":{"XOPQ":250,"XTRA":250,"YTLC":525/* ,"PWGT":250 */}
         }
     };
 
@@ -213,7 +213,10 @@ element: p
 
         //calculate adjusted weight as % of default XOPQ
         var baseXOPQ = axes.XOPQ.default + (axisDeltas.XOPQ || 0);
-        var targetXOPQ = Math.round(baseXOPQ * weightSlider.value/100);
+
+        //not sure if this should be based on the regular-default XOPQ, or the opsz-modified one
+//        var targetXOPQ = Math.round(baseXOPQ * weightSlider.value/100);
+        var targetXOPQ = Math.round(axes.XOPQ.default * weightSlider.value/100);
 
         //back-figure wght value from XOPQ
         var targetWght = parametricToComposite('XOPQ', targetXOPQ, 'wght');
@@ -229,7 +232,7 @@ element: p
         axisDeltas.forEach(function(v, k) {
             fvs[k] = axes[k].default + v;
             var output = axesDisplay.querySelector('li.' + k);
-            output.querySelector('output').textContent =  v;
+            output.querySelector('output').textContent =  (axes[k].default + v) + " (" + (v >= 0 ? "+" : "") + v + ")";
             if (v == 0) {
                 output.className = k;
             } else {
