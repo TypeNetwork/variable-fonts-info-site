@@ -39,9 +39,6 @@
     {% if params.label %}
         <label>{{ params.label }}</label>
     {% endif %}
-    {% unless params.label %}
-        {{axis_listing}}
-    {% endunless %}
     {% if element == "figure" %}
         </figcaption>
     {% endif %}

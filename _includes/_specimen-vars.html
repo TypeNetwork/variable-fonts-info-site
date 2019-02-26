@@ -33,7 +33,7 @@
     {% if params.leading < 6 %}
         {% assign lineheight = params.leading %}
     {% else %}
-        {% assign lineheight = params.leading|abs|append:"px" %}
+        {% assign lineheight = params.leading|abs|append:"pt" %}
     {% endif %}
 {% else %}
     {% assign lineheight = 1.2 %}
@@ -100,7 +100,7 @@
     color: {{foreground}};
     background: {{background}};
     font-family: "{{fontfamily}}";
-    font-size: {{fontsize}}px;
+    font-size: {{fontsize}}pt;
     line-height: {{lineheight}};
     font-weight: {{fontweight}};
     font-variation-settings: {{fvs_verbose|join:", "}};
