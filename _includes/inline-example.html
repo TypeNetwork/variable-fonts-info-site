@@ -3,7 +3,7 @@
 
 <figure class='example {{example.class}}'>
     <figcaption>
-        <h3>{{example.title}}</h3>
+        {% if page.layout != 'example' %}<h3>{{example.title}}</h3>{% endif %}
         {{example.description|markdownify}}
     </figcaption>
     {% include example.html example=example %}
