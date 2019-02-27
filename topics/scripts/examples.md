@@ -2,7 +2,7 @@
 layout: article
 breadcrumbs: ["Scripts", "Examples…"]
 sidebar: "Example"
-title: "Example"
+title: "Multi-script alignment"
 ---
 Fonts today containing multiple scripts share one set of alignments stored in the fonts that are available for programs: baseline, ascent, descent, cap height, and x-height. Font families that combine scripts must select one ideal use of the vertical space of the em; in other words,  the scripts must be adjusted so that they can work together.
 
