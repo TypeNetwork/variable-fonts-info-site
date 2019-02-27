@@ -3,6 +3,10 @@
 (function() {
 "use strict";
 
+window.globalAxes = {{site.data.fonts.axes[site.data.fonts.names["Amstelvar-Alpha"]]|jsonify}};
+window.axisDefaults = Object.keys(globalAxes).reduce(function(defaults, axis, i) { if ("default" in globalAxes[axis]) { defaults[axis] = globalAxes[axis].default; } return defaults; }, {});
+
+
 function varbroSetup() {
     overrideTNJS();
     addNav();
@@ -483,25 +487,200 @@ function setupPlaygrounds() {
 var sizeWeightAxisRanges = {
     // these are point values for now
     'AmstelvarAlpha': {
-        10: {
-            400: {
-                XTRA: [10, 20, 30]
+        '10': {
+            '100': {
+                XTRA: [370, 402, 402]
             },
-            700: {
-                XTRA: [20, 40, 60]
+            '210': {
+                XTRA: [370, 402, 402]
             }
         },
         
-        20: {
-            400: {
-                XTRA: [5, 10, 15]
+        '14': {
+            '100': {
+                XTRA: [380, 402, 402]
             },
-            700: {
-                XTRA: [10, 20, 30]
+            '210': {
+                XTRA: [302, 326, 342]
             }
         },
+        
+        '48': {
+            '100': {
+                XTRA: [325, 342, 359]
+            },
+            '210': {
+                XTRA: [325, 342, 359]
+            }
+        }
     }
 };
+
+
+//pull axis info from typetools
+var composites = {
+    "opsz":{
+        "10":{"XOPQ":110,"YOPQ":75,"YTLC":525},
+        "14":[],
+        "72":{"XTRA":300,"YOPQ":12,"YTLC":475}
+    },"wdth":{
+        "35":{"XTRA":42,"XOPQ":70,"YOPQ":45/* ,"PWDT":60 */},
+        "100":[]
+    },"wght":{
+        "100":{"XOPQ":38,"YOPQ":25,"XTRA":375,"YTSE":8/* ,"PWGT":38 */},
+        "400":[],
+        "900":{"XOPQ":250,"XTRA":250,"YTLC":525/* ,"PWGT":250 */}
+    }
+};
+
+//convert a set of axes from blended to all-parametric
+window.allParametric = function(axes) {
+    var axisDeltas = {};
+    
+    //special case for "relweight" specifying weight as % of default XOPQ
+    // back-figure this to a `wght` value
+    if ('relweight' in axes) {
+        var baseXOPQ = axisDefaults.XOPQ + (axisDeltas.XOPQ || 0);
+    
+        //not sure if this should be based on the regular-default XOPQ, or the opsz-modified one
+    //        var targetXOPQ = Math.round(baseXOPQ * axes.relweight.value/100);
+        var targetXOPQ = Math.round(axisDefaults.XOPQ * axes.relweight/100);
+    
+        //back-figure wght value from XOPQ
+        axes.wght = parametricToComposite('XOPQ', targetXOPQ, 'wght');
+        delete axes.relweight;
+    }
+    
+    axes.forEach(function(val, axis) {
+        compositeToParametric(axis, val).forEach(function(v, k) {
+            if (!(k in axisDeltas)) {
+                axisDeltas[k] = 0;
+            }
+            axisDeltas[k] += v - axisDefaults[k];
+        });
+    });
+
+    var result = {};
+    axisDeltas.forEach(function(v, k) {
+        result[k] = axisDefaults[k] + v;
+    });
+    
+    return result;
+};
+
+window.compositeToParametric = function(caxis, cvalue) {
+    cvalue = parseFloat(cvalue);
+    
+    if (!(caxis in composites)) {
+        var temp = {};
+        temp[caxis] = cvalue;
+        return temp;
+    }
+
+    //maintain a list of all axes mentioned in the composite, so we can reset them all
+    var allAxes = {};   
+    
+    var lowerPivot, upperPivot;
+    var lowerAxes, upperAxes;
+    //pivot value and axes
+    composites[caxis].forEach(function(paxes, pivot) {
+        pivot = parseFloat(pivot);
+        
+        //add any new axes to the list
+        paxes.forEach(function(pval, paxis) {
+            if (!(paxis in allAxes)) {
+                allAxes[paxis] = globalAxes[paxis].default;
+            }
+        });
+        
+        if (pivot >= cvalue) {
+            //first time this happens we can stop
+            if (isNaN(upperPivot)) {
+                upperPivot = pivot;
+                upperAxes = paxes;
+            }
+        }
+        
+        if (isNaN(lowerPivot) || isNaN(upperPivot)) {
+            //first runthru OR we still haven't found the top of the range
+            lowerPivot = pivot;
+            lowerAxes = paxes;
+        }
+    });
+
+    if (isNaN(upperPivot)) {
+        upperPivot = lowerPivot;
+        upperAxes = lowerAxes;
+    }
+
+    var result = {};
+    
+    allAxes.forEach(function(dflt, axis) {
+        var u = axis in upperAxes ? upperAxes[axis] : dflt;
+        var l = axis in lowerAxes ? lowerAxes[axis] : dflt;
+        var r = upperPivot === lowerPivot ? 0.0 : (cvalue-lowerPivot)/(upperPivot-lowerPivot);
+        result[axis] = l + r*(u-l);
+        if (globalAxes[axis].max - globalAxes[axis].min > 50) {
+            result[axis] = Math.round(result[axis]);
+        }
+    });
+
+    return result;
+}
+
+//given a value for a parametric axis, back-calculate the composite value that would produce it
+window.parametricToComposite = function(paxis, pvalue, caxis) {
+    if (!(caxis in composites)) {
+        return null;
+    }
+
+    pvalue = parseFloat(pvalue);
+
+    var mydefault = globalAxes[paxis].default;
+    
+    var lowerC, upperC;
+    var lowerP, upperP;
+
+    //pivot value and axes
+    composites[caxis].forEach(function(paxes, pivot) {
+        pivot = parseFloat(pivot);
+        
+        var myval = paxis in paxes ? paxes[paxis] : mydefault;
+
+        if (myval >= pvalue) {
+            //first time this happens we can stop
+            if (isNaN(upperC)) {
+                upperC = pivot;
+                upperP = myval;
+            }
+        }
+        
+        if (isNaN(lowerC) || isNaN(upperC)) {
+            //first runthru OR we still haven't found the top of the range
+            lowerC = pivot;
+            lowerP = myval;
+        }
+    });
+
+    if (!upperC) {
+        upperC = lowerC;
+        upperP = lowerP;
+    }
+
+    if (upperC === lowerC) {
+        return upperC;
+    }
+
+    var result = lowerC + (pvalue - lowerP)/(upperP - lowerP) * (upperC - lowerC);
+
+    if (globalAxes[caxis].max - globalAxes[caxis].min > 50) {
+        return Math.round(result);
+    }
+    
+    return result;
+}
+
+
 
 window.getAxisRanges = function(targetsize, targetweight) {
 //    var css = getComputedStyle(el);
@@ -514,7 +693,7 @@ window.getAxisRanges = function(targetsize, targetweight) {
 //        default: targetweight = parseFloat(css.fontWeight) | 400; break;
 //    }
 
-var font = 'AmstelvarAlpha';
+    var font = 'AmstelvarAlpha';
     
     if (!(font in sizeWeightAxisRanges)) {
         return {};
@@ -635,8 +814,8 @@ var font = 'AmstelvarAlpha';
 
 window.testRanges = function() {
     var el = document.querySelector('#unique-specimen-8 span.rendered');
-    var sizes = [9, 10, 11, 15, 19, 20, 21];
-    var weights = [300, 400, 430, 550, 670, 700, 800];
+    var sizes = [9, 10, 12, 14, 24, 48, 60];
+    var weights = [0.9, 1.0, 1.1, 1.55, 2.0, 2.1, 2.2];
     sizes.forEach(function(size) {
         weights.forEach(function(weight) {
             console.log(size, weight, JSON.stringify(getAxisRanges(size, weight)));
