@@ -14,6 +14,9 @@
     HTML can't be indented or it will be escaped
 {% endcomment %}
 <figure id='{{specimen_id}}' class="specimen {{layout}}"{% if params.css %} style="{% for kv in params.css %}{{kv[0]}}:{{kv[1]}};{% endfor %}"{% endif %}>
+    {% if params.caption %}
+        <figcaption>{{params.caption}}</figcaption>
+    {% endif %}
     <ul class='lines'>
     {% for line in params.lines %}
         <li>{% include specimen.html params=line %}</li>

@@ -35,6 +35,8 @@ figure.specimen {
     }
     
     ul.lines {
+        padding: 1rem;
+        background: white;
         > li + li {
             margin-top: 0.5em;
         }
@@ -43,6 +45,10 @@ figure.specimen {
     figcaption {
         margin: 0;
         padding: 0;
+        
+        + ul.lines {
+            margin-top: 0.5rem;
+        }
         
         label {
             color: $pink;

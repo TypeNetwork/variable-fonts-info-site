@@ -33,12 +33,13 @@
     }
 
     ul.comparison {
-        padding: 1rem;
-        background: white;
+//         padding: 1rem;
+//         background: white;
         > li + li {
             margin-top: 1rem;
         }
         figure {
+            background: transparent;
             padding: 0;
         }
     }
