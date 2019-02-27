@@ -19,6 +19,19 @@ function varbroSetup() {
     setTimeout(setupFitToWidth, 1000);
 }
 
+//like jQuery function
+window.doOnReady = function(func, thisArg) {
+    if (thisArg) {
+        func = func.bind(thisArg);
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', func);
+    } else {
+        func();
+    }
+}
+
+
 doOnReady(varbroSetup);
 
 //handy polyfills and utility functions
@@ -130,18 +143,6 @@ if (!RegExp.escape) {
 
 
 
-//like jQuery function
-function doOnReady(func, thisArg) {
-    if (thisArg) {
-        func = func.bind(thisArg);
-    }
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', func);
-    } else {
-        func();
-    }
-}
-
 // shortcuts to get dimensions of element minus padding, equivalent to jQuery width() and height()
 if (!Element.prototype.contentWidth) {
     Element.prototype.contentWidth = function() {
@@ -184,7 +185,7 @@ if (!HTMLFormElement.prototype.serialize) {
 }
 
 
-function doAjax(url, options) {
+window.doAjax = function(url, options) {
     var xhr = new XMLHttpRequest();
     if (options.complete) {
         xhr.addEventListener("load", function() { options.complete(xhr); });
@@ -273,7 +274,6 @@ function setupFitToWidth() {
         
         //write pass
         spans.forEach(function(span, i) {
-            console.log(oldsize[i], ratios[i]);
             var newsize = Math.floor(oldsize[i] * ratios[i]);
             span.style.fontSize = newsize + "px";
             if (fvs[i].indexOf('opsz') >= 0) {
