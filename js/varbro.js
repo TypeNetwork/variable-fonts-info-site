@@ -220,6 +220,9 @@ window.obj2fvs = function(fvs) {
 
 window.fvs2obj = function(css) {
     var result = {};
+    if (css === 'normal') {
+        return result;
+    }
     css.split(',').forEach(function(clause) {
         var m = clause.match(/['"](....)['"]\s+(\-?[0-9\.]+)/);
         if (m) {
@@ -531,6 +534,37 @@ var composites = {
         "400":[],
         "900":{"XOPQ":250,"XTRA":250,"YTLC":525/* ,"PWGT":250 */}
     }
+};
+
+window.getXtraRange = function(fontsize) {
+    fontsize = parseFloat(fontsize);
+    var lowerSize, upperSize;
+    var lowerRange, upperRange;
+    sizeWeightAxisRanges.AmstelvarAlpha.forEach(function(weights, size) {
+        size = parseInt(size);
+        if (isNaN(lowerSize) || size <= fontsize) {
+            lowerSize = size;
+            lowerRange = weights[100].XTRA;
+        }
+        if (isNaN(upperSize) && size >= fontsize) {
+            upperSize = size;
+            upperRange = weights[100].XTRA;
+        }
+    });
+    if (isNaN(upperSize)) {
+        upperSize = lowerSize;
+        upperRange = lowerRange;
+    }
+    if (upperSize === lowerSize) {
+        return upperRange;
+    }
+    var result = [];
+    var ratio = (fontsize - lowerSize) / (upperSize - lowerSize);
+    lowerRange.forEach(function(lower, i) {
+        var upper = upperRange[i];
+        result.push(lower + ratio * (upper - lower));
+    });
+    return result;
 };
 
 //convert a set of axes from blended to all-parametric

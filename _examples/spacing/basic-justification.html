@@ -1,0 +1,249 @@
+---
+breadcrumbs: ["Spacing", "Examples…"]
+title: "Basic justification"
+description: "Justifying default size/weight with nothing fancy. Starts with min recommended XTRA, then expands first XTRA then word space."
+---
+
+{% capture css %}
+#basic-justification {
+    position: relative;
+    font-family: {{site.data.fonts.names["Amstelvar-Alpha"]}}, "Comic Sans MS";
+    box-sizing: border-box;
+    p {
+        font-size: 14pt;
+        line-height: 1.4;
+    }
+
+    p.lede {
+      font-size: 120%;
+    }
+
+    .caps {
+      text-transform: uppercase;
+    }
+
+    span {
+      display: inline;
+    }
+
+    var {
+      position: relative;
+      display: inline-block;
+      font: inherit;
+      white-space: nowrap;
+
+      &::after {
+        content: attr(data-var) " " attr(data-wordspace);
+        display: block;
+        position: absolute;
+        font-family: Verdana;
+        font-size: 10px;
+        color: #09F;
+        top: 50%;
+        transform: translateY(-50%);
+        left: calc(100% + 2rem);
+      }
+    }
+
+    .resize {
+      display: block;
+      margin: 0;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: -1.5em;
+      width: 1em;
+      grid-column: auto;
+      cursor: ew-resize;
+      &:hover {
+        background-color: red;
+        opacity: 0.5;
+      }
+    }
+}
+{% endcapture %}
+
+<style>{{css|scssify}}</style>
+
+<article id='basic-justification'>
+    <p>
+        I remembered the case well, for it was one in which Holmes had taken an interest on account of the peculiar ferocity of the crime and the wanton brutality which had marked all the actions of the assassin. The commutation of his death sentence had been due to some doubts as to his complete sanity, so atrocious was his conduct. Our wagonette had topped a rise and in front of us rose the huge expanse of the moor, mottled with gnarled and craggy cairns and tors. A cold wind swept down from it and set us shivering. Somewhere there, on that desolate plain, was lurking this fiendish man, hiding in a burrow like a wild beast, his heart full of malignancy against the whole race which had cast him out. It needed but this to complete the grim suggestiveness of the barren waste, the chilling wind, and the darkling sky. Even Baskerville fell silent and pulled his overcoat more closely around him.
+    </p>
+    <div class='resize'></div>
+</article>
+
+<script>
+(function() {
+
+    Element.prototype.setFVS = function(k, v) {
+//         this.style.fontVariationSettings = '';
+        var style = getComputedStyle(this);
+        var current = fvs2obj(style.fontVariationSettings);
+//         current.opsz = parseFloat(style.fontSize) * 72/96;
+        if (k !== undefined && v !== undefined) {
+            current[k] = v;
+        }
+        this.style.fontVariationSettings = obj2fvs(current);
+    };
+
+    var container = document.getElementById('basic-justification');
+    var paragraphs = container.querySelectorAll('p');
+
+    // resize article
+    
+    var dragging = false;
+    var startX, startW;
+    
+    container.querySelector(".resize").addEventListener("mousedown", function(evt) {
+        evt.preventDefault();
+        dragging = true;
+        startX = evt.clientX;
+        startW = container.getBoundingClientRect().width;
+    });
+    
+    document.addEventListener("mouseup", function(evt) {
+        if (!dragging) return;
+        dragging = false;
+        reflow();
+    });
+    
+    document.addEventListener("mousemove", function(evt) {
+        if (!dragging) return;
+        evt.preventDefault();
+        var dx = evt.clientX - startX;
+        container.style.width = startW + dx + "px";
+    });
+
+
+    // the real stuff
+
+    function reflow() {
+        var startTime = window.performance.now();
+        
+        //reset to free-flowing text
+        paragraphs.forEach(function(paragraph) {
+            var words = paragraph.textContent.trim().split(/\s+/);
+            paragraph.innerHTML = "<span>" + words.join("</span> <span>") + "</span>";
+        });
+    
+      
+        //first set maximum squish and do regular wrapping, then expand
+        var maxsquish;
+        paragraphs.forEach(function(paragraph) {
+            var fontsize = parseFloat(getComputedStyle(paragraph).fontSize) * 72/96;
+            var xtraRange = getXtraRange(fontsize);
+            paragraph.setAttribute('data-xtra-range', JSON.stringify(xtraRange));
+            paragraph.setFVS('XTRA', xtraRange[0]);
+        });
+        
+        paragraphs.forEach(function(paragraph) {
+            var parabox = paragraph.getBoundingClientRect();
+            var spans = paragraph.querySelectorAll("span");
+            var xtraRange = JSON.parse(paragraph.getAttribute('data-xtra-range'));
+        
+            var lastY = false;
+            var lines = [], line = [];
+    
+            spans.forEach(function(word) {
+                // var box = word.getBoundingClientRect();
+                // var eol = box.left - parabox.left + box.width;
+                var y = word.getBoundingClientRect().top;
+                if (lastY === false) {
+                    lastY = y;
+                }
+                
+                if (y === lastY) {
+                    line.push(word.textContent);
+                } else {
+                    //wrap!
+                    lines.push(line.join(" "));
+                    line = [word.textContent];
+                    // word = word.previousSibling;
+                    // while (word.previousSibling) {
+                    //   word = word.previousSibling;
+                    //   paragraph.removeChild(word.nextSibling);
+                    // }
+                    // paragraph.removeChild(word);
+                    //paragraph.innerHTML = paragraph.innerHTML.trim();
+                }
+                
+                lastY = y;
+            });
+    
+        if (line.length) {
+          lines.push(line.join(" "));
+        }
+    
+        paragraph.innerHTML = "<var>" + lines.join("</var> <var>") + "</var>";
+
+        //now expand width to fit
+        paragraph.querySelectorAll("var").forEach(function(line, index) {
+            //don't wordspace last line of paragraph
+            if (line.nextElementSibling) {
+                line.addClass("needs-wordspace");
+            }
+            
+            var tries = 0;
+            
+            var cmin = xtraRange[0];
+            var cmax = xtraRange[2];
+            var cnow = fvs2obj(paragraph.style.fontVariationSettings).XTRA;
+            var cnew;
+
+            var dw, tries = 10;
+            
+            while (tries--) {
+                line.setFVS('XTRA', cnow);
+                line.setAttribute('data-var', 'XTRA ' + Math.round(cnow));
+                dw = parabox.width - line.clientWidth;
+                
+                //console.log(line.textContent.trim().split(' ')[0], dw, cmin, cmax, cnow);
+                
+                if (Math.abs(dw) < 1) {
+                    line.removeClass('needs-wordspace');
+                    break;
+                }
+                
+                if (dw < 0) {
+                    //narrower
+                    cnew = (cnow + cmin) / 2;
+                    cmax = cnow;
+                } else {
+                    cnew = (cnow + cmax) / 2;
+                    cmin = cnow;
+                }
+                
+                if (Math.abs(cnew - cnow) / (xtraRange[2] - xtraRange[0]) < 0.005) {
+                    break;
+                }
+                
+                cnow = cnew;
+            }
+        });
+    
+        paragraph.querySelectorAll("var.needs-wordspace").forEach(function(line) {
+            var dw = parabox.width - line.clientWidth;
+            var spaces = line.textContent.split(" ").length - 1;
+            var fontsize = parseFloat(getComputedStyle(line).fontSize);
+            line.style.wordSpacing = dw / spaces / fontsize + "em";
+            
+            line.setAttribute('data-wordspace', line.style.wordSpacing);
+            
+            //console.log(line.textContent.trim().split(' ')[0], dw);
+        });
+    });
+    
+      var endTime = window.performance.now();
+    
+      console.log("Reflowed in " + Math.round(endTime - startTime) / 1000 + "s");
+    }
+
+//document.querySelector("button[name=reflow]").addEventListener("click", reflow);
+
+reflow();
+
+window.addEventListener("load", reflow);
+
+
+})();
+</script>
