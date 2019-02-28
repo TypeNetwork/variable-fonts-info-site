@@ -1,0 +1,282 @@
+---
+layout: article
+breadcrumbs: ["Spacing", "Examples…"]
+title: "Justification"
+description: "Justifying default size/weight with nothing fancy. Starts with min recommended XTRA, then expands first XTRA then word space."
+paragraph-text: >
+    I remembered the case well, for it was one in which Holmes had taken an interest on account of the peculiar ferocity of the crime and the wanton brutality which had marked all the actions of the assassin. The commutation of his death sentence had been due to some doubts as to his complete sanity, so atrocious was his conduct. Our wagonette had topped a rise and in front of us rose the huge expanse of the moor, mottled with gnarled and craggy cairns and tors. A cold wind swept down from it and set us shivering. Somewhere there, on that desolate plain, was lurking this fiendish man, hiding in a burrow like a wild beast, his heart full of malignancy against the whole race which had cast him out. It needed but this to complete the grim suggestiveness of the barren waste, the chilling wind, and the darkling sky. Even Baskerville fell silent and pulled his overcoat more closely around him.
+---
+
+<figure>
+    <figcaption>
+        <h3>Wordspace only</h3>
+        <p>This is the default justification algorithm for all browsers, so this paragraph simply has CSS <code>text-align: justify</code> and is very fast.</p>
+    </figcaption>
+    <article class='justification-example wordspace'>
+        <p>
+            {{page.paragraph-text}}
+        </p>
+    </article>
+</figure>
+
+<figure>
+    <figcaption>
+        <h3>Wordspace + Letterspace</h3>
+        <p>Add a little bit of tracking to make the wordspaces a bit less egregious.</p>
+    </figcaption>
+    <article class='justification-example wordspace letterspace'>
+        <p>
+            {{page.paragraph-text}}
+        </p>
+    </article>
+</figure>
+
+<figure>
+    <figcaption>
+        <h3>Wordspace + Letterspace + XTRA</h3>
+        <p>First adjust X Transparent to the narrowest setting that is still pleasant to read; then expand XTRA until the line is full-width, or it hits its widest setting; then add tracking and letterspacing as above.</p>
+    </figcaption>
+    <article class='justification-example wordspace letterspace xtra'>
+        <p>
+            {{page.paragraph-text}}
+        </p>
+    </article>
+</figure>
+
+<script>
+(function() {
+
+    Element.prototype.setFVS = function(k, v) {
+//         this.style.fontVariationSettings = '';
+        var style = getComputedStyle(this);
+        var current = fvs2obj(style.fontVariationSettings);
+//         current.opsz = parseFloat(style.fontSize) * 72/96;
+        if (k !== undefined && v !== undefined) {
+            current[k] = v;
+        }
+        this.style.fontVariationSettings = obj2fvs(current);
+    };
+
+    //resize all the paragraphs when you resize one
+    var reflowFuncs = [];
+    function resizeAll(w) {
+        document.querySelectorAll('article.justification-example').forEach(function(container) {
+            container.style.width = w + "px";
+        });
+    }
+
+    document.querySelectorAll('article.justification-example').forEach(function(container) {
+        var paragraphs = container.querySelectorAll('p');
+
+        var doWS = container.hasClass('wordspace');
+        var doLS = container.hasClass('letterspace');
+        var doXTRA = container.hasClass('xtra');
+
+        // resize article
+        
+        var dragging = false;
+        var startX, startW;
+        
+        var resize = document.createElement('div');
+        resize.className = 'resize';
+        container.appendChild(resize);
+        
+        resize.addEventListener("mousedown", function(evt) {
+            evt.preventDefault();
+            dragging = true;
+            startX = evt.clientX;
+            startW = container.getBoundingClientRect().width;
+        });
+        
+        document.addEventListener("mouseup", function(evt) {
+            if (!dragging) return;
+            dragging = false;
+            reflowFuncs.forEach(function(f) { f(); });
+        });
+        
+        document.addEventListener("mousemove", function(evt) {
+            if (!dragging) return;
+            evt.preventDefault();
+            var dx = evt.clientX - startX;
+            resizeAll(startW + dx, false);
+        });
+    
+    
+        // the real stuff
+
+        //shortcut
+        if (doWS && !doLS && !doXTRA) {
+            container.style.textAlign = "justify";
+            return;
+        }
+        
+        function reflow() {
+            var startTime = window.performance.now();
+            
+            //reset to free-flowing text
+            paragraphs.forEach(function(paragraph) {
+                var words = paragraph.textContent.trim().split(/\s+/);
+                paragraph.innerHTML = "<span>" + words.join("</span> <span>") + "</span>";
+            });
+        
+          
+            //first set maximum squish and do regular wrapping, then expand
+            paragraphs.forEach(function(paragraph) {
+                var fontsize = parseFloat(getComputedStyle(paragraph).fontSize) * 72/96;
+                var xtraRange = getXtraRange(fontsize);
+                paragraph.setAttribute('data-xtra-range', JSON.stringify(xtraRange));
+                if (doXTRA) {
+                    paragraph.setFVS('XTRA', xtraRange[0]);
+                }
+            });
+            
+            paragraphs.forEach(function(paragraph) {
+                var parabox = paragraph.getBoundingClientRect();
+                var spans = paragraph.querySelectorAll("span");
+                var xtraRange = JSON.parse(paragraph.getAttribute('data-xtra-range'));
+            
+                var lastY = false;
+                var lines = [], line = [];
+        
+                spans.forEach(function(word) {
+                    // var box = word.getBoundingClientRect();
+                    // var eol = box.left - parabox.left + box.width;
+                    var y = word.getBoundingClientRect().top;
+                    if (lastY === false) {
+                        lastY = y;
+                    }
+                    
+                    if (y === lastY) {
+                        line.push(word.textContent);
+                    } else {
+                        //wrap!
+                        lines.push(line.join(" "));
+                        line = [word.textContent];
+                        // word = word.previousSibling;
+                        // while (word.previousSibling) {
+                        //   word = word.previousSibling;
+                        //   paragraph.removeChild(word.nextSibling);
+                        // }
+                        // paragraph.removeChild(word);
+                        //paragraph.innerHTML = paragraph.innerHTML.trim();
+                    }
+                    
+                    lastY = y;
+                });
+        
+                if (line.length) {
+                  lines.push(line.join(" "));
+                }
+            
+                paragraph.innerHTML = "<var>" + lines.join("</var> <var>") + "</var>";
+        
+                //now expand width to fit
+                paragraph.querySelectorAll("var").forEach(function(line, index) {
+                    //don't wordspace last line of paragraph
+                    if (line.nextElementSibling) {
+                        if (doWS) {
+                            line.addClass("needs-wordspace");
+                        }
+                        if (doLS) {
+                            line.addClass('needs-letterspace');
+                        }
+                    }
+
+                    if (doXTRA) {
+                        var tries = 0;
+                        
+                        var cmin = xtraRange[0];
+                        var cmax = xtraRange[2];
+                        var cnow = fvs2obj(paragraph.style.fontVariationSettings).XTRA;
+                        var cnew;
+            
+                        var dw, tries = 10;
+                        
+                        while (tries--) {
+                            line.setFVS('XTRA', cnow);
+                            line.setAttribute('data-xtra', Math.round(cnow));
+                            dw = parabox.width - line.clientWidth;
+                            
+                            //console.log(line.textContent.trim().split(' ')[0], dw, cmin, cmax, cnow);
+                            
+                            if (Math.abs(dw) < 1) {
+                                line.removeClass('needs-wordspace');
+                                line.setAttribute('data-wordspace', 0);
+                                break;
+                            }
+                            
+                            if (dw < 0) {
+                                //narrower
+                                cnew = (cnow + cmin) / 2;
+                                cmax = cnow;
+                            } else {
+                                cnew = (cnow + cmax) / 2;
+                                cmin = cnow;
+                            }
+                            
+                            if (Math.abs(cnew - cnow) / (xtraRange[2] - xtraRange[0]) < 0.005) {
+                                break;
+                            }
+                            
+                            cnow = cnew;
+                        }
+                    }
+                });
+
+                if (doLS) {
+                    paragraph.querySelectorAll("var.needs-letterspace").forEach(function(line) {
+                        var dw = parabox.width - line.clientWidth;
+                        var fontsize = parseFloat(getComputedStyle(line).fontSize);
+                        line.style.letterSpacing = Math.min(0.01, dw / line.textContent.length / fontsize) + "em";
+                        
+                        line.setAttribute('data-letterspace', Math.round(parseFloat(line.style.letterSpacing) * 1000));
+                        
+                        //console.log(line.textContent.trim().split(' ')[0], dw);
+                    });
+                }
+
+                if (doWS) {
+                    paragraph.querySelectorAll("var.needs-wordspace").forEach(function(line) {
+                        var dw = parabox.width - line.clientWidth;
+                        var spaces = line.textContent.split(" ").length - 1;
+                        var fontsize = parseFloat(getComputedStyle(line).fontSize);
+                        line.style.wordSpacing = dw / spaces / fontsize + "em";
+                        
+                        line.setAttribute('data-wordspace', Math.round(parseFloat(line.style.wordSpacing) * 1000));
+                        
+                        //console.log(line.textContent.trim().split(' ')[0], dw);
+                    });
+                }
+                
+                //set up param labels
+                paragraph.querySelectorAll("var").forEach(function(line) {
+                    var label = [];
+                    if (line.hasAttribute('data-xtra')) {
+                        label.push("XTRA " + line.getAttribute('data-xtra'));
+                    }
+                    if (line.hasAttribute('data-letterspace')) {
+                        label.push("ls " + line.getAttribute('data-letterspace'));
+                    }
+                    if (line.hasAttribute('data-wordspace')) {
+                        label.push("ws " + line.getAttribute('data-wordspace'));
+                    }
+                    if (label.length) {
+                        line.setAttribute('data-params', label.join(" "));
+                    }
+                });
+            });
+            
+            var endTime = window.performance.now();
+            
+            console.log(container.className, "Reflowed in " + Math.round(endTime - startTime) / 1000 + "s");
+        }
+        //document.querySelector("button[name=reflow]").addEventListener("click", reflow);
+        
+        reflow();
+
+        reflowFuncs.push(reflow);
+        
+        window.addEventListener("load", reflow);
+    });
+})();
+</script>

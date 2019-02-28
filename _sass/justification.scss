@@ -1,0 +1,75 @@
+
+.justification-example {
+    position: relative;
+    font-family: "AmstelvarAlpha-VF", "Comic Sans MS";
+    box-sizing: border-box;
+    padding: 1rem;
+    border: 1px solid #CCC;
+    margin-bottom: 1em;
+    
+    &::after {
+        position: absolute;
+        content: "↔︎";
+        color: #CCC;
+        top: 50%;
+        right: -0.5em;
+        transform: translateY(-50%);
+    }
+    
+    p {
+        font-size: 14pt;
+        line-height: 1.4;
+    }
+
+    p.lede {
+      font-size: 120%;
+    }
+
+    .caps {
+      text-transform: uppercase;
+    }
+
+    span {
+      display: inline;
+    }
+
+    var {
+      position: relative;
+      display: inline-block;
+      font: inherit;
+      white-space: nowrap;
+
+      &::after {
+        content: attr(data-params);
+        display: block;
+        position: absolute;
+        font-family: Verdana;
+        font-size: 10px;
+        color: #09F;
+        top: 50%;
+        transform: translateY(-50%);
+        left: calc(100% + 2rem);
+        letter-spacing: 0;
+        word-spacing: 0;
+      }
+    }
+
+    .resize {
+      display: block;
+      margin: 0;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: -0.5em;
+      width: 1em;
+      grid-column: auto;
+      cursor: ew-resize;
+      z-index: 1;
+/*
+      &:hover {
+        background-color: red;
+        opacity: 0.5;
+      }
+*/
+    }
+}
