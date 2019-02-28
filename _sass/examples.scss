@@ -63,9 +63,15 @@
     &.inline {
     }
     
-    .extra-content:not(:empty) {
-        background: white;
-        padding: 1rem;
+    .extra-content {
+        > * {
+            background: white;
+            padding: 1rem;
+            
+            + * {
+                padding-top: 0;
+            }
+        }
     }
 
     &.grey {
