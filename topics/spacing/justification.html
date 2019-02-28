@@ -57,6 +57,12 @@ paragraph-text: >
         this.style.fontVariationSettings = obj2fvs(current);
     };
 
+    var fontsizepx = parseFloat(getComputedStyle(document.querySelector('article.justification-example p')).fontSize);
+    var fontsize = fontsizepx * 72/96;
+    var relweight = 100;
+
+    var tolerances = getJustificationTolerances(fontsize, relweight);
+
     //resize all the paragraphs when you resize one
     var reflowFuncs = [];
     function resizeAll(w) {
@@ -134,18 +140,14 @@ paragraph-text: >
           
             //first set maximum squish and do regular wrapping, then expand
             paragraphs.forEach(function(paragraph) {
-                var fontsize = parseFloat(getComputedStyle(paragraph).fontSize) * 72/96;
-                var xtraRange = getXtraRange(fontsize);
-                paragraph.setAttribute('data-xtra-range', JSON.stringify(xtraRange));
                 if (doXTRA) {
-                    paragraph.setFVS('XTRA', xtraRange[0]);
+                    paragraph.setFVS('XTRA', tolerances.XTRA[0]);
                 }
             });
             
             paragraphs.forEach(function(paragraph) {
                 var parabox = paragraph.getBoundingClientRect();
                 var spans = paragraph.querySelectorAll("span");
-                var xtraRange = JSON.parse(paragraph.getAttribute('data-xtra-range'));
             
                 var lastY = false;
                 var lines = [], line = [];
@@ -197,8 +199,8 @@ paragraph-text: >
                     if (doXTRA) {
                         var tries = 0;
                         
-                        var cmin = xtraRange[0];
-                        var cmax = xtraRange[2];
+                        var cmin = tolerances.XTRA[0];
+                        var cmax = tolerances.XTRA[2];
                         var cnow = fvs2obj(paragraph.style.fontVariationSettings).XTRA;
                         var cnew;
             
@@ -226,7 +228,7 @@ paragraph-text: >
                                 cmin = cnow;
                             }
                             
-                            if (Math.abs(cnew - cnow) / (xtraRange[2] - xtraRange[0]) < 0.005) {
+                            if (Math.abs(cnew - cnow) / (tolerances.XTRA[2] - tolerances.XTRA[0]) < 0.005) {
                                 break;
                             }
                             
@@ -238,10 +240,16 @@ paragraph-text: >
                 if (doLS) {
                     paragraph.querySelectorAll("var.needs-letterspace").forEach(function(line) {
                         var dw = parabox.width - line.clientWidth;
-                        var fontsize = parseFloat(getComputedStyle(line).fontSize);
-                        line.style.letterSpacing = Math.min(0.01, dw / line.textContent.length / fontsize) + "em";
                         
-                        line.setAttribute('data-letterspace', Math.round(parseFloat(line.style.letterSpacing) * 1000));
+                        var minLS = tolerances['letter-spacing'][0];
+                        var maxLS = tolerances['letter-spacing'][2];
+                        var fitLS = dw / line.textContent.length / fontsizepx;
+
+                        fitLS = Math.max(minLS, Math.min(maxLS, fitLS));
+
+                        line.style.letterSpacing = fitLS + "em";
+                        
+                        line.setAttribute('data-letterspace', Math.round(fitLS * 1000));
                         
                         //console.log(line.textContent.trim().split(' ')[0], dw);
                     });
@@ -251,8 +259,7 @@ paragraph-text: >
                     paragraph.querySelectorAll("var.needs-wordspace").forEach(function(line) {
                         var dw = parabox.width - line.clientWidth;
                         var spaces = line.textContent.split(" ").length - 1;
-                        var fontsize = parseFloat(getComputedStyle(line).fontSize);
-                        line.style.wordSpacing = dw / spaces / fontsize + "em";
+                        line.style.wordSpacing = (dw / spaces / fontsizepx) + "em";
                         
                         line.setAttribute('data-wordspace', Math.round(parseFloat(line.style.wordSpacing) * 1000));
                         

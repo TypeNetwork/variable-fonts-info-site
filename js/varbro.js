@@ -487,33 +487,47 @@ function setupPlaygrounds() {
     });
 }
 
-var sizeWeightAxisRanges = {
+var defaultWordSpace = 0.3195;
+var maxLetterSpace = 1;
+var justificationTolerances = {
     // these are point values for now
     'AmstelvarAlpha': {
         '10': {
             '100': {
-                XTRA: [370, 402, 402]
+                XTRA: [370, 402, 402],
+                'letter-spacing': [0, 0, 0],
+                'word-spacing': [-defaultWordSpace * 0.2, 0, defaultWordSpace * 0.2]
             },
             '210': {
-                XTRA: [370, 402, 402]
+                XTRA: [370, 402, 402],
+                'letter-spacing': [0, 0, 0],
+                'word-spacing': [-defaultWordSpace * 0.2, 0, defaultWordSpace * 0.2]
             }
         },
         
         '14': {
             '100': {
-                XTRA: [380, 402, 402]
+                XTRA: [380, 402, 402],
+                'letter-spacing': [-maxLetterSpace * 0.05, 0, maxLetterSpace * 0.05],
+                'word-spacing': [-defaultWordSpace * 0.21, 0, defaultWordSpace * 0.21]
             },
             '210': {
-                XTRA: [302, 326, 342]
+                XTRA: [302, 326, 342],
+                'letter-spacing': [-maxLetterSpace * 0.05, 0, maxLetterSpace * 0.05],
+                'word-spacing': [-defaultWordSpace * 0.21, 0, defaultWordSpace * 0.21]
             }
         },
         
         '48': {
             '100': {
-                XTRA: [325, 342, 359]
+                XTRA: [325, 342, 359],
+                'letter-spacing': [-maxLetterSpace * 0.1, 0, maxLetterSpace * 0.1],
+                'word-spacing': [-defaultWordSpace * 0.25, 0, defaultWordSpace * 0.25]
             },
             '210': {
-                XTRA: [325, 342, 359]
+                XTRA: [325, 342, 359],
+                'letter-spacing': [-maxLetterSpace * 0.1, 0, maxLetterSpace * 0.1],
+                'word-spacing': [-defaultWordSpace * 0.25, 0, defaultWordSpace * 0.25]
             }
         }
     }
@@ -536,36 +550,6 @@ var composites = {
     }
 };
 
-window.getXtraRange = function(fontsize) {
-    fontsize = parseFloat(fontsize);
-    var lowerSize, upperSize;
-    var lowerRange, upperRange;
-    sizeWeightAxisRanges.AmstelvarAlpha.forEach(function(weights, size) {
-        size = parseInt(size);
-        if (isNaN(lowerSize) || size <= fontsize) {
-            lowerSize = size;
-            lowerRange = weights[100].XTRA;
-        }
-        if (isNaN(upperSize) && size >= fontsize) {
-            upperSize = size;
-            upperRange = weights[100].XTRA;
-        }
-    });
-    if (isNaN(upperSize)) {
-        upperSize = lowerSize;
-        upperRange = lowerRange;
-    }
-    if (upperSize === lowerSize) {
-        return upperRange;
-    }
-    var result = [];
-    var ratio = (fontsize - lowerSize) / (upperSize - lowerSize);
-    lowerRange.forEach(function(lower, i) {
-        var upper = upperRange[i];
-        result.push(lower + ratio * (upper - lower));
-    });
-    return result;
-};
 
 //convert a set of axes from blended to all-parametric
 window.allParametric = function(axes) {
@@ -716,7 +700,7 @@ window.parametricToComposite = function(paxis, pvalue, caxis) {
 
 
 
-window.getAxisRanges = function(targetsize, targetweight) {
+window.getJustificationTolerances = function(targetsize, targetweight) {
 //    var css = getComputedStyle(el);
 //    var font = css.fontFamily.split(',')[0].trim().replace(/^['"]\s*/, '').replace(/\s*['"]$/, '').replace(/-VF$/, '').replace(/[\s\-]/g, '');
 //    var targetsize = parseFloat(css.fontSize) * 3/4; //multiply by 3/4 if calibrated on points
@@ -729,7 +713,7 @@ window.getAxisRanges = function(targetsize, targetweight) {
 
     var font = 'AmstelvarAlpha';
     
-    if (!(font in sizeWeightAxisRanges)) {
+    if (!(font in justificationTolerances)) {
         return {};
     }
     
@@ -737,7 +721,7 @@ window.getAxisRanges = function(targetsize, targetweight) {
 
     //now we need to find the "anchor" sizes and weights on either side of the actual size and weight
     // so if our size/weight is 36/600, the anchors might be 14/400 and 72/700
-    var sizes = Object.keys(sizeWeightAxisRanges[font]);
+    var sizes = Object.keys(justificationTolerances[font]);
     sizes.sort(numsort);
     sizes.forEach(function(v,i) { sizes[i] = parseInt(v); });
 
@@ -760,7 +744,7 @@ window.getAxisRanges = function(targetsize, targetweight) {
             upper[0] = anchorsize;
 
             //find lower weight
-            weights = Object.keys(sizeWeightAxisRanges[font][lower[0]]);
+            weights = Object.keys(justificationTolerances[font][lower[0]]);
             weights.sort(numsort);
             weights.forEach(function(v,i) { weights[i] = parseInt(v); });
             weightdone = false;
@@ -778,7 +762,7 @@ window.getAxisRanges = function(targetsize, targetweight) {
             });
 
             //find upper weight
-            weights = Object.keys(sizeWeightAxisRanges[font][upper[0]]);
+            weights = Object.keys(justificationTolerances[font][upper[0]]);
             weights.sort(numsort);
             weights.forEach(function(v,i) { weights[i] = parseInt(v); });
             weightdone = false;
@@ -805,10 +789,10 @@ window.getAxisRanges = function(targetsize, targetweight) {
     
     //get axis values for the four corners
     var corners = {
-        șẉ: sizeWeightAxisRanges[font][lower[0]][lower[1]],
-        ŝẉ: sizeWeightAxisRanges[font][upper[0]][lower[1]],
-        șẇ: sizeWeightAxisRanges[font][lower[0]][upper[1]],
-        ŝẇ: sizeWeightAxisRanges[font][upper[0]][upper[1]]
+        șẉ: justificationTolerances[font][lower[0]][lower[1]],
+        ŝẉ: justificationTolerances[font][upper[0]][lower[1]],
+        șẇ: justificationTolerances[font][lower[0]][upper[1]],
+        ŝẇ: justificationTolerances[font][upper[0]][upper[1]]
     };
     
     //now we need to interpolate along the four edges
@@ -849,10 +833,10 @@ window.getAxisRanges = function(targetsize, targetweight) {
 window.testRanges = function() {
     var el = document.querySelector('#unique-specimen-8 span.rendered');
     var sizes = [9, 10, 12, 14, 24, 48, 60];
-    var weights = [0.9, 1.0, 1.1, 1.55, 2.0, 2.1, 2.2];
+    var weights = [90, 100, 110, 155, 200, 210, 220];
     sizes.forEach(function(size) {
         weights.forEach(function(weight) {
-            console.log(size, weight, JSON.stringify(getAxisRanges(size, weight)));
+            console.log(size, weight, JSON.stringify(getJustificationTolerances(size, weight)));
         });
     });
 };
