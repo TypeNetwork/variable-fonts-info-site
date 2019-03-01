@@ -7,6 +7,19 @@ paragraph-text: >
     I remembered the case well, for it was one in which Holmes had taken an interest on account of the peculiar ferocity of the crime and the wanton brutality which had marked all the actions of the assassin. The commutation of his death sentence had been due to some doubts as to his complete sanity, so atrocious was his conduct. Our wagonette had topped a rise and in front of us rose the huge expanse of the moor, mottled with gnarled and craggy cairns and tors. A cold wind swept down from it and set us shivering. Somewhere there, on that desolate plain, was lurking this fiendish man, hiding in a burrow like a wild beast, his heart full of malignancy against the whole race which had cast him out. It needed but this to complete the grim suggestiveness of the barren waste, the chilling wind, and the darkling sky. Even Baskerville fell silent and pulled his overcoat more closely around him.
 ---
 
+<style>
+    ul.parambuliders, ul.parambuliders li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<ul class='parambuliders'>
+    <li><label>Size</label> <input type='range' name='size' min='10' max='48' value='14'><label></label></li>
+    <li><label>Weight</label> <input type='range' name='relweight' min='43' max='284' value='100'><label></label></li>
+</ul>
+
 <figure>
     <figcaption>
         <h3>Wordspace only</h3>
@@ -57,6 +70,9 @@ paragraph-text: >
         this.style.fontVariationSettings = obj2fvs(current);
     };
 
+    var allDemos = document.querySelectorAll('article.justification-example');
+    var allParagraphs = document.querySelectorAll('article.justification-example p');
+
     var fontsizepx = parseFloat(getComputedStyle(document.querySelector('article.justification-example p')).fontSize);
     var fontsize = fontsizepx * 72/96;
     var relweight = 100;
@@ -66,10 +82,47 @@ paragraph-text: >
     //resize all the paragraphs when you resize one
     var reflowFuncs = [];
     function resizeAll(w) {
-        document.querySelectorAll('article.justification-example').forEach(function(container) {
+        allDemos.forEach(function(container) {
             container.style.width = w + "px";
         });
     }
+    
+    function reflowAll() {
+        reflowFuncs.forEach(function(f) { f(); });
+    }
+    
+    //reset paragraph to plain text and remove special styling
+    function resetParagraph(paragraph) {
+        fontsize = parseInt(sizeSlider.value);
+        relweight = parseInt(weightSlider.value);
+        fontsizepx = fontsize * 96/72;
+        tolerances = getJustificationTolerances(fontsize, relweight);
+        
+        var fvs = window.allParametric({ 'opsz': fontsize, 'relweight': relweight });
+        var words = paragraph.textContent.trim().split(/\s+/);
+
+        paragraph.style.fontSize = fontsize + 'pt';
+        paragraph.style.fontVariationSettings = obj2fvs(fvs);
+        paragraph.innerHTML = "<span>" + words.join("</span> <span>") + "</span>";
+    }
+    
+    //set up sliders to adjust size and weight
+    var sliders = document.querySelector('ul.parambuliders');
+    var sizeSlider = sliders.querySelector('input[name=size]');
+    var weightSlider = sliders.querySelector('input[name=relweight]');
+
+    function doSizeWeight(evt) {
+        allParagraphs.forEach(function(para) {
+            resetParagraph(para);
+        });
+        
+        if (evt && evt.type === 'change') {
+            reflowAll();
+        }
+    }
+    
+    sliders.addEventListener('input', doSizeWeight);
+    sliders.addEventListener('change', doSizeWeight);
 
     document.querySelectorAll('article.justification-example').forEach(function(container) {
         var paragraphs = container.querySelectorAll('p');
@@ -99,7 +152,7 @@ paragraph-text: >
         document.addEventListener("mouseup", function(evt) {
             if (!dragging) return;
             dragging = false;
-            reflowFuncs.forEach(function(f) { f(); });
+            reflowAll();
         });
         
         document.addEventListener("mousemove", function(evt) {
@@ -132,11 +185,7 @@ paragraph-text: >
             var startTime = window.performance.now();
             
             //reset to free-flowing text
-            paragraphs.forEach(function(paragraph) {
-                var words = paragraph.textContent.trim().split(/\s+/);
-                paragraph.innerHTML = "<span>" + words.join("</span> <span>") + "</span>";
-            });
-        
+            paragraphs.forEach(resetParagraph);
           
             //first set maximum squish and do regular wrapping, then expand
             paragraphs.forEach(function(paragraph) {
@@ -282,6 +331,8 @@ paragraph-text: >
                     if (label.length) {
                         line.setAttribute('data-params', label.join(" "));
                     }
+                    
+                    line.textContent = line.textContent;
                 });
             });
             
