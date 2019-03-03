@@ -830,6 +830,23 @@ window.getJustificationTolerances = function(targetsize, targetweight) {
     return interInterpolate(targetsize, targetweight, justificationTolerances[font]);
 };
 
+window.getLineHeight = function(fontsize, columnwidth, yopq) {
+    var theGrid = {
+        '20': {
+            '8': 1.5,
+            '12': 1.2,
+            '144': 0
+        },
+        '60': {
+            '8': 2,
+            '12': 1.8,
+            '144': 1
+        }
+    };
+
+    return 1 + interInterpolate(columnwidth, fontsize, theGrid) * yopq/1000;
+};
+
 window.testRanges = function() {
     var el = document.querySelector('#unique-specimen-8 span.rendered');
     var sizes = [9, 10, 12, 14, 24, 48, 60];
