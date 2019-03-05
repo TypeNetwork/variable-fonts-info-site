@@ -13,6 +13,13 @@ title: "Spacing primer"
         max-width: 50vw;
         float: right;
         margin-left: 1rem;
+        margin-top: 0;
+        padding-top: 0;
+
+        > :first-child {
+            margin-top: 0;
+            padding-top: 0;
+        }
 
         figure {
             display: block;
