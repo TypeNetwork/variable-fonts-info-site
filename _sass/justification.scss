@@ -21,6 +21,16 @@
         line-height: 1.4;
     }
 
+    p[data-column-width]::before {
+        content: "YOPQ " attr(data-yopq) "; CW " attr(data-column-width) "; LH " attr(data-line-height);
+        display: block;
+        position: absolute;
+        font-size: 10px;
+        font-family: Courier, monospace;
+        color: #69F;
+        top: 2px;
+    }
+
     p.lede {
       font-size: 120%;
     }

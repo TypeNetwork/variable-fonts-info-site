@@ -698,82 +698,64 @@ window.parametricToComposite = function(paxis, pvalue, caxis) {
     return result;
 }
 
-
-
-window.getJustificationTolerances = function(targetsize, targetweight) {
-//    var css = getComputedStyle(el);
-//    var font = css.fontFamily.split(',')[0].trim().replace(/^['"]\s*/, '').replace(/\s*['"]$/, '').replace(/-VF$/, '').replace(/[\s\-]/g, '');
-//    var targetsize = parseFloat(css.fontSize) * 3/4; //multiply by 3/4 if calibrated on points
-//    var targetweight;
-//    switch (css.fontWeight) {
-//        case 'normal': targetweight=400; break;
-//        case 'bold': targetweight=700; break;
-//        default: targetweight = parseFloat(css.fontWeight) | 400; break;
-//    }
-
-    var font = 'AmstelvarAlpha';
-    
-    if (!(font in justificationTolerances)) {
-        return {};
-    }
-    
+function interInterpolate(targetX, targetY, theGrid) {
     var numsort = function(a,b) { return a - b; };
 
-    //now we need to find the "anchor" sizes and weights on either side of the actual size and weight
-    // so if our size/weight is 36/600, the anchors might be 14/400 and 72/700
-    var sizes = Object.keys(justificationTolerances[font]);
-    sizes.sort(numsort);
-    sizes.forEach(function(v,i) { sizes[i] = parseInt(v); });
+    //now we need to find the "anchor" Xs and Ys on either side of the actual X and Y
+    // so if our X/Y is 36/600, the anchors might be 14/400 and 72/700
+    var Xs = Object.keys(theGrid);
+    Xs.sort(numsort);
+    Xs.forEach(function(v,i) { Xs[i] = parseInt(v); });
 
-    var lower = [sizes[0], 0], upper = [sizes[sizes.length-1], Infinity];
+    var lower = [Xs[0], 0], upper = [Xs[Xs.length-1], Infinity];
     var done = false;
-    sizes.forEach(function(anchorsize) {
+    Xs.forEach(function(anchorX) {
         if (done) {
             return;
         }
 
-        var weights, weightdone;
+        var Ys, Ydone;
 
-        if (anchorsize <= targetsize) {
+        if (anchorX <= targetX) {
             //set lower and keep looking
-            lower[0] = anchorsize;
+            lower[0] = anchorX;
         }
 
-        if (anchorsize >= targetsize || anchorsize === upper[0]) {
-            //found our upper size! Now search weights
-            upper[0] = anchorsize;
+        if (anchorX >= targetX || anchorX === upper[0]) {
+            //found our upper X! Now search Ys
+            upper[0] = anchorX;
 
-            //find lower weight
-            weights = Object.keys(justificationTolerances[font][lower[0]]);
-            weights.sort(numsort);
-            weights.forEach(function(v,i) { weights[i] = parseInt(v); });
-            weightdone = false;
-            lower[1] = weights[0];
-            weights.forEach(function(anchorweight) {
-                if (weightdone) {
+            //find lower Y
+            Ys = Object.keys(theGrid[lower[0]]);
+            Ys.sort(numsort);
+            Ys.forEach(function(v,i) { Ys[i] = parseInt(v); });
+            Ydone = false;
+            lower[1] = Ys[0];
+            Ys.forEach(function(anchorY) {
+                if (Ydone) {
                     return;
                 }
-                if (anchorweight <= targetweight) {
-                    lower[1] = anchorweight;
+                if (anchorY <= targetY) {
+                    lower[1] = anchorY;
                 }
-                if (anchorweight >= targetweight) {
-                    weightdone = true;
+                if (anchorY >= targetY) {
+                    Ydone = true;
                 }
             });
 
-            //find upper weight
-            weights = Object.keys(justificationTolerances[font][upper[0]]);
-            weights.sort(numsort);
-            weights.forEach(function(v,i) { weights[i] = parseInt(v); });
-            weightdone = false;
-            upper[1] = weights[weights.length-1];
-            weights.forEach(function(anchorweight) {
-                if (weightdone) {
+            //find upper Y
+            Ys = Object.keys(theGrid[upper[0]]);
+            Ys.sort(numsort);
+            Ys.forEach(function(v,i) { Ys[i] = parseInt(v); });
+            Ydone = false;
+            upper[1] = Ys[Ys.length-1];
+            Ys.forEach(function(anchorY) {
+                if (Ydone) {
                     return;
                 }
-                if (anchorweight >= targetweight) {
-                    upper[1] = anchorweight;
-                    weightdone = true;
+                if (anchorY >= targetY) {
+                    upper[1] = anchorY;
+                    Ydone = true;
                 }
             });
             
@@ -784,23 +766,23 @@ window.getJustificationTolerances = function(targetsize, targetweight) {
     //okay, now we have our lower and upper anchors!
 
     //how far bewteen lower and upper are we
-    var sizeratio = upper[0] === lower[0] ? 0 : Math.max(0, Math.min(1, (targetsize - lower[0]) / (upper[0] - lower[0])));
-    var weightratio = upper[1] === lower[1] ? 0 : Math.max(0, Math.min(1, (targetweight - lower[1]) / (upper[1] - lower[1])));
+    var Xratio = upper[0] === lower[0] ? 0 : Math.max(0, Math.min(1, (targetX - lower[0]) / (upper[0] - lower[0])));
+    var Yratio = upper[1] === lower[1] ? 0 : Math.max(0, Math.min(1, (targetY - lower[1]) / (upper[1] - lower[1])));
     
     //get axis values for the four corners
     var corners = {
-        șẉ: justificationTolerances[font][lower[0]][lower[1]],
-        ŝẉ: justificationTolerances[font][upper[0]][lower[1]],
-        șẇ: justificationTolerances[font][lower[0]][upper[1]],
-        ŝẇ: justificationTolerances[font][upper[0]][upper[1]]
+        șẉ: theGrid[lower[0]][lower[1]],
+        ŝẉ: theGrid[upper[0]][lower[1]],
+        șẇ: theGrid[lower[0]][upper[1]],
+        ŝẇ: theGrid[upper[0]][upper[1]]
     };
     
     //now we need to interpolate along the four edges
     var edges = {
-        ș: [corners.șẇ, corners.șẉ, weightratio],
-        ŝ: [corners.ŝẇ, corners.ŝẉ, weightratio],
-        ẉ: [corners.ŝẉ, corners.șẉ, sizeratio],
-        ẇ: [corners.ŝẇ, corners.șẇ, sizeratio]
+        ș: [corners.șẇ, corners.șẉ, Yratio],
+        ŝ: [corners.ŝẇ, corners.ŝẉ, Yratio],
+        ẉ: [corners.ŝẉ, corners.șẉ, Xratio],
+        ẇ: [corners.ŝẇ, corners.șẇ, Xratio]
     };
 
     edges.forEach(function(hlr, edge) {
@@ -808,26 +790,61 @@ window.getJustificationTolerances = function(targetsize, targetweight) {
         var low = hlr[1];;
         var ratio = hlr[2];
         var middle = {};
-        high.forEach(function(sml, axis) {
-            middle[axis] = [];
-            for (var i=0; i<3; i++) {
-                middle[axis].push(low[axis][i] + (high[axis][i] - low[axis][i]) * ratio);
-            }
-        });
-        edges[edge] = middle;
-    });
-
-    //now we can inter-interpolate between the interpolated edge values
-    var axes = Object.keys(corners.șẉ);
-    var result = {};
-    axes.forEach(function(axis) {
-        result[axis] = [];
-        for (var i=0; i<3; i++) {
-            result[axis].push(edges.ẉ[axis][i] + (edges.ẇ[axis][i] - edges.ẉ[axis][i]) * weightratio);
+        if (typeof high === 'number' && typeof low === 'number') {
+            edges[edge] = low + (high - low) * ratio;
+        } else {
+            high.forEach(function(sml, axis) {
+                middle[axis] = [];
+                for (var i=0; i<3; i++) {
+                    middle[axis].push(low[axis][i] + (high[axis][i] - low[axis][i]) * ratio);
+                }
+            });
+            edges[edge] = middle;
         }
     });
 
-    return result;
+    //now we can inter-interpolate between the interpolated edge values
+    if (typeof edges.ẉ === 'number') {
+        return edges.ẉ + (edges.ẇ - edges.ẉ) * Yratio;
+    } else {
+        var axes = Object.keys(corners.șẉ);
+        var result = {};
+        axes.forEach(function(axis) {
+            result[axis] = [];
+            for (var i=0; i<3; i++) {
+                result[axis].push(edges.ẉ[axis][i] + (edges.ẇ[axis][i] - edges.ẉ[axis][i]) * Yratio);
+            }
+        });
+    
+        return result;
+    }
+}
+
+window.getJustificationTolerances = function(targetsize, targetweight) {
+    var font = 'AmstelvarAlpha';
+    
+    if (!(font in justificationTolerances)) {
+        return {};
+    }
+
+    return interInterpolate(targetsize, targetweight, justificationTolerances[font]);
+};
+
+window.getLineHeight = function(fontsize, columnwidth, yopq) {
+    var theGrid = {
+        '20': {
+            '8': 1.5,
+            '12': 1.2,
+            '144': 0
+        },
+        '60': {
+            '8': 2,
+            '12': 1.8,
+            '144': 1
+        }
+    };
+
+    return 1 + interInterpolate(columnwidth, fontsize, theGrid) * yopq/1000;
 };
 
 window.testRanges = function() {
