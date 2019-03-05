@@ -23,6 +23,7 @@ title: "Spacing primer"
                 text-align: center;
                 text-transform: uppercase;
                 line-height: 1.2;
+                margin-top: 0;
             }
         }
         
@@ -41,6 +42,7 @@ title: "Spacing primer"
                 left: 0;
                 right: 0;
                 text-align: center;
+                line-height: 1;
                 
                 &.regular {
                     position: relative;
