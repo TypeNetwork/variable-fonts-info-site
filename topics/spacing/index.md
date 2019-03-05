@@ -10,7 +10,7 @@ title: "Spacing primer"
     figure#twos-complement {
         display: block;
         width: 3in;
-        max-width: 50vw;
+        max-width: 33vw;
         float: right;
         margin-left: 1rem;
         margin-top: 0;
@@ -37,8 +37,12 @@ title: "Spacing primer"
         .horizontal-stretch, .vertical-stretch {
             font-family: "{{site.data.fonts.names["Amstelvar-Alpha"]}}";
             display: block;
-            font-size: 1in;
+            font-size: 12vw;
             position: relative;
+
+            @media (min-width: 9in) {
+                font-size: 1.2in;
+            }
             
             samp {
                 font-family: inherit;
