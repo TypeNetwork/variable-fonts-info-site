@@ -26,7 +26,7 @@ comparison:
                 font: Roboto
                 size: 24
                 leading: 1.4
-                text: "More design possibilities, less space"
+                text: "Many more design possibilities with less space"
                 axes:
                     wght: 400
             -
@@ -64,7 +64,7 @@ comparison:
                 font: Roboto
                 size: 24
                 leading: 1.4
-                text: "More design possibilities, less space"
+                text: "Many more design possibilities with less space"
                 axes:
                     wght: 240
             -
@@ -80,3 +80,45 @@ comparison:
                 axes:
                     wght: 200
 ---
+
+{% capture css %}
+
+.example .comparison {
+//    > li:first-child {
+        h1 .rendered {
+            font-size: 11vw !important; //26pt
+            
+            @media (min-width: 582px) {
+                font-size: 48pt !important;
+            }
+        }
+        
+        h2 .rendered {
+            font-size: 6.5vw !important; //16pt
+            
+            @media (min-width: 615px) {
+                font-size: 30pt !important;
+            }
+        }
+
+        p.lede .rendered {
+            font-size: 3.75vw !important; //9pt
+            
+            @media (min-width: 520px) {
+                font-size: 18pt !important;
+            }
+        }
+        
+        p .rendered {
+            font-size: 3.333vw !important; //8pt
+            
+            @media (min-width: 520px) {
+                font-size: 13pt !important;
+            }
+        }
+//    }
+}
+
+{% endcapture %}
+
+<style>{{css|scssify}}</style>
