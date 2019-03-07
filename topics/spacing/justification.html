@@ -201,7 +201,7 @@ paragraph-text: >
                 var spans = paragraph.querySelectorAll("span");
             
                 var lastY = false;
-                var lines = [], line = [], totalChars = 0;
+                var lines = [], line = [];
         
                 spans.forEach(function(word) {
                     // var box = word.getBoundingClientRect();
@@ -217,7 +217,6 @@ paragraph-text: >
                         //wrap!
                         line = line.join(" ");
                         lines.push(line);
-                        totalChars += line.length;
                         line = [word.textContent];
                         // word = word.previousSibling;
                         // while (word.previousSibling) {
@@ -237,15 +236,7 @@ paragraph-text: >
             
                 paragraph.innerHTML = "<var>" + lines.join("</var> <var>") + "</var>";
 
-                //line height math
-                var charsPerLine = totalChars / Math.max(1, lines.length-1);
-                var yopq = fvs2obj(paragraph.style.fontVariationSettings).YOPQ || axisDefaults.YOPQ;
-                console.log(charsPerLine, yopq);
-                paragraph.style.lineHeight = getLineHeight(fontsize, charsPerLine, yopq);
-                
-                paragraph.setAttribute('data-column-width', Math.round(charsPerLine));
-                paragraph.setAttribute('data-line-height', Math.round(paragraph.style.lineHeight*100)/100);
-                paragraph.setAttribute('data-yopq', yopq);
+                paragraph.setLineHeight();
                 
                 //now expand width to fit
                 paragraph.querySelectorAll("var").forEach(function(line, index) {

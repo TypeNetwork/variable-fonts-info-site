@@ -3,6 +3,7 @@
 (function() {
 "use strict";
 
+window.fontNames = {{site.data.fonts.names|jsonify}};
 window.globalAxes = {{site.data.fonts.axes[site.data.fonts.names["Amstelvar-Alpha"]]|jsonify}};
 window.axisDefaults = Object.keys(globalAxes).reduce(function(defaults, axis, i) { if ("default" in globalAxes[axis]) { defaults[axis] = globalAxes[axis].default; } return defaults; }, {});
 
@@ -242,6 +243,10 @@ function setupSidebar() {
         }
     });
 */
+}
+
+function getPrimaryFontFamily(ff) {
+    return ff.split(',')[0].trim().replace(/^["']\s*/, '').replace(/\s*$/, '');
 }
 
 function setupFitToWidth() {
@@ -830,21 +835,54 @@ window.getJustificationTolerances = function(targetsize, targetweight) {
     return interInterpolate(targetsize, targetweight, justificationTolerances[font]);
 };
 
-window.getLineHeight = function(fontsize, columnwidth, yopq) {
-    var theGrid = {
-        '20': {
-            '8': 1.5,
-            '12': 1.2,
-            '144': 0
-        },
-        '60': {
-            '8': 2,
-            '12': 1.8,
-            '144': 1
-        }
-    };
+//these are charsPerLine: fontSize: YOPQ Multiplier
+var lineHeights = {};
+lineHeights[''] = {
+    '45': {
+        '12': 4,
+        '72': 0
+    }
+};
+lineHeights[fontNames['Amstelvar-Alpha']] = {
+    '20': {
+        '8': 1.5,
+        '12': 1.2,
+        '144': 0
+    },
+    '60': {
+        '8': 2,
+        '12': 1.8,
+        '144': 1
+    }
+};
 
-    return 1 + interInterpolate(columnwidth, fontsize, theGrid) * yopq/1000;
+HTMLElement.prototype.setLineHeight = function() {
+    var css = getComputedStyle(this);
+    
+    var fontfamily = getPrimaryFontFamily(css.fontFamily);
+    var fontsize = parseFloat(css.fontSize);
+
+    var boxheight = this.contentHeight();
+    var totalChars = this.textContent.trim().length;
+    var charsPerLine = totalChars / (boxheight / Math.max(1, parseInt(css.lineHeight)));
+    
+    var yopq = fvs2obj(css.fontVariationSettings).YOPQ;
+    if (isNaN(yopq) && fontfamily in lineHeights) {
+        yopq = axisDefaults.YOPQ;
+    }
+    if (isNaN(yopq)) {
+        yopq = 50;
+    }
+
+    var yopqMultiplier = interInterpolate(charsPerLine, fontsize, lineHeights[fontfamily] || lineHeights['']);
+    var lineHeight = 1 + yopq/1000 * yopqMultiplier;
+
+    //console.log(totalChars, css.lineHeight, boxheight, charsPerLine, yopq, yopqMultiplier);
+
+    this.style.lineHeight = lineHeight;
+    this.setAttribute('data-column-width', Math.round(charsPerLine));
+    this.setAttribute('data-line-height', Math.round(lineHeight*100)/100);
+    this.setAttribute('data-yopq', yopq);
 };
 
 window.testRanges = function() {
