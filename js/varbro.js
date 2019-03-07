@@ -896,4 +896,20 @@ window.testRanges = function() {
     });
 };
 
+window.doLineHeights = function() {
+    document.querySelectorAll('.specimen .rendered').forEach(function(el) {
+        el.setLineHeight();
+    });
+}
+
+doOnReady(window.doLineHeights);
+window.addEventListener('load', window.doLineHeights);
+var resizeTimeout;
+window.addEventListener('resize', function() {
+    if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
+    }
+    resizeTimeout = setTimeout(window.doLineHeights, 500);
+});
+
 })();

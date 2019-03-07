@@ -25,8 +25,8 @@ paragraph-text: >
         <h3>Wordspace only</h3>
         <p>This is the default justification algorithm for all browsers, so this paragraph simply has CSS <code>text-align: justify</code> and is very fast.</p>
     </figcaption>
-    <article class='justification-example wordspace'>
-        <p>
+    <article class='specimen justification-example wordspace'>
+        <p class='rendered'>
             {{page.paragraph-text}}
         </p>
     </article>
@@ -37,8 +37,8 @@ paragraph-text: >
         <h3>Wordspace + Letterspace</h3>
         <p>Add a little bit of tracking to make the wordspaces a bit less egregious.</p>
     </figcaption>
-    <article class='justification-example wordspace letterspace'>
-        <p>
+    <article class='specimen justification-example wordspace letterspace'>
+        <p class='rendered'>
             {{page.paragraph-text}}
         </p>
     </article>
@@ -49,8 +49,8 @@ paragraph-text: >
         <h3>Wordspace + Letterspace + XTRA</h3>
         <p>First adjust X Transparent to the narrowest setting that is still pleasant to read; then expand XTRA until the line is full-width, or it hits its widest setting; then add tracking and wordspacing as above.</p>
     </figcaption>
-    <article class='justification-example wordspace letterspace xtra'>
-        <p>
+    <article class='specimen justification-example wordspace letterspace xtra'>
+        <p class='rendered'>
             {{page.paragraph-text}}
         </p>
     </article>
@@ -236,8 +236,6 @@ paragraph-text: >
             
                 paragraph.innerHTML = "<var>" + lines.join("</var> <var>") + "</var>";
 
-                paragraph.setLineHeight();
-                
                 //now expand width to fit
                 paragraph.querySelectorAll("var").forEach(function(line, index) {
                     //don't wordspace last line of paragraph
@@ -340,6 +338,8 @@ paragraph-text: >
                     line.textContent = line.textContent;
                 });
             });
+            
+            window.doLineHeights();
             
             var endTime = window.performance.now();
             
