@@ -147,13 +147,12 @@ comparison:
             var ratio = (fontsize - range[1]) / (range[0] - range[1]);
             var wght = range[3] + ratio * (range[2] - range[3]);
             var wght = Math.max(range[2], Math.min(range[3], wght));
-            var parametric = /* allParametric */({'opsz': fontsize, 'wght': wght});
-            console.log(parametric);
-            el.style.fontVariationSettings = obj2fvs(parametric);
+            el.style.fontVariationSettings = obj2fvs({'opsz': fontsize, 'wght': wght});
         });
     }
     Object.forEach(elements, function(el) {
         el.style.fontWeight = 'normal';
+        el.style.fontOpticalSizing = 'none';
     });
     doWeights();
     var timeout;
