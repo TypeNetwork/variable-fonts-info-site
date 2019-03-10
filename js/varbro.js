@@ -47,14 +47,13 @@ if (window.NodeList && !NodeList.prototype.forEach) {
     };
 }
 
-// and why not forEach on objects
-if (!Object.prototype.forEach) {
-    Object.prototype.forEach = function(callback) {
-        var thiss = this;
-        Object.keys(thiss).forEach(function(k) {
-            callback(thiss[k], k);
+// do NOT use Object.prototype here as it does not play nice with jQuery http://erik.eae.net/archives/2005/06/06/22.13.54/
+if (!Object.forEach) {
+    Object.forEach = function(o, callback) {
+        Object.keys(o).forEach(function(k) {
+            callback(o[k], k);
         });
-    }
+    };
 }
 
 // jQuery-style addClass/removeClass are not canon, but more flexible than ClassList
@@ -202,7 +201,7 @@ window.doAjax = function(url, options) {
     
     if (options.headers) {
         console.log(options);
-        options.headers.forEach(function (v, k) {
+        Object.forEach(options.headers, function (v, k) {
             xhr.setRequestHeader(k, v);
         });
     }
@@ -213,7 +212,7 @@ window.doAjax = function(url, options) {
 
 window.obj2fvs = function(fvs) {
     var clauses = [];
-    fvs.forEach(function(v, k) {
+    Object.forEach(fvs, function(v, k) {
         clauses.push('"' + k + '" ' + v);
     });
     return clauses.join(", ");
@@ -574,8 +573,8 @@ window.allParametric = function(axes) {
         delete axes.relweight;
     }
     
-    axes.forEach(function(val, axis) {
-        compositeToParametric(axis, val).forEach(function(v, k) {
+    Object.forEach(axes, function(val, axis) {
+        Object.forEach(compositeToParametric(axis, val), function(v, k) {
             if (!(k in axisDeltas)) {
                 axisDeltas[k] = 0;
             }
@@ -584,7 +583,7 @@ window.allParametric = function(axes) {
     });
 
     var result = {};
-    axisDeltas.forEach(function(v, k) {
+    Object.forEach(axisDeltas, function(v, k) {
         result[k] = axisDefaults[k] + v;
     });
     
@@ -606,11 +605,11 @@ window.compositeToParametric = function(caxis, cvalue) {
     var lowerPivot, upperPivot;
     var lowerAxes, upperAxes;
     //pivot value and axes
-    composites[caxis].forEach(function(paxes, pivot) {
+    Object.forEach(composites[caxis], function(paxes, pivot) {
         pivot = parseFloat(pivot);
         
         //add any new axes to the list
-        paxes.forEach(function(pval, paxis) {
+        Object.forEach(paxes, function(pval, paxis) {
             if (!(paxis in allAxes)) {
                 allAxes[paxis] = globalAxes[paxis].default;
             }
@@ -638,7 +637,7 @@ window.compositeToParametric = function(caxis, cvalue) {
 
     var result = {};
     
-    allAxes.forEach(function(dflt, axis) {
+    Object.forEach(allAxes, function(dflt, axis) {
         var u = axis in upperAxes ? upperAxes[axis] : dflt;
         var l = axis in lowerAxes ? lowerAxes[axis] : dflt;
         var r = upperPivot === lowerPivot ? 0.0 : (cvalue-lowerPivot)/(upperPivot-lowerPivot);
@@ -665,7 +664,7 @@ window.parametricToComposite = function(paxis, pvalue, caxis) {
     var lowerP, upperP;
 
     //pivot value and axes
-    composites[caxis].forEach(function(paxes, pivot) {
+    Object.forEach(composites[caxis], function(paxes, pivot) {
         pivot = parseFloat(pivot);
         
         var myval = paxis in paxes ? paxes[paxis] : mydefault;
@@ -790,7 +789,7 @@ function interInterpolate(targetX, targetY, theGrid) {
         ẇ: [corners.ŝẇ, corners.șẇ, Xratio]
     };
 
-    edges.forEach(function(hlr, edge) {
+    Object.forEach(edges, function(hlr, edge) {
         var high = hlr[0];
         var low = hlr[1];;
         var ratio = hlr[2];
@@ -798,7 +797,7 @@ function interInterpolate(targetX, targetY, theGrid) {
         if (typeof high === 'number' && typeof low === 'number') {
             edges[edge] = low + (high - low) * ratio;
         } else {
-            high.forEach(function(sml, axis) {
+            Object.forEach(high, function(sml, axis) {
                 middle[axis] = [];
                 for (var i=0; i<3; i++) {
                     middle[axis].push(low[axis][i] + (high[axis][i] - low[axis][i]) * ratio);

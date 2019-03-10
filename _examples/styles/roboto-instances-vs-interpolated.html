@@ -122,3 +122,44 @@ comparison:
 {% endcapture %}
 
 <style>{{css|scssify}}</style>
+
+<script>
+
+(function() {
+    var ranges = {
+        'h1': [48, 26, 200, 200],
+        'h2': [30, 16, 220, 280],
+        'h3': [18, 9, 240, 360],
+        'p': [13, 8, 200, 340]
+    };
+    var figure = document.querySelector(".example .comparison > li:nth-child(2) > figure");
+    var elements = {
+        'h1': figure.querySelector('h1 .rendered'),
+        'h2': figure.querySelector('h2 .rendered'),
+        'h3': figure.querySelector('p.lede .rendered'),
+        'p': figure.querySelector('p:not(.lede) .rendered')
+    };
+    function doWeights() {
+        Object.forEach(elements, function(el, tag) {
+            var css = getComputedStyle(el);
+            var fontsize = parseFloat(css.fontSize) * 72 / 96;
+            var range = ranges[tag];
+            var ratio = (fontsize - range[1]) / (range[0] - range[1]);
+            var wght = range[3] + ratio * (range[2] - range[3]);
+            var wght = Math.max(range[2], Math.min(range[3], wght));
+            var parametric = /* allParametric */({'opsz': fontsize, 'wght': wght});
+            console.log(parametric);
+            el.style.fontVariationSettings = obj2fvs(parametric);
+        });
+    }
+    Object.forEach(elements, function(el) {
+        el.style.fontWeight = 'normal';
+    });
+    doWeights();
+    var timeout;
+    window.addEventListener('resize', function() {
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(doWeights, 100);
+    });
+})();
+</script>
