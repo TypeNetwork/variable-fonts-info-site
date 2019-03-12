@@ -8,7 +8,7 @@ A variable font contains a minimum of one axis, which typically provides a fluid
 
 Replacing existing font families with variable-font families means that the variable font can contain the regular design as the default. If the original styles are all weights, the font can contain these as named instances along the **wght** axis, allowing the styles to show in menus, matching preexisting styles from a variable font’s design space. 
 
-Another variable-font file could contain widths and weights in the same way, while offering all of the combinations of all of the weights and all of the widths as well. This may sometimes enlarge the design space of an existing font family to cover more styles than the original. **(Fig 02)**
+Another variable-font file could contain widths and weights in the same way, while offering all of the combinations of all of the weights and all of the widths as well. This may sometimes enlarge the design space of an existing font family to cover more styles than the original. Or in the example of Amstelvar, with respect for the design, the default is as wide as it gets, and the width axis only gets narrower. **(Fig 02)**
 
 The font specification also contains an axis that is new to desktop and web software: optical size (**opsz**). **(Fig 3 was Fig 04)** Combined with weight and width, an optical size axis adds the capability to define weight and width ranges in a variable font's design space to work best for any font family, with wider ranges of both weight and width for greater impact and more efficient use of space in large sizes, and "safer" ranges of both weight and width in small sizes where type is more vulnerable to print production and web text rendering.  
 
