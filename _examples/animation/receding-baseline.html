@@ -1,0 +1,82 @@
+---
+title: Receding Baseline
+description: Text in 3D environments can respond to its "distance" from the user, maintaining readability under varying conditions.
+text: A long time ago in a galaxy far, far away
+class: compact receding-example
+size: 48
+font: Amstelvar-Alpha
+---
+<style>
+    .receding-example .specimen .rendered {
+        position: relative;
+        perspective: 334px;
+        perspective-origin: center center;
+    }
+    
+    .receding-example .specimen .rendered span {
+        display: inline-block;
+    }
+
+    .receding-example .specimen .rendered span.positioned {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+</style>
+<script>
+    var canvas = document.querySelector('.receding-example .specimen .rendered');
+    canvas.style.whiteSpace = 'nowrap';
+    var total = canvas.textContent.trim().length;
+    if (total > 0) {
+        canvas.innerHTML = ('<span>' + canvas.textContent.trim().split(/(?=[^])/u).join("</span><span>") + "</span>").replace(/<span>\s+<\/span>/g, ' ');
+
+        var spans = canvas.querySelectorAll('span');
+
+        //inputs
+        var spread = 180; //width of the "field of view"
+        var opszRange = [14, 72];
+
+        //handy constants
+        var tau = Math.PI * 2;
+        var quarter = Math.PI / 2;
+
+        //first calculate all the letter positions along the line
+        var lineRect = canvas.getBoundingClientRect();
+        var offsets = [];
+        spans.forEach(function(letter) {
+            var lettRect = letter.getBoundingClientRect();
+            offsets.push((lettRect.left - lineRect.left) / lineRect.width);
+        });
+
+        //then apply opsz, which will change some letter widths
+        spans.forEach(function(letter, i) {
+            var opsz = opszRange[1] - (opszRange[1] - opszRange[0]) * Math.sin(offsets[i] * Math.PI);
+            letter.style.fontVariationSettings = '"opsz" ' + opsz;
+        });
+
+        //now recalculate offsets since the line probably got wider
+        lineRect = canvas.getBoundingClientRect();
+        spans.forEach(function(letter, i) {
+            var lettRect = letter.getBoundingClientRect();
+            offsets[i] = (lettRect.left - lineRect.left) / lineRect.width;
+        });
+
+        //now actually rotate letters along a circle
+        var radius = 360 / spread * lineRect.width / tau;
+        canvas.style.perspective = (radius * 1) + 'px';
+        canvas.style.transform = 'translateX(' + (spread / 180 * radius * 3/4) + 'px)';
+        console.log(radius);
+        spans.forEach(function(letter, i) {
+            var ratio = offsets[i];
+
+            var angle = spread/2 - spread * ratio;
+            
+            var transforms = [];
+            transforms.push("rotateY(" + angle + "deg)");
+            transforms.push("translateZ(" + -radius + "px)");
+            
+            letter.className = 'positioned';
+            letter.style.transform = transforms.join(" ");
+        });
+    }
+</script>
