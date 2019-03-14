@@ -33,8 +33,8 @@ font: Amstelvar-Alpha
         var spans = canvas.querySelectorAll('span');
 
         //inputs
-        var spread = 180; //width of the "field of view"
-        var opszRange = [14, 72];
+        var spread = 270; //width of the "field of view"
+        var opszRange = [10, 72];
 
         //handy constants
         var tau = Math.PI * 2;
@@ -64,7 +64,7 @@ font: Amstelvar-Alpha
         //now actually rotate letters along a circle
         var radius = 360 / spread * lineRect.width / tau;
         canvas.style.perspective = (radius * 1) + 'px';
-        canvas.style.transform = 'translateX(' + (spread / 180 * radius * 3/4) + 'px)';
+        canvas.style.transform = "scale(" + (180 / spread) + ") translateX(" + (radius * spread / 180) + 'px)';
         console.log(radius);
         spans.forEach(function(letter, i) {
             var ratio = offsets[i];
