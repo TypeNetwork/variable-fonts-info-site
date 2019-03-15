@@ -4,7 +4,7 @@ description: Text in 3D environments can respond to its "distance" from the user
 text: A long time ago in a galaxy far, far away
 class: compact receding-example
 size: 48
-font: Amstelvar-Alpha
+font: Roboto-Delta
 ---
 <style>
     .receding-example .specimen .rendered {
@@ -33,8 +33,9 @@ font: Amstelvar-Alpha
         var spans = canvas.querySelectorAll('span');
 
         //inputs
-        var spread = 270; //width of the "field of view"
+        var spread = 225; //width of the "field of view"
         var opszRange = [10, 72];
+        var gradRange = [1, -0.5];
 
         //handy constants
         var tau = Math.PI * 2;
@@ -51,7 +52,9 @@ font: Amstelvar-Alpha
         //then apply opsz, which will change some letter widths
         spans.forEach(function(letter, i) {
             var opsz = opszRange[1] - (opszRange[1] - opszRange[0]) * Math.sin(offsets[i] * Math.PI);
-            letter.style.fontVariationSettings = '"opsz" ' + opsz;
+            var grad = gradRange[1] - (gradRange[1] - gradRange[0]) * Math.sin(offsets[i] * Math.PI);
+//            letter.style.fontVariationSettings = '"opsz" ' + opsz;
+            letter.style.fontVariationSettings = '"GRAD" ' + grad;
         });
 
         //now recalculate offsets since the line probably got wider
