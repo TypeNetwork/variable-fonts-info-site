@@ -65,9 +65,8 @@ font: Roboto-Delta
         });
 
         //now actually rotate letters along a circle
-        var radius = 360 / spread * lineRect.width / tau;
+        var radius = Math.round(360 / spread * lineRect.width / tau);
         canvas.style.perspective = (radius * 1) + 'px';
-        canvas.style.transform = "scale(" + (180 / spread) + ") translateX(" + (radius * spread / 180) + 'px)';
         console.log(radius);
         spans.forEach(function(letter, i) {
             var ratio = offsets[i];
@@ -75,11 +74,19 @@ font: Roboto-Delta
             var angle = spread/2 - spread * ratio;
             
             var transforms = [];
-            transforms.push("rotateY(" + angle + "deg)");
+            transforms.push("rotateY(" + Math.round(100*angle)/100 + "deg)");
             transforms.push("translateZ(" + -radius + "px)");
             
             letter.className = 'positioned';
             letter.style.transform = transforms.join(" ");
         });
+        
+        //and now scale the whole thing into the actual viewport
+        var screen = canvas.parentElement.getBoundingClientRect();
+        var left = canvas.querySelector('span:first-of-type').getBoundingClientRect();
+        var right = canvas.querySelector('span:last-of-type').getBoundingClientRect();
+        var transformedWidth = right.left - left.left + right.width;
+        canvas.style.transformOrigin = "top left";
+        canvas.style.transform = "scale(" + (screen.width / transformedWidth) + ") translateX(" + Math.round(screen.left - left.left) + "px)";
     }
 </script>
