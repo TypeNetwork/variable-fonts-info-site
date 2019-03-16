@@ -13,9 +13,9 @@ font: Roboto-Delta
 
     .receding-example .specimen .rendered {
         position: relative;
-        top: 3rem;
         perspective: 334px;
         perspective-origin: center center;
+        top: 8rem;
     }
     
     .receding-example .specimen .rendered span {
@@ -28,18 +28,23 @@ font: Roboto-Delta
         top: 0;
     }
 
-    ul.sliders, ul.sliders li {
+    #sphere-sliders {
         list-style: none;
         margin: 0;
         padding: 0;
+        position: absolute;
     }
 </style>
 
 <style>
 </style>
 
-<ul class='sliders'>
-    <li><label>Sphericality</label> <input id='sphere-input' type='range' name='angle' min='10' max='330' value='225'><label></label></li>
+<ul id='sphere-sliders'>
+    <li><label>Depth</label> <input type='range' name='angle' min='10' max='330' value='225'></li>
+    <li><label>Opsz</label> <input type='range' name='opsz1' min='8' max='144' value='12'> <input type='range' name='opsz2' min='8' max='144' value='12'></li>
+    <li><label>Grade</label> <input type='range' name='GRAD1' min='-1' max='1' value='0' step="0.01"> <input type='range' name='GRAD2' min='-1' max='1' value='0' step="0.01"></li>
+    <li><label>Weight</label> <input type='range' name='wght1' min='100' max='900' value='400'> <input type='range' name='wght2' min='100' max='900' value='400'></li>
+    <li><label>Width</label> <input type='range' name='wdth1' min='75' max='125' value='100' step="0.1"> <input type='range' name='wdth2' min='75' max='125' value='100' step="0.1"></li>
 </ul>
 
 <script>
@@ -47,48 +52,55 @@ font: Roboto-Delta
     canvas.style.whiteSpace = 'nowrap';
     var total = canvas.textContent.trim().length;
     if (total > 0) {
-        canvas.innerHTML = ('<span>' + canvas.textContent.trim().split(/(?=[^])/u).join("</span><span>") + "</span>").replace(/<span>\s+<\/span>/g, ' ');
-
-        var spans = canvas.querySelectorAll('span');
-
         //handy constants
         var tau = Math.PI * 2;
         var quarter = Math.PI / 2;
 
-        var opszRange = [10, 72];
-        var gradRange = [1, -0.5];
-
-        //first calculate all the letter positions along the line
-        var lineRect = canvas.getBoundingClientRect();
-        var offsets = [];
-        spans.forEach(function(letter) {
-            var lettRect = letter.getBoundingClientRect();
-            offsets.push((lettRect.left - lineRect.left) / lineRect.width);
-        });
-
-        //then apply opsz, which will change some letter widths
-        spans.forEach(function(letter, i) {
-            var opsz = opszRange[1] - (opszRange[1] - opszRange[0]) * Math.sin(offsets[i] * Math.PI);
-            var grad = gradRange[1] - (gradRange[1] - gradRange[0]) * Math.sin(offsets[i] * Math.PI);
-//            letter.style.fontVariationSettings = '"opsz" ' + opsz;
-            letter.style.fontVariationSettings = '"GRAD" ' + grad;
-        });
-
-        //now recalculate offsets since the line probably got wider
-        lineRect = canvas.getBoundingClientRect();
-        spans.forEach(function(letter, i) {
-            var lettRect = letter.getBoundingClientRect();
-            offsets[i] = (lettRect.left - lineRect.left) / lineRect.width;
-        });
-
-
-        var sphereInput = document.querySelector('#sphere-input');
         function doSphere() {
-            //inputs
-            var spread = sphereInput.value; //width of the "field of view"
-
-            //reset
+            //reset string into individual unstyled spans for each letter
             canvas.style.transform = "";
+            canvas.innerHTML = ('<span>' + canvas.textContent.trim().split(/(?=[^])/u).join("</span><span>") + "</span>").replace(/<span>\s+<\/span>/g, ' ');
+    
+            var spans = canvas.querySelectorAll('span');
+    
+            //calculate all the letter positions along the line
+            var lineRect = canvas.getBoundingClientRect();
+            var offsets = [];
+            spans.forEach(function(letter) {
+                var lettRect = letter.getBoundingClientRect();
+                offsets.push((lettRect.left - lineRect.left) / lineRect.width);
+            });
+    
+            //then apply sliders, which will change some letter widths
+            var paramRanges = {};
+            var spread;
+            document.querySelectorAll('#sphere-sliders input').forEach(function(input) {
+                if (input.name === 'angle') {
+                    spread = input.value;
+                }
+                var m = input.name.match(/(....)\d$/);
+                if (m) {
+                    if (!(m[1] in paramRanges)) {
+                        paramRanges[m[1]] = [];
+                    }
+                    paramRanges[m[1]].push(parseFloat(input.value));
+                }
+            });
+    
+            spans.forEach(function(letter, i) {
+                var fvs = {};
+                Object.forEach(paramRanges, function(paramRange, axis) {
+                    fvs[axis] = paramRange[0] + (paramRange[1] - paramRange[0]) * Math.sin(offsets[i] * Math.PI);
+                });
+                letter.style.fontVariationSettings = obj2fvs(fvs);
+            });
+    
+            //now recalculate offsets since the line probably got wider
+            lineRect = canvas.getBoundingClientRect();
+            spans.forEach(function(letter, i) {
+                var lettRect = letter.getBoundingClientRect();
+                offsets[i] = (lettRect.left - lineRect.left) / lineRect.width;
+            });
     
             //now actually rotate letters along a circle
             var radius = Math.round(360 / spread * lineRect.width / tau);
@@ -116,9 +128,11 @@ font: Roboto-Delta
             canvas.style.transform = "scale(" + (screen.width / transformedWidth) + ") translateX(" + Math.round(screen.left - left.left) + "px)"; 
         }
         
-        sphereInput.addEventListener('input', doSphere);
-        sphereInput.addEventListener('change', doSphere);
         
-        sphereInput.trigger('change');
+        document.querySelectorAll('#sphere-sliders input').forEach(function(input) {
+            input.addEventListener('input', doSphere);
+            input.addEventListener('change', doSphere);
+        });
+        doSphere();
     }
 </script>
