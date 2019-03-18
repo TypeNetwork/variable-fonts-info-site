@@ -37,7 +37,7 @@ comparison:
                 text: >
                     Intro text leads reader into article by the nose,
                     with grace and dignity and a little pithy charm.
-                    Typeface has changed to the <span style='font-weight:600'>appropriate</span> optical size
+                    Typeface has changed to the <span style='font-weight:500'>appropriate</span> optical size
                     by the miracle of modern typography.
                 axes:
                     wght: 200
@@ -75,10 +75,10 @@ comparison:
                 text: >
                     Intro text leads reader into article by the nose,
                     with grace and dignity and a little pithy charm.
-                    Typeface has changed to the <span style='font-weight:600'>appropriate</span> optical size
+                    Typeface has changed to the <span style='font-weight:500'>appropriate</span> optical size
                     by the miracle of modern typography.
                 axes:
-                    wght: 200
+                    wght: 260
 ---
 
 {% capture css %}
@@ -130,7 +130,7 @@ comparison:
         'h1': [48, 26, 200, 200],
         'h2': [30, 16, 220, 280],
         'h3': [18, 9, 240, 360],
-        'p': [13, 8, 200, 340]
+        'p': [13, 8, 260, 340]
     };
     var figure = document.querySelector(".example .comparison > li:nth-child(2) > figure");
     var elements = {
@@ -147,7 +147,8 @@ comparison:
             var ratio = (fontsize - range[1]) / (range[0] - range[1]);
             var wght = range[3] + ratio * (range[2] - range[3]);
             var wght = Math.max(range[2], Math.min(range[3], wght));
-            el.style.fontVariationSettings = obj2fvs({'opsz': fontsize, 'wght': wght});
+            el.style.fontVariationSettings = obj2fvs({'opsz': fontsize});
+            el.style.fontWeight = wght;
         });
     }
     Object.forEach(elements, function(el) {
