@@ -410,7 +410,7 @@ function setupExamples() {
                     outputFrame.addEventListener('load', setupPlayground);
                     outputFrame.src = "{{site.baseUrl}}/playground-iframe.html";
 
-                    outputFrame.style.width = specimen.getBoundingClientRect().width + 'px';
+                    outputFrame.style.width = 'calc(' + specimen.getBoundingClientRect().width + 'px + 2rem)';
 
                     var ignoreClasses = /\b(specimen|single-line|editorial|paragraph|has-label|fit-to-width)\b/g;
                     specimen.querySelectorAll('span.rendered').forEach(function(span) {
