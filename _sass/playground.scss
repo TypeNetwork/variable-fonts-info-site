@@ -77,6 +77,8 @@
             margin-right: auto;
             border: 1px solid black;
             resize: both;
+            height: calc(100% - 2rem);
+            margin-top: 1rem;
         }
     }
     .html {

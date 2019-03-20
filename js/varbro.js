@@ -410,10 +410,8 @@ function setupExamples() {
                     outputFrame.addEventListener('load', setupPlayground);
                     outputFrame.src = "{{site.baseUrl}}/playground-iframe.html";
 
-                    if (specimen.hasClass('editorial')) {
-                        outputFrame.style.width = specimen.getBoundingClientRect().width + 'px';
-                    }
-                    
+                    outputFrame.style.width = specimen.getBoundingClientRect().width + 'px';
+
                     var ignoreClasses = /\b(specimen|single-line|editorial|paragraph|has-label|fit-to-width)\b/g;
                     specimen.querySelectorAll('span.rendered').forEach(function(span) {
                         var style = {};
