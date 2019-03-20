@@ -13,7 +13,7 @@ function varbroSetup() {
     addNav();
     setupSidebar();
     setupExamples();
-    setupPlaygrounds();
+    setupPlayground();
     window.addEventListener('load', setupFitToWidth);
     window.addEventListener('resize', setupFitToWidth);
     //and once more just to make sure the fonts are loaded
@@ -314,6 +314,7 @@ function addNav() {
     //add prev/next links to article pages by walking the sidebar
     var prev, next;
     var links = document.querySelectorAll('aside.content-filters li a');
+    if (!links.length) return;
     links.forEach(function(a, i) {
         if (a.href === window.location.href) {
             if (i > 0) {
@@ -394,20 +395,23 @@ function setupExamples() {
                 alert("No specimen found!");
                 return;
             }
-            window.doAjax("/playground-template.html", {
+            window.doAjax("{{site.baseUrl}}/playground-template.html", {
                 'complete': function(xhr) {
                     var temp = document.createElement('div');
                     temp.innerHTML = xhr.responseText;
-                    var playground = temp.querySelector('.playground');
-                    var outputFrame = playground.querySelector('.output.frame .wrapper');
+                    var playground = temp.querySelector('#playground');
+                    var outputFrame = playground.querySelector('.output.frame iframe');
                     var htmlFrame = playground.querySelector('.html.frame .editor');
                     var cssFrame = playground.querySelector('.css.frame .editor');
 
                     var styles = [];
                     var codes = [];
                     
+                    outputFrame.addEventListener('load', setupPlayground);
+                    outputFrame.src = "{{site.baseUrl}}/playground-iframe.html";
+
                     if (specimen.hasClass('editorial')) {
-                        outputFrame.style.maxWidth = specimen.getBoundingClientRect().width + 'px';
+                        outputFrame.style.width = specimen.getBoundingClientRect().width + 'px';
                     }
                     
                     var ignoreClasses = /\b(specimen|single-line|editorial|paragraph|has-label|fit-to-width)\b/g;
@@ -436,59 +440,60 @@ function setupExamples() {
                     htmlFrame.textContent = codes.join("\n\n").replace(/\. \{/g, ' {').replace(/ class=""/g, '');
 
                     doOverlay(playground);
-                    
-                    setTimeout(setupPlaygrounds);
                 }
             })
         });
     });
 }
 
-function setupPlaygrounds() { 
-    document.querySelectorAll('.playground').forEach(function(playground, i) {
-        if (playground.getAttribute('data-processed') === 'true') {
-            return;
-        }
+function setupPlayground() { 
+    var playground = document.querySelector('#playground');
+    if (!playground) return;
+    if (playground.getAttribute('data-processed') === 'true') {
+        return;
+    }
 
-        var output = playground.querySelector('.output.frame .wrapper');
-        var html = playground.querySelector('.html.frame');
-        var css = playground.querySelector('.css.frame');
+    var outputFrame = playground.querySelector('.output.frame iframe');
+    var outputDoc = outputFrame.contentWindow.document;
 
-        var styleid = 'playground-' + i + '-style';
-        var style = document.getElementById(styleid);
-        if (!style) {
-            style = document.createElement('style');
-            style.id = styleid;
-            document.head.appendChild(style);
-        }
+    //if the iframe hasn't loaded yet, come back when it's ready
+    if (outputDoc.readyState !== 'complete') {
+        return;
+    }
 
-        var updatetimeout;
-        var oldHTML, oldCSS;
-        function update() {
-            var newHTML = html.textContent;
-            var newCSS = css.textContent.replace(/^.+\{/gm, function(rules) {
-                return rules.replace(/(^|,\s*)/g, '$1 .playground .output.frame .wrapper ');
-            });
+    var output = outputDoc.getElementById('playground-output');
+    var html = playground.querySelector('.html.frame');
+    var css = playground.querySelector('.css.frame');
 
-            if (oldHTML !== newHTML || oldCSS !== newCSS) {
-                output.innerHTML = oldHTML = newHTML;
-                style.textContent = oldCSS = newCSS;
-            }
+    var style = outputDoc.createElement('style');
+    outputDoc.head.appendChild(style);
 
-            updatetimeout = null;
-        }
-        
-        playground.addEventListener('keyup', function(evt) {
-            if (updatetimeout) {
-                clearTimeout(updatetimeout);
-            }
-            updatetimeout = setTimeout(update, 500);
+    var updatetimeout;
+    var oldHTML, oldCSS;
+    function update() {
+        var newHTML = html.textContent;
+        var newCSS = css.textContent.replace(/^.+\{/gm, function(rules) {
+            return rules.replace(/(^|,)\s*/g, '$1 #playground-output ');
         });
-        
-        update();
-        
-        playground.setAttribute('data-processed', 'true');
+
+        if (oldHTML !== newHTML || oldCSS !== newCSS) {
+            output.innerHTML = oldHTML = newHTML;
+            style.textContent = oldCSS = newCSS;
+        }
+
+        updatetimeout = null;
+    }
+    
+    playground.addEventListener('keyup', function(evt) {
+        if (updatetimeout) {
+            clearTimeout(updatetimeout);
+        }
+        updatetimeout = setTimeout(update, 500);
     });
+    
+    setTimeout(update);
+    
+    playground.setAttribute('data-processed', 'true');
 }
 
 var defaultWordSpace = 0.3195;

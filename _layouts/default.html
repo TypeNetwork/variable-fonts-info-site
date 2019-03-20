@@ -1,115 +1,59 @@
-<!DOCTYPE html>
-<html lang="en" id='varbro-site'>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+---
+layout: base
+---
+<div class="wrapper ">
 
-    <title>{% if page.title %}{{page.title}} | {% endif %} Variable Fonts | Type Network + Google</title>
-    
-    <link rel="stylesheet" href="https://www.typenetwork.com/assets_content/css/fonts-momentum-sans.css" />
-    <link rel="stylesheet" href="https://www.typenetwork.com/assets_content/css/icon_font.css" />
-    <link rel="stylesheet" href="https://www.typenetwork.com/assets_content/css/reset.css" />
-    <link rel="stylesheet" href="https://www.typenetwork.com/assets_content/css/style.css" />
-    
-    {% if page.stylesheets %}
-        {% for ss in page.stylesheets %}
-            <link rel="stylesheet" href="{{ss}}" />
-        {% endfor %}
-    {% endif %}
-    
-    <link rel="apple-touch-icon" sizes="57x57" href="https://www.typenetwork.com/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://www.typenetwork.com/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://www.typenetwork.com/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://www.typenetwork.com/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://www.typenetwork.com/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://www.typenetwork.com/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://www.typenetwork.com/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://www.typenetwork.com/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://www.typenetwork.com/apple-touch-icon-180x180.png">
-    <link rel="icon" type="image/png" href="https://www.typenetwork.com/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="https://www.typenetwork.com/android-chrome-192x192.png" sizes="192x192">
-    <link rel="icon" type="image/png" href="https://www.typenetwork.com/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/png" href="https://www.typenetwork.com/favicon-16x16.png" sizes="16x16">
-    <link rel="mask-icon" href="https://www.typenetwork.com/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+    <header class="header-global">
+        <h1><a href="{{baseurl}}/">Type Network</a></h1>
+    </header>
 
-    <script src="{{baseurl}}/js/varbro.js"></script>
-
-    <link rel="stylesheet" href="{{site.baseurl}}/varbro.css">
-
+    <nav class="nav-global">
+        <a class="nav-global-reveal" href="#">Menu</a>
+        <ul>
 <!--
-    <meta name="twitter:url" property="og:url"      content="https://www.typenetwork.com/news/article/roger-black-collection" />
-    <meta name="twitter:image" property="og:image" content="https://www.typenetwork.com/assets_content/uploads/RBC_LedeR-45.svg" />
-    <meta property="og:type" content="article" />
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@typenetwork">
-    <meta name="twitter:title" property="og:title" content="A long line of custom classics" />
-    <meta property="og:site_name" content="Type Network" />
-    <meta name="twitter:description" property="og:description" content="Roger Black Collection spotlights typefaces that began life as custom commissions by the celebrated art director and typographic consultant. On the occasion of the collection’s launch, Yves Peters had a freewheeling conversation with Black, who cofounded Font Bureau and is a member of the board at Type Network." />
+            <li><a class="nav-home-link" href="https://www.typenetwork.com/">Home</a></li>
+            <li><a href="http://store.typenetwork.com">Fonts</a></li>
+            <li><a href="https://www.typenetwork.com/news">News</a></li>
+            <li><a href="https://www.typenetwork.com/gallery" >Gallery</a></li>
 -->
-
-</head>
-
-<body id="{{page.page_id|default:layout.page_id}}">
+        </ul>
+    </nav>
     
-    <div class="wrapper ">
-    
-        <header class="header-global">
-            <h1><a href="{{baseurl}}/">Type Network</a></h1>
-        </header>
-    
-        <nav class="nav-global">
-            <a class="nav-global-reveal" href="#">Menu</a>
-            <ul>
+    <nav class="nav-user">
+        <a class="nav-user-reveal" href="#">Menu</a>
+        <ul>
 <!--
-                <li><a class="nav-home-link" href="https://www.typenetwork.com/">Home</a></li>
-                <li><a href="http://store.typenetwork.com">Fonts</a></li>
-                <li><a href="https://www.typenetwork.com/news">News</a></li>
-                <li><a href="https://www.typenetwork.com/gallery" >Gallery</a></li>
+            <li><a href="http://store.typenetwork.com/account/licenses" class="nav-user-account"></a></li>
+            <li><a href="http://store.typenetwork.com/account/favorites" class="nav-user-favorites"></a></li>
+            <li><a href="http://store.typenetwork.com/cart" class="nav-user-cart"></a></li>
 -->
-            </ul>
-        </nav>
-        
-        <nav class="nav-user">
-            <a class="nav-user-reveal" href="#">Menu</a>
-            <ul>
-<!--
-                <li><a href="http://store.typenetwork.com/account/licenses" class="nav-user-account"></a></li>
-                <li><a href="http://store.typenetwork.com/account/favorites" class="nav-user-favorites"></a></li>
-                <li><a href="http://store.typenetwork.com/cart" class="nav-user-cart"></a></li>
--->
-            </ul>
-        </nav>
-        
-        <aside class="content-filters">
-            <a class="content-filters-close" href="#">Close</a>
-
-            {% include sidebar.html %}
-
-        </aside>
+        </ul>
+    </nav>
     
-        <div class="content-main">
-            <div class='content-main-full-height'>
-                <a class="content-options-show-filters" href="#">Sidebar</a>
-                {{content}}
-            </div>
-    
-            <footer class="footer-global">
-                <ul>
-                    <li><a href="https://www.typenetwork.com/about">About Type Network</a></li>
-                    <li><a href="https://www.typenetwork.com/about#subscribe">Subscribe to the Newsletter</a></li>
-                    <li><a href="https://www.typenetwork.com/support">Help and Support</a></li>
-                </ul>
-                <p>&copy; Copyright Type Network 2018. All Rights Reserved.</p>
-            </footer>
+    <aside class="content-filters">
+        <a class="content-filters-close" href="#">Close</a>
+
+        {% include sidebar.html %}
+
+    </aside>
+
+    <div class="content-main">
+        <div class='content-main-full-height'>
+            <a class="content-options-show-filters" href="#">Sidebar</a>
+            {{content}}
         </div>
-    </div>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://www.typenetwork.com/assets_content/js/libs/picturefill.min.js"></script>
-    <script src="https://www.typenetwork.com/assets_content/js/functions.js"></script>
 
-</body>
-</html>
+        <footer class="footer-global">
+            <ul>
+                <li><a href="https://www.typenetwork.com/about">About Type Network</a></li>
+                <li><a href="https://www.typenetwork.com/about#subscribe">Subscribe to the Newsletter</a></li>
+                <li><a href="https://www.typenetwork.com/support">Help and Support</a></li>
+            </ul>
+            <p>&copy; Copyright Type Network 2018. All Rights Reserved.</p>
+        </footer>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://www.typenetwork.com/assets_content/js/libs/picturefill.min.js"></script>
+<script src="https://www.typenetwork.com/assets_content/js/functions.js"></script>

@@ -1,0 +1,60 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en" id='varbro-site'>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% if page.title %}{{page.title}} | {% endif %} Variable Fonts | Type Network + Google</title>
+    
+    <link rel="stylesheet" href="https://www.typenetwork.com/assets_content/css/fonts-momentum-sans.css" />
+    <link rel="stylesheet" href="https://www.typenetwork.com/assets_content/css/icon_font.css" />
+    <link rel="stylesheet" href="https://www.typenetwork.com/assets_content/css/reset.css" />
+    <link rel="stylesheet" href="https://www.typenetwork.com/assets_content/css/style.css" />
+    
+    {% if page.stylesheets %}
+        {% for ss in page.stylesheets %}
+            <link rel="stylesheet" href="{{ss}}" />
+        {% endfor %}
+    {% endif %}
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="https://www.typenetwork.com/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://www.typenetwork.com/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://www.typenetwork.com/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://www.typenetwork.com/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://www.typenetwork.com/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://www.typenetwork.com/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://www.typenetwork.com/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://www.typenetwork.com/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.typenetwork.com/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="https://www.typenetwork.com/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://www.typenetwork.com/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="https://www.typenetwork.com/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="https://www.typenetwork.com/favicon-16x16.png" sizes="16x16">
+    <link rel="mask-icon" href="https://www.typenetwork.com/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <script src="{{baseurl}}/js/varbro.js"></script>
+
+    <link rel="stylesheet" href="{{site.baseurl}}/varbro.css">
+
+<!--
+    <meta name="twitter:url" property="og:url"      content="https://www.typenetwork.com/news/article/roger-black-collection" />
+    <meta name="twitter:image" property="og:image" content="https://www.typenetwork.com/assets_content/uploads/RBC_LedeR-45.svg" />
+    <meta property="og:type" content="article" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@typenetwork">
+    <meta name="twitter:title" property="og:title" content="A long line of custom classics" />
+    <meta property="og:site_name" content="Type Network" />
+    <meta name="twitter:description" property="og:description" content="Roger Black Collection spotlights typefaces that began life as custom commissions by the celebrated art director and typographic consultant. On the occasion of the collection’s launch, Yves Peters had a freewheeling conversation with Black, who cofounded Font Bureau and is a member of the board at Type Network." />
+-->
+
+</head>
+
+<body id="{{page.page_id|default:layout.page_id}}">
+    {{content}}
+</body>
+</html>
