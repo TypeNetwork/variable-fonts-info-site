@@ -9,14 +9,14 @@ comparison:
             -
                 element: h1
                 font: Roboto
-                size: 60
+                size: 48
                 text: PARTICIPATION
                 axes:
                     wght: 800
             -
                 element: h2
                 font: Roboto
-                size: 35.5
+                size: 28
                 text: Normal Interactive Process
                 axes:
                     wght: 600
@@ -24,7 +24,7 @@ comparison:
                 element: p
                 class: lede
                 font: Roboto
-                size: 24
+                size: 16
                 leading: 1.4
                 text: "Many more design possibilities with less space"
                 axes:
@@ -32,7 +32,7 @@ comparison:
             -
                 element: p
                 font: Roboto
-                size: 18
+                size: 13
                 leading: 1.4
                 text: >
                     Intro text leads reader into article by the nose,
@@ -47,14 +47,14 @@ comparison:
             -
                 element: h1
                 font: Roboto
-                size: 60
+                size: 48
                 text: PARTICIPATION
                 axes:
                     wght: 200
             -
                 element: h2
                 font: Roboto
-                size: 34.7
+                size: 28
                 text: Normal Interactive Process
                 axes:
                     wght: 220
@@ -62,7 +62,7 @@ comparison:
                 element: p
                 class: lede
                 font: Roboto
-                size: 24
+                size: 16
                 leading: 1.4
                 text: "Many more design possibilities with less space"
                 axes:
@@ -70,13 +70,15 @@ comparison:
             -
                 element: p
                 font: Roboto
-                size: 18
+                size: 13
                 leading: 1.4
                 text: >
                     Intro text leads reader into article by the nose,
                     with grace and dignity and a little pithy charm.
                     Typeface has changed to the <span style='font-weight:500'>appropriate</span> optical size
                     by the miracle of modern typography.
+                css:
+                    max-width: 28em
                 axes:
                     wght: 260
 ---
@@ -111,7 +113,6 @@ comparison:
         
         p .rendered {
             font-size: 3.333vw !important; //8pt
-            max-width: 28em;
             
             @media (min-width: 520px) {
                 font-size: 13pt !important;
@@ -129,8 +130,8 @@ comparison:
 (function() {
     var ranges = {
         'h1': [48, 26, 200, 200],
-        'h2': [30, 16, 220, 280],
-        'h3': [18, 9, 240, 360],
+        'h2': [28, 16, 220, 280],
+        'h3': [16, 9, 240, 360],
         'p': [13, 8, 260, 340]
     };
     var figure = document.querySelector(".example .comparison > li:nth-child(2) > figure");
