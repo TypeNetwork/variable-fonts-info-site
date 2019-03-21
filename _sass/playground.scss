@@ -69,16 +69,24 @@
             content: "Output";
         }
         
-        iframe {
+        .resize-me {
             display: block;
-            overflow: auto;
+            overflow: hidden;
             background: white;
             margin-left: auto;
             margin-right: auto;
             border: 1px solid black;
-            resize: both;
+            width: calc(320px + 2rem);
+            max-width: calc(100% - 2rem);
             height: calc(100% - 2rem);
+            resize: both;
             margin-top: 1rem;
+            padding: 1rem;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
         }
     }
     .html {
@@ -104,5 +112,7 @@
 }
 
 #playground-iframe-internal {
-    padding: 1rem;
+    .example {
+        background: transparent;
+    }
 }

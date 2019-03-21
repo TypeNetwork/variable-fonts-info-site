@@ -39,6 +39,8 @@ comparison:
                     with grace and dignity and a little pithy charm.
                     Typeface has changed to the <span style='font-weight:500'>appropriate</span> optical size
                     by the miracle of modern typography.
+                css:
+                    max-width: 28em
                 axes:
                     wght: 200
     -
@@ -85,40 +87,38 @@ comparison:
 
 {% capture css %}
 
-.example .comparison {
-//    > li:first-child {
-        h1 .rendered {
-            font-size: 10.5vw !important; //26pt
-            
-            @media (min-width: 582px) {
-                font-size: 48pt !important;
-            }
-        }
+.example {
+    h1 .rendered {
+        font-size: 10.5vw !important; //26pt
         
-        h2 .rendered {
-            font-size: 5.75vw !important; //16pt
-            
-            @media (min-width: 649px) {
-                font-size: 28pt !important;
-            }
+        @media (min-width: 582px) {
+            font-size: 48pt !important;
         }
+    }
+    
+    h2 .rendered {
+        font-size: 5.75vw !important; //16pt
+        
+        @media (min-width: 649px) {
+            font-size: 28pt !important;
+        }
+    }
 
-        p.lede .rendered {
-            font-size: 3.75vw !important; //9pt
-            
-            @media (min-width: 640px) {
-                font-size: 16pt !important;
-            }
-        }
+    p.lede .rendered {
+        font-size: 3.75vw !important; //9pt
         
-        p .rendered {
-            font-size: 3.333vw !important; //8pt
-            
-            @media (min-width: 520px) {
-                font-size: 13pt !important;
-            }
+        @media (min-width: 640px) {
+            font-size: 16pt !important;
         }
-//    }
+    }
+    
+    p .rendered {
+        font-size: 3.333vw !important; //8pt
+        
+        @media (min-width: 520px) {
+            font-size: 13pt !important;
+        }
+    }
 }
 
 {% endcapture %}
@@ -134,7 +134,7 @@ comparison:
         'h3': [16, 9, 240, 360],
         'p': [13, 8, 260, 340]
     };
-    var figure = document.querySelector(".example .comparison > li:nth-child(2) > figure");
+    var figure = document.querySelector(".example .comparison > li:nth-child(2) > figure") || document.querySelector('#playground-output');
     var elements = {
         'h1': figure.querySelector('h1 .rendered'),
         'h2': figure.querySelector('h2 .rendered'),

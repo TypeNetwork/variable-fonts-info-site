@@ -410,7 +410,7 @@ function setupExamples() {
                     outputFrame.addEventListener('load', setupPlayground);
                     outputFrame.src = "{{site.baseUrl}}/playground-iframe.html";
 
-                    outputFrame.style.width = 'calc(' + specimen.getBoundingClientRect().width + 'px + 2rem)';
+                    //outputFrame.style.width = 'calc(' + specimen.getBoundingClientRect().width + 'px + 2rem)';
 
                     var ignoreClasses = /\b(specimen|single-line|editorial|paragraph|has-label|fit-to-width)\b/g;
                     specimen.querySelectorAll('span.rendered').forEach(function(span) {
@@ -436,6 +436,30 @@ function setupExamples() {
                     cssFrame.textContent = styles.join("\n\n");
 
                     htmlFrame.textContent = codes.join("\n\n").replace(/\. \{/g, ' {').replace(/ class=""/g, '');
+
+                    //some examples have extra styles and JS in the content
+                    var extraContent = button.closest('.example-links');
+                    if (extraContent) {
+                        extraContent = extraContent.previousElementSibling;
+                    }
+                    if (extraContent && !extraContent.className.match(/\bexample\b/)) {
+                        extraContent = null;
+                    }
+                    if (extraContent) {
+                        extraContent = extraContent.querySelector('.extra-content');
+                    }
+
+                    if (extraContent) {
+                        extraContent.querySelectorAll('style').forEach(function(style) {
+                            cssFrame.textContent += "\n\n" + style.textContent.trim();
+                        });
+                        extraContent.querySelectorAll('script').forEach(function(s) {
+                            htmlFrame.textContent += "\n\n<script>\n" + s.textContent.trim() + "\n</script>";
+                        });
+                    }
+                    
+                    //remove .rendered from CSS
+                    cssFrame.textContent = cssFrame.textContent.replace(/([\w>~\]\+])[ \t]+\.rendered/g, "$1");
 
                     doOverlay(playground);
                 }
@@ -470,13 +494,30 @@ function setupPlayground() {
     var oldHTML, oldCSS;
     function update() {
         var newHTML = html.textContent;
-        var newCSS = css.textContent.replace(/^.+\{/gm, function(rules) {
-            return rules.replace(/(^|,)\s*/g, '$1 #playground-output ');
+        var newCSS = css.textContent.replace(/^.+?\{/gm, function(rules) {
+            var newrules = [];
+            rules.split(/,/).forEach(function(rule) {
+                if (rule.trim().match(/^@|\.example/)) {
+                    newrules.push(rule);
+                } else {
+                    newrules.push('.example ' + rule);
+                }
+            })
+            return newrules.join(", ");
         });
 
         if (oldHTML !== newHTML || oldCSS !== newCSS) {
             output.innerHTML = oldHTML = newHTML;
             style.textContent = oldCSS = newCSS;
+            
+            //and run any scripts in the input
+            output.querySelectorAll('script').forEach(function(script) {
+                var js = script.textContent;
+                script.parentNode.removeChild(script);
+                var newscript = outputDoc.createElement('script');
+                newscript.textContent = js;
+                output.appendChild(newscript);
+            });
         }
 
         updatetimeout = null;
