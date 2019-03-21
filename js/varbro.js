@@ -400,6 +400,7 @@ function setupExamples() {
                     var temp = document.createElement('div');
                     temp.innerHTML = xhr.responseText;
                     var playground = temp.querySelector('#playground');
+                    var resizeFrame = playground.querySelector('.output.frame .resize-me');
                     var outputFrame = playground.querySelector('.output.frame iframe');
                     var htmlFrame = playground.querySelector('.html.frame .editor');
                     var cssFrame = playground.querySelector('.css.frame .editor');
@@ -410,7 +411,7 @@ function setupExamples() {
                     outputFrame.addEventListener('load', setupPlayground);
                     outputFrame.src = "{{site.baseUrl}}/playground-iframe.html";
 
-                    //outputFrame.style.width = 'calc(' + specimen.getBoundingClientRect().width + 'px + 2rem)';
+                    resizeFrame.style.width = 'calc(' + specimen.getBoundingClientRect().width + 'px + 2rem)';
 
                     var ignoreClasses = /\b(specimen|single-line|editorial|paragraph|has-label|fit-to-width)\b/g;
                     specimen.querySelectorAll('span.rendered').forEach(function(span) {
@@ -449,17 +450,18 @@ function setupExamples() {
                         extraContent = extraContent.querySelector('.extra-content');
                     }
 
+                    var noRendered = /([\w>~\]\+\)])[ \t]+\.rendered/g;
                     if (extraContent) {
                         extraContent.querySelectorAll('style').forEach(function(style) {
                             cssFrame.textContent += "\n\n" + style.textContent.trim();
                         });
                         extraContent.querySelectorAll('script').forEach(function(s) {
-                            htmlFrame.textContent += "\n\n<script>\n" + s.textContent.trim() + "\n</script>";
+                            htmlFrame.textContent += "\n\n<script>\n" + s.textContent.trim().replace(noRendered, '$1') + "\n</script>";
                         });
                     }
                     
-                    //remove .rendered from CSS
-                    cssFrame.textContent = cssFrame.textContent.replace(/([\w>~\]\+])[ \t]+\.rendered/g, "$1");
+                    //remove .rendered from CSS and JS
+                    cssFrame.textContent = cssFrame.textContent.replace(noRendered, "$1");
 
                     doOverlay(playground);
                 }

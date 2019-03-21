@@ -143,6 +143,7 @@ comparison:
     };
     function doWeights() {
         Object.forEach(elements, function(el, tag) {
+            if (!el) return;
             var css = getComputedStyle(el);
             var fontsize = parseFloat(css.fontSize) * 72 / 96;
             var range = ranges[tag];
