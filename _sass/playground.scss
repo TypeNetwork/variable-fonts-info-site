@@ -79,7 +79,7 @@
             min-width: calc(320px + 2rem);
             max-width: calc(100% - 2rem);
             height: calc(100% - 2rem);
-            max-height: 100%;
+            max-height: calc(100% - 2rem + 1px);
             resize: both;
             margin-top: 1rem;
             padding: 1rem;
@@ -115,5 +115,9 @@
 #playground-iframe-internal {
     .example {
         background: transparent;
+        
+        > p {
+            margin-top: 0.5rem;
+        }
     }
 }

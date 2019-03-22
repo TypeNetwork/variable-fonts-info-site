@@ -37,14 +37,14 @@ comparison:
                 text: >
                     Intro text leads reader into article by the nose,
                     with grace and dignity and a little pithy charm.
-                    Typeface has changed to the <span style='font-weight:500'>appropriate</span> optical size
+                    Typeface has changed to the <span style='font-weight:600'>appropriate</span> optical size
                     by the miracle of modern typography.
                 css:
                     max-width: 28em
                 axes:
                     wght: 200
     -
-        caption: "Chang(ing) to other style(s) in the font: 200, 220, 240, text 260, text bold 600"
+        caption: "Chang(ing) to other style(s) in the font: 200, 220, 240, text 300, text bold 500"
         lines:
             -
                 element: h1
@@ -82,7 +82,7 @@ comparison:
                 css:
                     max-width: 28em
                 axes:
-                    wght: 260
+                    wght: 300
 ---
 
 {% capture css %}
@@ -132,7 +132,7 @@ comparison:
         'h1': [48, 26, 200, 200],
         'h2': [28, 16, 220, 280],
         'h3': [16, 9, 240, 360],
-        'p': [13, 8, 260, 340]
+        'p': [13, 8, 300, 360]
     };
     var figure = document.querySelector(".example .comparison > li:nth-child(2) > figure") || document.querySelector('#playground-output');
     var elements = {
