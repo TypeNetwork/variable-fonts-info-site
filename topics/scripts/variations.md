@@ -5,7 +5,7 @@ sidebar: "Multiple scripts"
 title: "Multiple scripts"
 ---
 <figure>
-    <img src="{{baseurl}}/images/articles/zephyr-axes.svg" alt="是Zéphyre">
+    <img src="{{site.baseurl}}/images/articles/zephyr-axes.svg" alt="是Zéphyre">
     <figcaption>Script-specific variable axes can apply sensible modifications to particular scripts.</figcaption>
 </figure>
 

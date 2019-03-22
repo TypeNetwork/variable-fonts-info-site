@@ -7,7 +7,7 @@ title: "One file, many fonts"
 The presentation of typeface families on the desktop is based on family and style names in the font files. Operating systems interpret these names into menu selections to make them easier for people to use. On the web, typeface families and styles have been identified generically, or by file name, and then assigned properties and called whenever a run of text requires that family.
 
 <figure>
-    <img src="{{baseurl}}/images/articles/family-selection.svg" alt="Traditional family/style choosing vs. with variable fonts">
+    <img src="{{site.baseurl}}/images/articles/family-selection.svg" alt="Traditional family/style choosing vs. with variable fonts">
     <figcaption>The old-school, interface-bending method of selecting a family and style from a desktop menu (left) versus the more intuitive, streamlined process of selection possible with variable fonts (right).</figcaption>
 </figure>
 
