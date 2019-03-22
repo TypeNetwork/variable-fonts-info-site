@@ -76,9 +76,10 @@
             margin-left: auto;
             margin-right: auto;
             border: 1px solid black;
-            width: calc(320px + 2rem);
+            min-width: calc(320px + 2rem);
             max-width: calc(100% - 2rem);
             height: calc(100% - 2rem);
+            max-height: 100%;
             resize: both;
             margin-top: 1rem;
             padding: 1rem;
