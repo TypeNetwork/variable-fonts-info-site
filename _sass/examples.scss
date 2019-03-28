@@ -50,13 +50,15 @@
         }
     }
     
-    &.side-by-side ul.comparison {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 1rem;
-        
-        > li {
-            margin: 0;
+    @media (min-width:40em) {
+        &.side-by-side ul.comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 1rem;
+            
+            > li {
+                margin: 0;
+            }
         }
     }
     
