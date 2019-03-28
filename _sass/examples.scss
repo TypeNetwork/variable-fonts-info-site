@@ -76,8 +76,8 @@
         }
     }
 
-    &.grey {
-        ul.comparison, .extra-content {
+    &.grey, &.gray {
+        ul.comparison, .extra-content, figure {
             background: transparent;
             padding: 0;
         }

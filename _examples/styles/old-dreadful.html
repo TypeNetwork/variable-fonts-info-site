@@ -3,21 +3,34 @@ title: Families go their own ways
 stylesheets:
  - "https://cloud.typenetwork.com/projects/3023/fontface.css/"
 class: grey
+links: false
 ---
 {% capture css %}
 {% raw %}
+    @mixin two-four-column {
+        ul {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-column-gap: 1rem;
+            
+            @media (min-width: 34em) {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    }
     #styles-primer-illustrations {
         font-size: 24px;
-        table {
-            width: 100%;
+
+        ul, li {
+            font: inherit;
         }
-        
+
         #faux-bold-oblique {
             font-family: Courier, monospace;
-            td {
-                width: 25%;
-            }
-            td[data-faux] {
+            
+            @include two-four-column;
+
+            li[data-faux] {
                 position: relative;
                 &::after {
                     position: absolute;
@@ -25,7 +38,7 @@ class: grey
                     content: attr(data-faux);
                 }
             }
-            td:nth-child(3), td:nth-child(4) {
+            li:nth-child(3), li:nth-child(4) {
                 font-style: italic;
             }
         }
@@ -33,18 +46,18 @@ class: grey
         #four-member-family {
             font-family: "Eldorado Text", "Times New Roman", serif;
             font-size: 110%;
-            td {
-                width: 25%;
-            }
-            td:nth-child(2) {
+
+            @include two-four-column;
+            
+            li:nth-child(2) {
                 font-weight: bold;
             }
         
-            td:nth-child(3) {
+            li:nth-child(3) {
                 font-style: italic;
             }
         
-            td:nth-child(4) {
+            li:nth-child(4) {
                 font-weight: bold;
                 font-style: italic;
             }
@@ -52,50 +65,68 @@ class: grey
         
         #titling-gothic {
             font-size: 110%;
-            td:nth-child(1) {
+
+            @media (min-width: 37em) {
+                ul {
+                    display: grid;
+                    grid-template-columns: repeat(3, auto);
+                    grid-column-gap: 1rem;
+                }
+            }
+
+            li:nth-child(3n+1) {
                 font-family: "Titling Gothic";
             }
-            td:nth-child(2) {
+            li:nth-child(3n+2) {
                 font-family: "TG Condensed";
             }
-            td:nth-child(3) {
+            li:nth-child(3n) {
                 font-family: "TG Compressed";
             }
-            tr:nth-child(1) {
+            li {
                 font-weight: 300;
             }
-            tr:nth-child(2) {
+            li:nth-child(3) ~ li {
                 font-weight: 400;
             }
-            tr:nth-child(3) {
+            li:nth-child(6) ~ li {
                 font-weight: 500;
             }
-            tr:nth-child(4) {
+            li:nth-child(9) ~ li {
                 font-weight: 600;
             }
-            tr:nth-child(5) {
+            li:nth-child(12) ~ li {
                 font-weight: 700;
             }
         }
 
         #momentum-sans {
             font-family: "MomentumSansVariable", sans-serif;
-            tr:nth-child(1) {
+
+            @media (min-width: 42em) {
+                ul {
+                    display: grid;
+                    grid-template-columns: repeat(3, auto);
+                    grid-column-gap: 1rem;
+                }
+            }
+
+            li {
                 font-weight: 400;
             }
-            tr:nth-child(2) {
+            li:nth-child(3) ~ li {
                 font-weight: 700;
             }
-            tr:nth-child(3) {
+            li:nth-child(6) ~ li {
                 font-weight: 900;
             }
-            td:nth-child(1) {
+            li:nth-child(3n+1) {
                 font-variation-settings: "opsz" 14;
             }
-            td:nth-child(2) {
+            li:nth-child(3n+2) {
                 font-variation-settings: "opsz" 36;
             }
-            td:nth-child(3) {
+            li:nth-child(3n) {
                 font-variation-settings: "opsz" 64;
             }
         }
@@ -108,77 +139,57 @@ class: grey
 <figure id='styles-primer-illustrations'>
     <figure id='faux-bold-oblique'>
         <figcaption>The Courier typeface family that could be generated from the “regular” by computerized bolding and obliqueing.</figcaption>
-        <table>
-            <tr>
-                <td>COURIER</td>
-                <td data-faux="COURIER">COURIER</td>
-                <td>COURIER</td>
-                <td data-faux="COURIER">COURIER</td>
-            </tr>
-        </table>
+        <ul>
+            <li>COURIER</li>
+            <li data-faux="COURIER">COURIER</li>
+            <li>COURIER</li>
+            <li data-faux="COURIER">COURIER</li>
+        </ul>
     </figure>
     
     <figure id='four-member-family'>
         <figcaption>The Eldorado typeface family contains four styles as individually designed fonts.</figcaption>
-        <table>
-            <tr>
-                <td>Eldorado</td>
-                <td>Eldorado</td>
-                <td>Eldorado</td>
-                <td>Eldorado</td>
-            </tr>
-        </table>
+        <ul>
+            <li>Eldorado</li>
+            <li>Eldorado</li>
+            <li>Eldorado</li>
+            <li>Eldorado</li>
+        </ul>
     </figure>
 
     <figure id='titling-gothic'>
         <figcaption>The Titling Gothic family is separated by widths, e.g. the subfamily TitlingGothicCondensed-, contains the five weights in the right-hand column.</figcaption>
-        <table>
-            <tr>
-                <td>Titling Gothic</td>
-                <td>Titling Gothic</td>
-                <td>Titling Gothic</td>
-            </tr>
-            <tr>
-                <td>Titling Gothic</td>
-                <td>Titling Gothic</td>
-                <td>Titling Gothic</td>
-            </tr>
-            <tr>
-                <td>Titling Gothic</td>
-                <td>Titling Gothic</td>
-                <td>Titling Gothic</td>
-            </tr>
-            <tr>
-                <td>Titling Gothic</td>
-                <td>Titling Gothic</td>
-                <td>Titling Gothic</td>
-            </tr>
-            <tr>
-                <td>Titling Gothic</td>
-                <td>Titling Gothic</td>
-                <td>Titling Gothic</td>
-            </tr>
-        </table>
+        <ul>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+            <li>Titling Gothic</li>
+        </ul>
     </figure>
     
     <figure id='momentum-sans'>
         <figcaption>The Momentum family is separated by size, e.g. each of three subfamilies; MomentumSansText-, MomentumSansDeck-, and MomentumSansDisplay-, contain the weights and widths of that size master.</figcaption>
-        <table>
-            <tr>
-                <td>MomentumText</td>
-                <td>MomentumDeck</td>
-                <td>MomentumDisplay</td>
-            </tr>
-            <tr>
-                <td>MomentumText</td>
-                <td>MomentumDeck</td>
-                <td>MomentumDisplay</td>
-            </tr>
-            <tr>
-                <td>MomentumText</td>
-                <td>MomentumDeck</td>
-                <td>MomentumDisplay</td>
-            </tr>
-        </table>
+        <ul>
+            <li>MomentumText</li>
+            <li>MomentumDeck</li>
+            <li>MomentumDisplay</li>
+            <li>MomentumText</li>
+            <li>MomentumDeck</li>
+            <li>MomentumDisplay</li>
+            <li>MomentumText</li>
+            <li>MomentumDeck</li>
+            <li>MomentumDisplay</li>
+        </ul>
     </figure>
 </figure>
