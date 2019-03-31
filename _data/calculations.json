@@ -1,0 +1,68 @@
+{
+    "notes": "This file contains parameters for adjusting horizontal and vertical spacing based on various typographic criteria.",
+    "line-height": {
+        "notes": "these are font: charsPerLine: fontSize: YOPQ Multiplier",
+        "YOPQdefault": 50, 
+        "default": {
+            "45": {
+                "12": 4,
+                "72": 0
+            }
+        },
+        "AmstelvarAlpha-VF": {
+            "20": {
+                "8": 1.5,
+                "12": 1.2,
+                "144": 0
+            },
+            "60": {
+                "8": 2,
+                "12": 1.8,
+                "144": 1
+            }
+        }
+    },
+    "justification": {
+        "notes": "font: size in points: weight as percentage of normal: parameter: min/default/max",
+        "defaultWordSpace": 0.3195,
+        "maxLetterSpace": 1,
+        "AmstelvarAlpha": {
+            "10": {
+                "100": {
+                    "XTRA": [370, 402, 402],
+                    "letter-spacing": [0, 0, 0],
+                    "word-spacing": [-0.2, 0, 0.2]
+                },
+                "210": {
+                    "XTRA": [370, 402, 402],
+                    "letter-spacing": [0, 0, 0],
+                    "word-spacing": [-0.2, 0, 0.2]
+                }
+            },
+            "14": {
+                "100": {
+                    "XTRA": [380, 402, 402],
+                    "letter-spacing": [-0.05, 0, 0.05],
+                    "word-spacing": [-0.21, 0, 0.21]
+                },
+                "210": {
+                    "XTRA": [302, 326, 342],
+                    "letter-spacing": [-0.05, 0, 0.05],
+                    "word-spacing": [-0.21, 0, 0.21]
+                }
+            },
+            "48": {
+                "100": {
+                    "XTRA": [325, 342, 359],
+                    "letter-spacing": [-0.1, 0, 0.1],
+                    "word-spacing": [-0.25, 0, 0.25]
+                },
+                "210": {
+                    "XTRA": [325, 342, 359],
+                    "letter-spacing": [-0.1, 0, 0.1],
+                    "word-spacing": [-0.25, 0, 0.25]
+                }
+            }
+        }
+    }
+}

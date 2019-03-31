@@ -537,52 +537,9 @@ function setupPlayground() {
     playground.setAttribute('data-processed', 'true');
 }
 
-var defaultWordSpace = 0.3195;
-var maxLetterSpace = 1;
-var justificationTolerances = {
-    // these are point values for now
-    'AmstelvarAlpha': {
-        '10': {
-            '100': {
-                XTRA: [370, 402, 402],
-                'letter-spacing': [0, 0, 0],
-                'word-spacing': [-defaultWordSpace * 0.2, 0, defaultWordSpace * 0.2]
-            },
-            '210': {
-                XTRA: [370, 402, 402],
-                'letter-spacing': [0, 0, 0],
-                'word-spacing': [-defaultWordSpace * 0.2, 0, defaultWordSpace * 0.2]
-            }
-        },
-        
-        '14': {
-            '100': {
-                XTRA: [380, 402, 402],
-                'letter-spacing': [-maxLetterSpace * 0.05, 0, maxLetterSpace * 0.05],
-                'word-spacing': [-defaultWordSpace * 0.21, 0, defaultWordSpace * 0.21]
-            },
-            '210': {
-                XTRA: [302, 326, 342],
-                'letter-spacing': [-maxLetterSpace * 0.05, 0, maxLetterSpace * 0.05],
-                'word-spacing': [-defaultWordSpace * 0.21, 0, defaultWordSpace * 0.21]
-            }
-        },
-        
-        '48': {
-            '100': {
-                XTRA: [325, 342, 359],
-                'letter-spacing': [-maxLetterSpace * 0.1, 0, maxLetterSpace * 0.1],
-                'word-spacing': [-defaultWordSpace * 0.25, 0, defaultWordSpace * 0.25]
-            },
-            '210': {
-                XTRA: [325, 342, 359],
-                'letter-spacing': [-maxLetterSpace * 0.1, 0, maxLetterSpace * 0.1],
-                'word-spacing': [-defaultWordSpace * 0.25, 0, defaultWordSpace * 0.25]
-            }
-        }
-    }
-};
 
+// CALCULATION STUFF
+var calculations = {{site.data.calculations|jsonify}};
 
 //pull axis info from typetools
 var composites = {
@@ -873,32 +830,11 @@ function interInterpolate(targetX, targetY, theGrid) {
 window.getJustificationTolerances = function(targetsize, targetweight) {
     var font = 'AmstelvarAlpha';
     
-    if (!(font in justificationTolerances)) {
+    if (!(font in calculations["justification"])) {
         return {};
     }
 
-    return interInterpolate(targetsize, targetweight, justificationTolerances[font]);
-};
-
-//these are charsPerLine: fontSize: YOPQ Multiplier
-var lineHeights = {};
-lineHeights[''] = {
-    '45': {
-        '12': 4,
-        '72': 0
-    }
-};
-lineHeights[fontNames['Amstelvar-Alpha']] = {
-    '20': {
-        '8': 1.5,
-        '12': 1.2,
-        '144': 0
-    },
-    '60': {
-        '8': 2,
-        '12': 1.8,
-        '144': 1
-    }
+    return interInterpolate(targetsize, targetweight, calculations["justification"][font]);
 };
 
 HTMLElement.prototype.setLineHeight = function() {
@@ -912,14 +848,14 @@ HTMLElement.prototype.setLineHeight = function() {
     var charsPerLine = totalChars / (boxheight / Math.max(1, parseInt(css.lineHeight)));
     
     var yopq = fvs2obj(css.fontVariationSettings).YOPQ;
-    if (isNaN(yopq) && fontfamily in lineHeights) {
+    if (isNaN(yopq) && fontfamily in calculations["line-height"]) {
         yopq = axisDefaults.YOPQ;
     }
     if (isNaN(yopq)) {
-        yopq = 50;
+        yopq = calculations["line-height"].YOPQdefault;
     }
 
-    var yopqMultiplier = interInterpolate(charsPerLine, fontsize, lineHeights[fontfamily] || lineHeights['']);
+    var yopqMultiplier = interInterpolate(charsPerLine, fontsize, calculations["line-height"][fontfamily] || calculations["line-height"].default);
     var lineHeight = 1 + yopq/1000 * yopqMultiplier;
 
     //console.log(totalChars, css.lineHeight, boxheight, charsPerLine, yopq, yopqMultiplier);
