@@ -4,7 +4,7 @@ breadcrumbs: ["Styles", "With variables…"]
 sidebar: "Styles, meet instances"
 title: "Styles, meet instances"
 ---
-A variable font contains a minimum of one axis, which typically provides a fluid range of styles that are visually congruent to a central design (the “default variable”). Such a font might just contain a weight axis (**wght**) or, like many font families today, it might include styles of weight and width in various combinations. The total combinations of axes define a style range referred to as the “design space” of a font family with—in contrast to the old discrete styles—instances* found at every combination of the ranges of each axis.
+A variable font contains a minimum of one axis, which typically provides a fluid range of styles that are visually congruent to a central design (the “default variable”). Such a font might just contain a weight axis (**wght**) or, like many font families today, it might include styles of weight and width in various combinations. The total interpolation of axes definewhat's called the “design space” of a font family with —in contrast to the old discrete styles— instances found at every combination of each axis.
 
 <figure>
     <img src="{{site.baseurl}}/images/articles/styles/one-d-chess.svg" alt="Single-axis range: weight">

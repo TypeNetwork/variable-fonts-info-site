@@ -2,7 +2,7 @@
 layout: article
 breadcrumbs: ["Families", "Before variables…"]
 sidebar: "Families / variable families"
-title: "One file, many fonts"
+title: "One family, many files"
 ---
 The presentation of typeface families on the desktop is based on family and style names in the font files. Operating systems interpret these names into menu selections to make them easier for people to use. On the web, typeface families and styles have been identified generically, or by file name, and then assigned properties and called whenever a run of text requires that family.
 
