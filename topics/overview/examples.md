@@ -14,34 +14,18 @@ Most of the demonstrations on this site will take the form of code playgrounds o
 Nearly all of the examples on this site are intended to demonstrate that it’s the job of the contemporary type designer to develop fonts with fluid values for a complete interoperable set of parametric axes appropriate to each font family’s intended uses. Such fonts can easily be programmed to interact with the other fluid values of web typography having to do with the spaces in and among the glyphs and stretching to the margins of pages. 
 
 <style>
-    iframe.mini-me {
-        background: white;
-        position: absolute;
-        transform-origin: top left;
+    #overview-examples-screenshots figure img {
+        max-width: 4in;
     }
 </style>
 
-<div class='example'>
+<div id='overview-examples-screenshots' class='example'>
     <figure>
-        <figcaption>Example compositions are shown for each topic being documented…</figcaption>
-        <iframe class='mini-me' src="{{site.baseurl}}/examples/scripts/multiscript-alignment"></iframe>
+        <figcaption>Example compositions are shown for each topic being documented, showing the appearanace at your portal size. Many of these examples also demonstrate responsive design practices, which can be observed by resizing your browser window or viewing the example on different devices.</figcaption>
+        <img src="{{site.baseurl}}/images/articles/overview/screenshot-participation.png" alt="Screenshot of a page on this website">
+    </figure>
+    <figure>
+        <figcaption>Many examples also contain “Experiment…” links, which will take you to a “playground” containing the example’s HTML and CSS.</figcaption>
+        <img src="{{site.baseurl}}/images/articles/overview/screenshot-playground.png" alt="Screenshot of a “code playground” on this website">
     </figure>
 </div>
-
-<script>
-(function() {
-    document.querySelectorAll('iframe.mini-me').forEach(function(iframe) {
-        var fullsize = document.documentElement.clientWidth;
-        var finalsize = iframe.parentNode.contentWidth();
-        var scale = finalsize/fullsize;
-        iframe.style.width = fullsize + 'px';
-        iframe.style.height = document.documentElement.clientHeight + 'px';
-        iframe.style.transform = 'scale(' + scale + ')';
-        
-        var spacer = document.createElement('div');
-        spacer.style.height = (document.documentElement.clientHeight * scale) + 'px';
-        
-        iframe.parentNode.appendChild(spacer);
-    });
-})();
-</script>
