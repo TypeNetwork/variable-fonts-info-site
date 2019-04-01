@@ -5,18 +5,22 @@ sidebar: "Logo sizing"
 title: "Logo sizing"
 ---
 
-A company called Moscoso has designed a new logotype, which they plan to use at three sizes: full size (display), half size, and quarter size. But there’s a problem: at smaller sizes, the finer details of this font start to disappear.
+The fictitious Elemeno Pea company is having difficulty spreading their brand 
+across the full range of media for modern use. Being used in print to just scaling 
+their artwork and having the printer over-ink the smaller uses, the thin hairlines 
+that bring elegance to their pea products, is having a hard time in rendering in 
+screen environments, where such elegant details ofter fail to appear.
 
 {% include inline-example.html example='size/logo-3' %}
 
-In the absence of designed optical sizes for this family, a common reaction
-might be to redesign the logotype using a “sturdier” typeface, like a flavorless sans, that can weather
-rough environments or display at smaller sizes.
+The first instinct of their fictitious ad agency, probably based on the experience of 
+doing the same thing over and over again and again from brand to brand, is to 
+switch Elemeno to a simple, low contrast san serif with little or no flavor. 
 
 {% include inline-example.html example='size/logo-4' %}
 
-With variable fonts, smaller sizes can be tuned to preserve the more delicate features of the design
-without compromising the elegance of the display version. Through CSS or application math,
-these tweaks can scale as the font changes size.
+Elemeno instead, can now make a custom version of their logo as a scaleable font with an
+optical size axis that maintains the look, feel, and elegance of their products, without the
+concern for ink in print, and with control over their logo’s appearance with any rendering. 
 
 {% include inline-example.html example='size/logo-5' %}
