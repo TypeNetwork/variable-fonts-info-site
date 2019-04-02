@@ -7,7 +7,7 @@ title: "Styles, meet instances"
 A variable font contains a minimum of one axis, which typically provides a fluid range of styles that are visually congruent to a central design (the “default variable”). Such a font might just contain a weight axis (**wght**) or, like many font families today, it might include styles of weight and width in various combinations. The total interpolation of axes definewhat's called the “design space” of a font family with —in contrast to the old discrete styles— instances found at every combination of each axis.
 
 <figure>
-    <img style='width:69%' src="{{site.baseurl}}/images/articles/styles/one-d-chess.svg" alt="Single-axis range: weight">
+    <img style='width:66%' src="{{site.baseurl}}/images/articles/styles/one-d-chess.svg" alt="Single-axis range: weight">
     <figcaption></figcaption>
 </figure>
 
