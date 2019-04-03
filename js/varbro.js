@@ -13,7 +13,6 @@ function varbroSetup() {
     addNav();
     setupSidebar();
     setupExamples();
-    setupPlayground();
     window.addEventListener('load', setupFitToWidth);
     window.addEventListener('resize', setupFitToWidth);
     //and once more just to make sure the fonts are loaded
@@ -344,34 +343,8 @@ function addNav() {
     nav.appendChild(ul);
 }
 
-function doOverlay(content) {
-    var overlay = document.getElementById('playground-overlay');
-    if (overlay) {
-        overlay.parentElement.removeChild(overlay);
-    }
-    overlay = document.createElement('div');
-    overlay.id = 'playground-overlay';
-
-    var closeButton = document.createElement('button');
-    closeButton.textContent = "×";
-    closeButton.className = 'close';
-    closeButton.setAttribute('type', 'button');
-
-    if (typeof content === 'string') {
-        overlay.innerHTML = content;
-    } else {
-        overlay.appendChild(content);
-    }
-    
-    closeButton.addEventListener('click', function(evt) {
-        overlay.parentElement.removeChild(overlay);
-    });
-    
-    overlay.appendChild(closeButton);
-
-    document.body.appendChild(overlay);
-}
-
+//whether closing the playground should navigate back in the browser history
+var playgroundFromHash = false;
 function setupExamples() {
 /*
 <div class='playground'>
@@ -388,88 +361,162 @@ function setupExamples() {
 */
     document.querySelectorAll('a.open-playground').forEach(function(button) {
         var specimen = document.querySelector(button.getAttribute('href')) || button.closest('.specimen');
+        if (!button.id) {
+            button.id = 'experiment-' + specimen.id;
+        }
+        
         button.addEventListener('click', function(evt) {
             evt.preventDefault();
-            if (!specimen) {
-                console.log(button);
-                alert("No specimen found!");
-                return;
-            }
-            window.doAjax("{{site.baseUrl}}/playground-template.html", {
-                'complete': function(xhr) {
-                    var temp = document.createElement('div');
-                    temp.innerHTML = xhr.responseText;
-                    var playground = temp.querySelector('#playground');
-                    var resizeFrame = playground.querySelector('.output.frame .resize-me');
-                    var outputFrame = playground.querySelector('.output.frame iframe');
-                    var htmlFrame = playground.querySelector('.html.frame .editor');
-                    var cssFrame = playground.querySelector('.css.frame .editor');
-
-                    var styles = [];
-                    var codes = [];
-                    
-                    outputFrame.addEventListener('load', setupPlayground);
-                    outputFrame.src = "{{site.baseUrl}}/playground-iframe.html";
-
-                    resizeFrame.style.width = 'calc(' + specimen.getBoundingClientRect().width + 'px + 2rem)';
-
-                    var ignoreClasses = /\b(specimen|single-line|editorial|paragraph|has-label|fit-to-width)\b/g;
-                    specimen.querySelectorAll('span.rendered').forEach(function(span) {
-                        var style = {};
-                        var subspec = span.closest('.specimen');
-                        style.tag = subspec.tagName.toLowerCase();
-                        style.className = subspec.className.replace(ignoreClasses, '').replace(/\s+/g, ' ').trim();
-                        style.css = span.getAttribute('style').trim().split(/\s*;\s*/);
-                        styles.push(style);
- 
-                        codes.push('<' + style.tag + ' class="' + style.className + '">\n  ' + span.innerHTML.trim() + '\n</' + style.tag + '>');
-                    });
- 
-                    styles.forEach(function(style, i) {
-                        var classes = '.' + style.className.trim().replace(/\s+/g, '.');
-                        classes = classes.replace(ignoreClasses, '');
-                        if (classes === '.') {
-                            classes = '';
-                        }
-                        styles[i] = style.tag + classes + ' {\n  ' + style.css.join(";\n  ").replace(/:(\S)/g, ": $1").trim() + '\n}';
-                    });
-                    
-                    cssFrame.textContent = styles.join("\n\n");
-
-                    htmlFrame.textContent = codes.join("\n\n").replace(/\. \{/g, ' {').replace(/ class=""/g, '');
-
-                    //some examples have extra styles and JS in the content
-                    var extraContent = button.closest('.example-links');
-                    if (extraContent) {
-                        extraContent = extraContent.previousElementSibling;
-                    }
-                    if (extraContent && !extraContent.className.match(/\bexample\b/)) {
-                        extraContent = null;
-                    }
-                    if (extraContent) {
-                        extraContent = extraContent.querySelector('.extra-content');
-                    }
-
-                    var noRendered = /([\w>~\]\+\)])[ \t]+\.rendered/g;
-                    if (extraContent) {
-                        extraContent.querySelectorAll('style').forEach(function(style) {
-                            cssFrame.textContent += "\n\n" + style.textContent.trim();
-                        });
-                        extraContent.querySelectorAll('script').forEach(function(s) {
-                            htmlFrame.textContent += "\n\n<script>\n" + s.textContent.trim().replace(noRendered, '$1') + "\n</script>";
-                        });
-                    }
-                    
-                    //remove .rendered from CSS and JS
-                    cssFrame.textContent = cssFrame.textContent.replace(noRendered, "$1");
-
-                    doOverlay(playground);
-                }
-            })
+            loadPlayground(button);
         });
+        
+        if (window.location.hash === '#playground-' + button.id) {
+            playgroundFromHash = true;
+            loadPlayground(button);
+        }
+    });
+    
+    window.addEventListener('popstate', function() {
+        console.log("popstate", window.location.hash);
+        closeOverlay();
+        var m = window.location.hash.match(/^#playground-(.+)$/);
+        if (m) {
+            playgroundFromHash = true;
+            loadPlayground(m[1]);
+        }
     });
 }
 
+
+function closeOverlay() {
+    var overlay = document.getElementById('playground-overlay');
+    if (overlay) {
+        overlay.parentElement.removeChild(overlay);
+    }
+}
+
+function doOverlay(content) {
+    closeOverlay();
+    var overlay = document.createElement('div');
+    overlay.id = 'playground-overlay';
+
+    var closeButton = document.createElement('button');
+    closeButton.textContent = "×";
+    closeButton.className = 'close';
+    closeButton.setAttribute('type', 'button');
+
+    if (typeof content === 'string') {
+        overlay.innerHTML = content;
+    } else {
+        overlay.appendChild(content);
+    }
+    
+    closeButton.addEventListener('click', function(evt) {
+        window.location.hash = '';
+        playgroundFromHash = false;
+        closeOverlay();
+    });
+    
+    overlay.appendChild(closeButton);
+
+    document.body.appendChild(overlay);
+}
+
+
+function loadPlayground(button) {
+    if (typeof button === 'string') {
+        button = document[button[0] === '#' ? 'querySelector' : 'getElementById'](button);
+    }
+    
+    if (!(button instanceof HTMLElement)) {
+        return;
+    }
+    
+    var specimen = document.querySelector(button.getAttribute('href')) || button.closest('.specimen');
+    
+    if (!specimen) {
+        alert("No specimen found!");
+        return;
+    }
+    
+    if (!playgroundFromHash) {
+        window.history.pushState({}, '', '#' + 'playground-' + button.id);
+    }
+    
+    window.doAjax("{{site.baseUrl}}/playground-template.html", {
+        'complete': function(xhr) {
+            var temp = document.createElement('div');
+            temp.innerHTML = xhr.responseText;
+            var playground = temp.querySelector('#playground');
+            var resizeFrame = playground.querySelector('.output.frame .resize-me');
+            var outputFrame = playground.querySelector('.output.frame iframe');
+            var htmlFrame = playground.querySelector('.html.frame .editor');
+            var cssFrame = playground.querySelector('.css.frame .editor');
+
+            var styles = [];
+            var codes = [];
+            
+            outputFrame.addEventListener('load', setupPlayground);
+            outputFrame.src = "{{site.baseUrl}}/playground-iframe.html";
+
+            resizeFrame.style.width = 'calc(' + specimen.getBoundingClientRect().width + 'px + 2rem)';
+
+            var ignoreClasses = /\b(specimen|single-line|editorial|paragraph|has-label|fit-to-width)\b/g;
+            specimen.querySelectorAll('span.rendered').forEach(function(span) {
+                var style = {};
+                var subspec = span.closest('.specimen');
+                style.tag = subspec.tagName.toLowerCase();
+                style.className = subspec.className.replace(ignoreClasses, '').replace(/\s+/g, ' ').trim();
+                style.css = span.getAttribute('style').trim().split(/\s*;\s*/);
+                styles.push(style);
+
+                codes.push('<' + style.tag + ' class="' + style.className + '">\n  ' + span.innerHTML.trim() + '\n</' + style.tag + '>');
+            });
+
+            styles.forEach(function(style, i) {
+                var classes = '.' + style.className.trim().replace(/\s+/g, '.');
+                classes = classes.replace(ignoreClasses, '');
+                if (classes === '.') {
+                    classes = '';
+                }
+                styles[i] = style.tag + classes + ' {\n  ' + style.css.join(";\n  ").replace(/:(\S)/g, ": $1").trim() + '\n}';
+            });
+            
+            cssFrame.textContent = styles.join("\n\n");
+
+            htmlFrame.textContent = codes.join("\n\n").replace(/\. \{/g, ' {').replace(/ class=""/g, '');
+
+            //some examples have extra styles and JS in the content
+            var extraContent = button.closest('.example-links');
+            if (extraContent) {
+                extraContent = extraContent.previousElementSibling;
+            }
+            if (extraContent && !extraContent.className.match(/\bexample\b/)) {
+                extraContent = null;
+            }
+            if (extraContent) {
+                extraContent = extraContent.querySelector('.extra-content');
+            }
+
+            var noRendered = /([\w>~\]\+\)])[ \t]+\.rendered/g;
+            if (extraContent) {
+                extraContent.querySelectorAll('style').forEach(function(style) {
+                    cssFrame.textContent += "\n\n" + style.textContent.trim();
+                });
+                extraContent.querySelectorAll('script').forEach(function(s) {
+                    htmlFrame.textContent += "\n\n<script>\n" + s.textContent.trim().replace(noRendered, '$1') + "\n</script>";
+                });
+            }
+            
+            //remove .rendered from CSS and JS
+            cssFrame.textContent = cssFrame.textContent.replace(noRendered, "$1");
+
+            doOverlay(playground);
+        }
+    });
+}
+        
+        
 function setupPlayground() { 
     var playground = document.querySelector('#playground');
     if (!playground) return;
