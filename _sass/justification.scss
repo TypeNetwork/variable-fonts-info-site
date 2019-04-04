@@ -4,17 +4,7 @@
     font-family: "AmstelvarAlpha-VF", "Comic Sans MS";
     box-sizing: border-box;
     padding: 1rem;
-    border: 1px solid #CCC;
     margin-bottom: 1em;
-    
-    &::after {
-        position: absolute;
-        content: "↔︎";
-        color: #CCC;
-        top: 50%;
-        right: -0.5em;
-        transform: translateY(-50%);
-    }
     
     p {
         font-size: 14pt;

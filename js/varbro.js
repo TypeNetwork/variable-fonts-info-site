@@ -594,9 +594,13 @@ window.makeResizable = function(el, options) {
 
     el.addClass('resize-me');
 
+    var handle = document.createElement('div');
+    handle.className = 'resize-handle';
+    el.appendChild(handle);
+
     var w0;
     window.interact(el).resizable({
-        'edges': {right: true},
+        'edges': {right: '.resize-handle'},
 /*
         'modifiers': [
             window.parent.interact.modifiers.restrictSize({
