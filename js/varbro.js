@@ -596,6 +596,7 @@ window.makeResizable = function(el, options) {
 
     var handle = document.createElement('div');
     handle.className = 'resize-handle';
+    handle.textContent = "⫼";
     el.appendChild(handle);
 
     var w0;
