@@ -460,6 +460,8 @@ function loadPlayground(button) {
             outputFrame.src = "{{site.baseUrl}}/playground-iframe.html";
 
             resizeFrame.style.width = 'calc(' + specimen.getBoundingClientRect().width + 'px + 2rem)';
+            
+            window.makeResizable(resizeFrame);
 
             var ignoreClasses = /\b(specimen|single-line|editorial|paragraph|has-label|fit-to-width)\b/g;
             specimen.querySelectorAll('span.rendered').forEach(function(span) {
@@ -584,6 +586,41 @@ function setupPlayground() {
     playground.setAttribute('data-processed', 'true');
 }
 
+
+window.makeResizable = function(el, options) {
+    if (!options) {
+        options = {};
+    }
+
+    el.addClass('resize-me');
+
+    var w0;
+    window.interact(el).resizable({
+        'edges': {right: true},
+/*
+        'modifiers': [
+            window.parent.interact.modifiers.restrictSize({
+                'min': { 'width': parseInt(getComputedStyle(el).minWidth) }
+            })
+        ]
+*/
+    }).on('resizestart', function(evt) {
+        w0 = evt.target.getBoundingClientRect().width;
+        evt.target.style.width = w0 + 'px';
+        if (typeof options.start === 'function') {
+            options.start(evt);
+        }
+    }).on('resizemove', function(evt) {
+        evt.target.style.width = (w0 + (evt.client.x - evt.clientX0)*2) + 'px';
+        if (typeof options.change === 'function') {
+            options.change(evt);
+        }
+    }).on('resizeend', function(evt) {
+        if (typeof options.end === 'function') {
+            options.end(evt);
+        }
+    });
+};
 
 // CALCULATION STUFF
 var calculations = {{site.data.calculations|jsonify}};

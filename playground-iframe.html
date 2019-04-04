@@ -5,15 +5,3 @@ page_id: playground-iframe-internal
 <div id='playground-output' class='example'>
     Playground goes here.
 </div>
-<script>
-(function() {
-    var resizeFrame = window.frameElement && window.frameElement.parentNode;
-    if (resizeFrame && resizeFrame.className.match(/\bresize-me\b/)) {
-        function unsize() {
-            resizeFrame.style.width = '';
-            window.removeEventListener('resize', unsize);
-        }
-        window.addEventListener('resize', unsize);
-    }
-})();
-</script>

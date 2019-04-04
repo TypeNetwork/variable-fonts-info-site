@@ -161,6 +161,20 @@ $pink: #69f;
         }
     }
     
+    
+    /* resize magic! */
+
+    .resize-me {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid black;
+        touch-action: manipulation; //for safari
+        touch-action: none;
+    }
+    
+    
+    
 @import "playground";
 @import "specimens";
 @import "examples";

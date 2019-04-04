@@ -132,46 +132,14 @@ paragraph-text: >
         var doXTRA = container.hasClass('xtra');
 
         // resize article
-        
-        var dragging = false;
-        var startX, startW, startTop;
-        
-        var resize = document.createElement('div');
-        resize.className = 'resize';
-        container.appendChild(resize);
-        
-        resize.addEventListener("mousedown", function(evt) {
-            evt.preventDefault();
-            dragging = true;
-            startX = evt.clientX;
-            startW = container.getBoundingClientRect().width;
-            //mess with window scroll position so that the paragraph doesn't move out from under the mouse
-            startTop = container.getBoundingClientRect().top;
-        });
-        
-        document.addEventListener("mouseup", function(evt) {
-            if (!dragging) return;
-            dragging = false;
-            reflowAll();
-        });
-        
-        document.addEventListener("mousemove", function(evt) {
-            if (!dragging) return;
-            evt.preventDefault();
-            var dx = evt.clientX - startX;
-            
-            resizeAll(startW + dx, false);
-            
-            var endTop = container.getBoundingClientRect().top;
-            
-            if (startTop !== endTop) {
-                document.documentElement.scrollTo(
-                    document.documentElement.scrollLeft,
-                    document.documentElement.scrollTop + (endTop - startTop)
-                );
+        window.makeResizable(container, {
+            'change': function(evt) {
+                resizeAll(parseInt(container.style.width), false);
+            },
+            'end': function(evt) {
+                reflowAll();
             }
         });
-    
     
         // the real stuff
 
