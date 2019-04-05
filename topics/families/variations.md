@@ -55,6 +55,6 @@ Variable fonts, by and large, follow a file or two files containing designs of o
         </li>
     </ul>
     <figcaption>
-        <p>Apple macOS’s use of variations includes display of different optical sizes depending on sie preferences for showing type in desktop icons.</p>
+        <p>Apple macOS’s use of variations includes display of different optical sizes depending on size preferences for showing type in desktop icons.</p>
     </figcaption>
 </figure>
