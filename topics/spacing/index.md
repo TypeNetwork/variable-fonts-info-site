@@ -33,70 +33,6 @@ title: "Spacing primer"
                 margin-top: 0;
             }
         }
-        
-        .horizontal-stretch, .vertical-stretch {
-            font-family: "{{site.data.fonts.names["Amstelvar-Alpha"]}}";
-            display: block;
-            font-size: 12vw;
-            position: relative;
-
-            @media (min-width: 9in) {
-                font-size: 1.2in;
-            }
-            
-            samp {
-                font-family: inherit;
-                display: block;
-                width: 100%;
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                text-align: center;
-                line-height: 1;
-                
-                &.regular {
-                    position: relative;
-                    color: #CCC;
-                }
-                
-                + samp {
-                    color: #999;
-                    + samp {
-                        color: #333;
-                    }
-                }
-                
-            }
-        }
-
-        .horizontal-stretch {
-            .regular {
-                transform: scaleX(1.0);
-            }
-
-            .thin {
-                transform: scaleX(0.9);
-            }
-            
-            .thinner {
-                transform: scaleX(0.8);
-            }
-        }
-        
-        .vertical-stretch {
-            .regular {
-                transform: scaleY(1.2);
-            }
-
-            .squat {
-                transform: scaleY(1.0);
-            }
-            
-            .squatter {
-                transform: scaleY(0.8);
-            }
-        }
     }
 {% endcapture %}
 
@@ -121,25 +57,6 @@ title: "Spacing primer"
     <figure>
         <img src="{{site.baseurl}}/images/articles/spacing-inside-glyphs-4.svg" alt="Letterspace plus kerning">
         <figcaption>Letterspace plus kerning</figcaption>
-    </figure>
-
-    <figure>
-        <img src="{{site.baseurl}}/images/articles/spacing-inside-glyphs-5.svg" alt="Inside-of-letters spacing">
-        <figcaption>Inside-of-letters spacing</figcaption>
-    </figure>
-
-    <figure class='horizontal-stretch'>
-        <samp class='regular'>Two</samp>
-        <samp class='thin'>Two</samp>
-        <samp class='thinner'>Two</samp>
-        <figcaption>Horizontal scale</figcaption>
-    </figure>
-
-    <figure class='vertical-stretch'>
-        <samp class='regular'>Two</samp>
-        <samp class='squat'>Two</samp>
-        <samp class='squatter'>Two</samp>
-        <figcaption>Vertical scale</figcaption>
     </figure>
 </figure>
 
