@@ -1,5 +1,5 @@
 
-.justification-example {
+.justify {
     position: relative;
     font-family: "AmstelvarAlpha-VF", "Comic Sans MS";
     box-sizing: border-box;
@@ -29,7 +29,7 @@
       text-transform: uppercase;
     }
 
-    span {
+    span:not(.rendered) {
       display: inline;
     }
 

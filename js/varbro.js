@@ -972,14 +972,212 @@ window.doLineHeights = function() {
     });
 }
 
+
+//JUSTIFICATION!!!
+
+Element.prototype.setFVS = function(k, v) {
+//         this.style.fontVariationSettings = '';
+    var style = getComputedStyle(this);
+    var current = fvs2obj(style.fontVariationSettings);
+//         current.opsz = parseFloat(style.fontSize) * 72/96;
+    if (k !== undefined && v !== undefined) {
+        current[k] = v;
+    }
+    this.style.fontVariationSettings = obj2fvs(current);
+};
+
+window.doJustification = function() {
+    document.querySelectorAll('.specimen.justify .rendered').forEach(function (paragraph) {
+        var container = paragraph.closest('.specimen.justify');
+
+        var doWS = container.hasClass('wordspace');
+        var doLS = container.hasClass('letterspace');
+        var doXTRA = container.hasClass('xtra');
+    
+        var startTime = (window.performance || Date).now();
+
+        //reset paragraph to plain text and remove special styling
+        var parastyle = getComputedStyle(paragraph);
+        var fontsizepx = parseFloat(parastyle.fontSize);
+        var fontsize = fontsizepx * 72/96;
+        var relweight = 100;
+        var tolerances = getJustificationTolerances(fontsize, relweight);
+        
+        var fvs = window.allParametric({ 'opsz': fontsize, 'relweight': relweight });
+        var words = paragraph.textContent.trim().split(/\s+/);
+        
+//            paragraph.style.fontSize = fontsize + 'pt';
+        paragraph.style.fontVariationSettings = obj2fvs(fvs);
+        paragraph.innerHTML = "<span>" + words.join("</span> <span>") + "</span>";
+    
+        if (doXTRA) {
+            paragraph.setFVS('XTRA', tolerances.XTRA[0]);
+        }
+            
+        var parabox = paragraph.getBoundingClientRect();
+        var spans = paragraph.querySelectorAll("span");
+    
+        var lastY = false;
+        var lines = [], line = [];
+    
+        spans.forEach(function(word) {
+            // var box = word.getBoundingClientRect();
+            // var eol = box.left - parabox.left + box.width;
+            var y = word.getBoundingClientRect().top;
+            if (lastY === false) {
+                lastY = y;
+            }
+            
+            if (y === lastY) {
+                line.push(word.textContent);
+            } else {
+                //wrap!
+                line = line.join(" ");
+                lines.push(line);
+                line = [word.textContent];
+                // word = word.previousSibling;
+                // while (word.previousSibling) {
+                //   word = word.previousSibling;
+                //   paragraph.removeChild(word.nextSibling);
+                // }
+                // paragraph.removeChild(word);
+                //paragraph.innerHTML = paragraph.innerHTML.trim();
+            }
+            
+            lastY = y;
+        });
+
+        if (line.length) {
+          lines.push(line.join(" "));
+        }
+    
+        paragraph.innerHTML = "<var>" + lines.join("</var> <var>") + "</var>";
+
+        //now expand width to fit
+        paragraph.querySelectorAll("var").forEach(function(line, index) {
+            //don't wordspace last line of paragraph
+            if (line.nextElementSibling) {
+                if (doWS) {
+                    line.addClass("needs-wordspace");
+                }
+                if (doLS) {
+                    line.addClass('needs-letterspace');
+                }
+            }
+
+            if (doXTRA) {
+                var tries = 0;
+                
+                var cmin = tolerances.XTRA[0];
+                var cmax = tolerances.XTRA[2];
+                var cnow = fvs2obj(paragraph.style.fontVariationSettings).XTRA;
+                var cnew;
+    
+                var dw, tries = 10;
+                
+                while (tries--) {
+                    line.setFVS('XTRA', cnow);
+                    line.setAttribute('data-xtra', Math.round(cnow));
+                    dw = parabox.width - line.clientWidth;
+                    
+                    //console.log(line.textContent.trim().split(' ')[0], dw, cmin, cmax, cnow);
+                    
+                    if (Math.abs(dw) < 1) {
+                        line.removeClass('needs-wordspace');
+                        line.setAttribute('data-wordspace', 0);
+                        break;
+                    }
+                    
+                    if (dw < 0) {
+                        //narrower
+                        cnew = (cnow + cmin) / 2;
+                        cmax = cnow;
+                    } else {
+                        cnew = (cnow + cmax) / 2;
+                        cmin = cnow;
+                    }
+                    
+                    if (Math.abs(cnew - cnow) / (tolerances.XTRA[2] - tolerances.XTRA[0]) < 0.005) {
+                        break;
+                    }
+                    
+                    cnow = cnew;
+                }
+            }
+        });
+
+        if (doLS) {
+            paragraph.querySelectorAll("var.needs-letterspace").forEach(function(line) {
+                var dw = parabox.width - line.clientWidth;
+                
+                var minLS = tolerances['letter-spacing'][0];
+                var maxLS = tolerances['letter-spacing'][2];
+                var fitLS = dw / line.textContent.length / fontsizepx;
+
+                fitLS = Math.max(minLS, Math.min(maxLS, fitLS));
+
+                line.style.letterSpacing = fitLS + "em";
+                
+                line.setAttribute('data-letterspace', Math.round(fitLS * 1000));
+                
+                //console.log(line.textContent.trim().split(' ')[0], dw);
+            });
+        }
+
+        if (doWS) {
+            paragraph.querySelectorAll("var.needs-wordspace").forEach(function(line) {
+                var dw = parabox.width - line.clientWidth;
+                var spaces = line.textContent.split(" ").length - 1;
+                line.style.wordSpacing = (dw / spaces / fontsizepx) + "em";
+                
+                line.setAttribute('data-wordspace', Math.round(parseFloat(line.style.wordSpacing) * 1000));
+                
+                //console.log(line.textContent.trim().split(' ')[0], dw);
+            });
+        }
+            
+        //set up param labels
+        paragraph.querySelectorAll("var").forEach(function(line) {
+            var label = [];
+            if (line.hasAttribute('data-xtra')) {
+                label.push("XTRA " + line.getAttribute('data-xtra'));
+            }
+            if (line.hasAttribute('data-letterspace')) {
+                label.push("ls " + line.getAttribute('data-letterspace'));
+            }
+            if (line.hasAttribute('data-wordspace')) {
+                label.push("ws " + line.getAttribute('data-wordspace'));
+            }
+            if (label.length) {
+                line.setAttribute('data-params', label.join(" "));
+            }
+            
+            line.textContent = line.textContent;
+        });
+            
+        window.doLineHeights();
+        
+        var endTime = (window.performance || Date).now();
+        
+        console.log(container.className, "Reflowed in " + Math.round(endTime - startTime) / 1000 + "s");
+    });
+};
+
 doOnReady(window.doLineHeights);
 window.addEventListener('load', window.doLineHeights);
+
+doOnReady(window.doJustification);
+window.addEventListener('load', window.doJustification);
+
 var resizeTimeout;
 window.addEventListener('resize', function() {
     if (resizeTimeout) {
         clearTimeout(resizeTimeout);
     }
-    resizeTimeout = setTimeout(window.doLineHeights, 500);
+    resizeTimeout = setTimeout(function() {
+        window.doLineHeights();
+        window.doJustification();
+    }, 500);
 });
 
 })();

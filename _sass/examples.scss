@@ -18,6 +18,14 @@
         padding: 0;
     }
 
+    p {
+        background: white;
+    }
+    
+    figcaption p {
+        background: transparent;
+    }
+
     .example {
         margin: 0;
         padding: 0;

@@ -130,4 +130,6 @@ There are two direct advantages, and two indirect advantages, to using variable 
 
 A third, even more indirect advantage is having variable typeface families with parametric values that compute perfectly interoperably with the values of linespacing, kerning, and letterspacing, something the current font format does not contain. The final typographic difference is that the inclusion of an axis that affects width, like a traditional width axis (<strong>wdth</strong>), draws the internal islands of white space out of the insides of glyphs, or a series of styles, into a fluid range good for several purposes.
 
+{% include inline-example.html example="spacing/simple-justification" %}
+
 And finally, in addition to the aforementioned advantages, the web provides typographers with a blank typographic slate, using only the data from the font. While doing typographers no favors, this also puts all of the details of spacing the fonts they choose into their hands. Everything is manual; nothing is automatic.

@@ -25,7 +25,7 @@ paragraph-text: >
         <h3>Wordspace only</h3>
         <p>This is the default justification algorithm for all browsers, so this paragraph simply has CSS <code>text-align: justify</code> and is very fast.</p>
     </figcaption>
-    <article class='specimen justification-example wordspace'>
+    <article class='specimen justify wordspace'>
         <p class='rendered'>
             {{page.paragraph-text}}
         </p>
@@ -37,7 +37,7 @@ paragraph-text: >
         <h3>Wordspace + Letterspace</h3>
         <p>Add a little bit of tracking to make the wordspaces a bit less egregious.</p>
     </figcaption>
-    <article class='specimen justification-example wordspace letterspace'>
+    <article class='specimen justify wordspace letterspace'>
         <p class='rendered'>
             {{page.paragraph-text}}
         </p>
@@ -49,7 +49,7 @@ paragraph-text: >
         <h3>Wordspace + Letterspace + XTRA</h3>
         <p>First adjust X Transparent to the narrowest setting that is still pleasant to read; then expand XTRA until the line is full-width, or it hits its widest setting; then add tracking and wordspacing as above.</p>
     </figcaption>
-    <article class='specimen justification-example wordspace letterspace xtra'>
+    <article class='specimen justify wordspace letterspace xtra'>
         <p class='rendered'>
             {{page.paragraph-text}}
         </p>
@@ -70,10 +70,10 @@ paragraph-text: >
         this.style.fontVariationSettings = obj2fvs(current);
     };
 
-    var allDemos = document.querySelectorAll('article.justification-example');
-    var allParagraphs = document.querySelectorAll('article.justification-example p');
+    var allDemos = document.querySelectorAll('article.justify');
+    var allParagraphs = document.querySelectorAll('article.justify p');
 
-    var fontsizepx = parseFloat(getComputedStyle(document.querySelector('article.justification-example p')).fontSize);
+    var fontsizepx = parseFloat(getComputedStyle(document.querySelector('article.justify p')).fontSize);
     var fontsize = fontsizepx * 72/96;
     var relweight = 100;
 
@@ -124,7 +124,7 @@ paragraph-text: >
     sliders.addEventListener('input', doSizeWeight);
     sliders.addEventListener('change', doSizeWeight);
 
-    document.querySelectorAll('article.justification-example').forEach(function(container) {
+    document.querySelectorAll('article.justify').forEach(function(container) {
         var paragraphs = container.querySelectorAll('p');
 
         var doWS = container.hasClass('wordspace');
