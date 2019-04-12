@@ -35,25 +35,25 @@ For example, in Amstelvar, Font Bureau added axes to adjust for the technical re
 <style>
 	@keyframes stAage-play {
 		0%, 10%, 21%, 25%, 36%, 40%, 51%, 55%, 66%, 70%, 81%, 85%, 100% {
-			font-variation-settings: /* "opsz" 14, "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 48;
+			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */ "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 49;
 		}
 		11%, 20% {
-			font-variation-settings: /* "opsz" 14, "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 190, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 48;
+			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 190, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 49;
 		}
 		26%, 35% {
-			font-variation-settings: /* "opsz" 14, "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 232, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 48;
+			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 232, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 49;
 		}
 		41%, 50% {
-			font-variation-settings: /* "opsz" 14, "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 110, "YOPQ" 48;
+			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 110, "YOPQ" 49;
 		}
 		56%, 65% {
-			font-variation-settings: /* "opsz" 14, "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 90, "YOPQ" 48;
+			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 90, "YOPQ" 49;
 		}
 		71%, 80% {
-			font-variation-settings: /* "opsz" 14, "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 54;
+			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 54;
 		}
 		86%, 90% {
-			font-variation-settings: /* "opsz" 14, "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 44;
+			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 44;
 		}
 	}
 	#varbro-site #stAage-play {
