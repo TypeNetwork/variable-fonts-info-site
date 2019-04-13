@@ -33,39 +33,127 @@ The italic or slant axes (**ital** and **slnt**), can also be added to a design 
 For example, in Amstelvar, Font Bureau added axes to adjust for the technical requirements of both composition and output, and to bring fluidity to these axes in the same way a weight or width axis brings fluidity to weight and width, respectively. Amstelvar illustrates both a wide range of widths and weights and  axes within the type to control specific details of the letters, and/or the white space the letters enclose and occupy.
 
 <style>
+	{% capture css %}
+	$radius: 1.5in;
+	$nudge: 10%;
+	$second: 100% / 19.1;
 	@keyframes stAage-play {
-		0%, 10%, 21%, 25%, 36%, 40%, 51%, 55%, 66%, 70%, 81%, 85%, 100% {
-			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */ "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 49;
+		0%, 
+		#{$second * 2},
+		#{$second * 4.1}, 
+		#{$second * 5},
+		#{$second * 7.1}, 
+		#{$second * 8},
+		#{$second * 10.1}, 
+		#{$second * 11},
+		#{$second * 13.1}, 
+		#{$second * 14},
+		#{$second * 16.1}, 
+		#{$second * 17},
+		#{$second * 19.1} {
+			font-variation-settings: "opsz" 15, "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 49;
+			top: 50%;
+			left: 50%;
 		}
-		11%, 20% {
-			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 190, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 49;
+		#{$second * 2.1},
+		#{$second * 4} {
+			font-variation-settings: "opsz" 15, "XTRA" 190, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 49;
+			top: 50% - $nudge;
 		}
-		26%, 35% {
-			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 232, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 49;
+		#{$second * 5.1},
+		#{$second * 7} {
+			font-variation-settings: "opsz" 15, "XTRA" 232, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 49;
+			top: 50% + $nudge;
 		}
-		41%, 50% {
-			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 110, "YOPQ" 49;
+		#{$second * 8.1},
+		#{$second * 10} {
+			font-variation-settings: "opsz" 15, "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 110, "YOPQ" 49;
+			top: 50% - ($nudge / 2);
+			left: 50% - ($nudge / 2 * 1.723);
 		}
-		56%, 65% {
-			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 90, "YOPQ" 49;
+		#{$second * 11.1},
+		#{$second * 13} {
+			font-variation-settings: "opsz" 15, "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 90, "YOPQ" 49;
+			top: 50% + ($nudge / 2);
+			left: 50% + ($nudge / 2 * 1.723);
 		}
-		71%, 80% {
-			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 54;
+		#{$second * 14.1},
+		#{$second * 16} {
+			font-variation-settings: "opsz" 15, "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 54;
+			top: 50% - ($nudge / 2);
+			left: 50% + ($nudge / 2 * 1.723);
 		}
-		86%, 90% {
-			font-variation-settings: "opsz" 15, /*  "wdth" 100, "wght" 400, "PWDT" 402, "PWGT" 88, */  "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 44;
+		#{$second * 17.1},
+		#{$second * 19} {
+			font-variation-settings: "opsz" 15, "XTRA" 211, "XOPQ" 197, "YTLC" 518, "GRAD" 100, "YOPQ" 44;
+			top: 50% + ($nudge / 2);
+			left: 50% - ($nudge / 2 * 1.723);
 		}
 	}
+
 	#varbro-site #stAage-play {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: $radius * 2;
+		height: $radius * 2;
+		position: relative;
+	}
+
+	#varbro-site #stAage-play::before {
+		content: "";
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-image: url("{{site.baseurl}}/images/articles/styles/radiation.jpg");
+		background-size: contain;
+		background-position: center center;
+		opacity: 0.25;
+	}
+	
+	#varbro-site #stAage-play label {
+		position: absolute;
+		font-weight: bold;
+	}
+
+	#varbro-site #stAage-play label.GRAD {
+		left: 0;
+		top: calc(50% - (#{$radius} / 1.723));
+	}
+
+	#varbro-site #stAage-play label.YOPQ {
+		right: 0;
+		top: calc(50% - (#{$radius} / 1.723));
+	}
+
+	#varbro-site #stAage-play label.XTRA {
+		bottom: 0.5em;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+
+	#varbro-site #stAage-play samp {
+		position: absolute;
 		font-family: "AmstelvarAlpha-VF";
 		font-size: 72pt;
-		text-align: center;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 		animation: stAage-play 20s linear infinite;
 	}
+	{% endcapture %}
+	{{css|scssify}}
 </style>
 
 <figure id='stAage-play'>
-	Aa
+	<label class='GRAD'>GRAD</label>
+	<label class='YOPQ'>YOPQ</label>
+	<label class='XTRA'>XTRA</label>
+	<samp>Aa</samp>
 </figure>
 
 Variable fonts also allow the type developer to go beyond the registered axes into any number of stylistic variations. Decovar illustrates this with a wide range of stylistic changes; users can “go fish” for a style that suits the tone of voice they may wish to present. The names and ranges of these axes are as open as the creative process. 
