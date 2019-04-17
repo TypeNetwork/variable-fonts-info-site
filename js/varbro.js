@@ -315,7 +315,7 @@ function addNav() {
     var links = document.querySelectorAll('aside.content-filters li a');
     if (!links.length) return;
     links.forEach(function(a, i) {
-        if (a.href === window.location.href) {
+        if (a.href.replace(/#.*$/, '') === window.location.href.replace(/#.*$/, '')) {
             if (i > 0) {
                 prev = links[i-1];
             }
