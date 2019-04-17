@@ -52,6 +52,10 @@
         letter-spacing: 0;
         word-spacing: 0;
       }
+      
+      &:last-of-type::after {
+          content: none;
+      }
     }
 
     .resize {
