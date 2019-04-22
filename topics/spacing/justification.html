@@ -16,6 +16,12 @@ paragraph-text: >
 </style>
 
 <ul class='parambuliders'>
+    <li><label>Font</label>
+        <select name='font-family'>
+            <option value='{{site.data.fonts.names['Amstelvar-Alpha']}}'>Amstelvar Alpha</option>
+            <option value='{{site.data.fonts.names['Roboto-Extremo']}}'>Roboto Extremo</option>
+        </select>
+    </li>
     <li><label>Size</label> <input type='range' name='size' min='10' max='48' value='14'><label></label></li>
     <li><label>Weight</label> <input type='range' name='relweight' min='43' max='284' value='100'><label></label></li>
 </ul>
@@ -46,10 +52,10 @@ paragraph-text: >
 
 <figure>
     <figcaption>
-        <h3>Wordspace + Letterspace + XTRA</h3>
-        <p>First adjust X Transparent to the narrowest setting that is still pleasant to read; then expand XTRA until the line is full-width, or it hits its widest setting; then add tracking and wordspacing as above.</p>
+        <h3>Width + Wordspace + Letterspace</h3>
+        <p>First adjust X Transparent (if available, otherwise Width) to the narrowest setting that is still pleasant to read; then expand XTRA/wdth until the line is full-width, or it hits its widest setting; then add tracking and wordspacing as above.</p>
     </figcaption>
-    <article class='specimen justify wordspace letterspace xtra'>
+    <article class='specimen justify wordspace letterspace xtra wdth'>
         <p class='rendered'>
             {{page.paragraph-text}}
         </p>
@@ -73,11 +79,17 @@ paragraph-text: >
     var allDemos = document.querySelectorAll('article.justify');
     var allParagraphs = document.querySelectorAll('article.justify p');
 
-    var fontsizepx = parseFloat(getComputedStyle(document.querySelector('article.justify p')).fontSize);
-    var fontsize = fontsizepx * 72/96;
-    var relweight = 100;
+    if (!allParagraphs.length) {
+        return;
+    }
 
-    var tolerances = getJustificationTolerances(fontsize, relweight);
+    //set up sliders to adjust size and weight
+    var sliders = document.querySelector('ul.parambuliders');
+    var fontSelect = sliders.querySelector('select[name="font-family"]');
+    var sizeSlider = sliders.querySelector('input[name=size]');
+    var weightSlider = sliders.querySelector('input[name=relweight]');
+
+    sizeSlider.value = parseFloat(getComputedStyle(document.querySelector('article.justify p')).fontSize) * 72/96;
 
     //resize all the paragraphs when you resize one
     var reflowFuncs = [];
@@ -92,25 +104,25 @@ paragraph-text: >
     }
     
     //reset paragraph to plain text and remove special styling
+    var fontfamily, fontsize, fontsizepx, relweight, tolerances;
     function resetParagraph(paragraph) {
+        fontfamily = (fontSelect.querySelector('option:checked') || fontSelect.querySelector('option')).value;
         fontsize = parseInt(sizeSlider.value);
         relweight = parseInt(weightSlider.value);
         fontsizepx = fontsize * 96/72;
-        tolerances = getJustificationTolerances(fontsize, relweight);
+        tolerances = getJustificationTolerances(fontfamily, fontsize, relweight);
 
-        var fvs = window.allParametric({ 'opsz': fontsize, 'relweight': relweight });
+        var fvs = window.allParametric(fontfamily, { 'opsz': fontsize, 'relweight': relweight });
         var words = paragraph.textContent.trim().split(/\s+/);
         
+        paragraph.style.fontFamily = '"' + fontfamily + '"';
         paragraph.style.fontSize = fontsize + 'pt';
         paragraph.style.fontVariationSettings = obj2fvs(fvs);
         paragraph.innerHTML = "<span>" + words.join("</span> <span>") + "</span>";
     }
     
-    //set up sliders to adjust size and weight
-    var sliders = document.querySelector('ul.parambuliders');
-    var sizeSlider = sliders.querySelector('input[name=size]');
-    var weightSlider = sliders.querySelector('input[name=relweight]');
-
+    resetParagraph(allParagraphs[0]);
+    
     function doSizeWeight(evt) {
         allParagraphs.forEach(function(para) {
             resetParagraph(para);
@@ -118,6 +130,11 @@ paragraph-text: >
         
         if (evt && evt.type === 'change') {
             reflowAll();
+        }
+        
+        //for font change, do it again in a second to make sure the font loaded
+        if (evt && evt.target.tagName === 'SELECT') {
+            setTimeout(reflowAll, 500);
         }
     }
     
@@ -127,9 +144,11 @@ paragraph-text: >
     document.querySelectorAll('article.justify').forEach(function(container) {
         var paragraphs = container.querySelectorAll('p');
 
-        var doWS = container.hasClass('wordspace');
-        var doLS = container.hasClass('letterspace');
-        var doXTRA = container.hasClass('xtra');
+        var modes = {};
+        
+        container.className.split(/\s+/).forEach(function(word) {
+            modes[word] = true;
+        });
 
         // resize article
         window.makeResizable(container, {
@@ -145,7 +164,7 @@ paragraph-text: >
 
         //shortcut
 /*
-        if (doWS && !doLS && !doXTRA) {
+        if (modes.wordspace && Object.keys(modes).length === 1) {
             container.style.textAlign = "justify";
             return;
         }
@@ -159,9 +178,14 @@ paragraph-text: >
           
             //first set maximum squish and do regular wrapping, then expand
             paragraphs.forEach(function(paragraph) {
-                if (doXTRA) {
-                    paragraph.setFVS('XTRA', tolerances.XTRA[0]);
-                }
+                Object.forEach(tolerances, function(tol, axis) {
+                    if (axis.length !== 4) {
+                        return;
+                    }
+                    if (axis.toLowerCase() in modes) {
+                        paragraph.setFVS(axis, tol[0]);
+                    }
+                });
             });
             
             paragraphs.forEach(function(paragraph) {
@@ -208,56 +232,61 @@ paragraph-text: >
                 paragraph.querySelectorAll("var").forEach(function(line, index) {
                     //don't wordspace last line of paragraph
                     if (line.nextElementSibling) {
-                        if (doWS) {
+                        if (modes.wordspace) {
                             line.addClass("needs-wordspace");
                         }
-                        if (doLS) {
+                        if (modes.letterspace) {
                             line.addClass('needs-letterspace');
                         }
                     }
 
-                    if (doXTRA) {
-                        var tries = 0;
-                        
-                        var cmin = tolerances.XTRA[0];
-                        var cmax = tolerances.XTRA[2];
-                        var cnow = fvs2obj(paragraph.style.fontVariationSettings).XTRA;
-                        var cnew;
-            
-                        var dw, tries = 10;
-                        
-                        while (tries--) {
-                            line.setFVS('XTRA', cnow);
-                            line.setAttribute('data-xtra', Math.round(cnow));
-                            dw = parabox.width - line.clientWidth;
-                            
-                            //console.log(line.textContent.trim().split(' ')[0], dw, cmin, cmax, cnow);
-                            
-                            if (Math.abs(dw) < 1) {
-                                line.removeClass('needs-wordspace');
-                                line.setAttribute('data-wordspace', 0);
-                                break;
-                            }
-                            
-                            if (dw < 0) {
-                                //narrower
-                                cnew = (cnow + cmin) / 2;
-                                cmax = cnow;
-                            } else {
-                                cnew = (cnow + cmax) / 2;
-                                cmin = cnow;
-                            }
-                            
-                            if (Math.abs(cnew - cnow) / (tolerances.XTRA[2] - tolerances.XTRA[0]) < 0.005) {
-                                break;
-                            }
-                            
-                            cnow = cnew;
+                    Object.forEach(tolerances, function(tol, axis) {
+                        if (axis.length !== 4) {
+                            return;
                         }
-                    }
+                        if (axis.toLowerCase() in modes) {
+                            var tries = 0;
+
+                            var cmin = tolerances[axis][0];
+                            var cmax = tolerances[axis][2];
+                            var cnow = fvs2obj(paragraph.style.fontVariationSettings)[axis];
+                            var cnew;
+                
+                            var dw, tries = 10;
+                            
+                            while (tries--) {
+                                line.setFVS(axis, cnow);
+                                line.setAttribute('data-' + axis, Math.round(cnow));
+                                dw = parabox.width - line.clientWidth;
+                                
+                                //console.log(line.textContent.trim().split(' ')[0], dw, cmin, cmax, cnow);
+                                
+                                if (Math.abs(dw) < 1) {
+                                    line.removeClass('needs-wordspace');
+                                    line.setAttribute('data-wordspace', 0);
+                                    break;
+                                }
+                                
+                                if (dw < 0) {
+                                    //narrower
+                                    cnew = (cnow + cmin) / 2;
+                                    cmax = cnow;
+                                } else {
+                                    cnew = (cnow + cmax) / 2;
+                                    cmin = cnow;
+                                }
+                                
+                                if (Math.abs(cnew - cnow) / (tolerances[axis][2] - tolerances[axis][0]) < 0.005) {
+                                    break;
+                                }
+                                
+                                cnow = cnew;
+                            }
+                        }
+                    });
                 });
 
-                if (doLS) {
+                if (modes.letterspace && 'letter-spacing' in tolerances) {
                     paragraph.querySelectorAll("var.needs-letterspace").forEach(function(line) {
                         var dw = parabox.width - line.clientWidth;
                         
@@ -275,7 +304,7 @@ paragraph-text: >
                     });
                 }
 
-                if (doWS) {
+                if (modes.wordspace) {
                     paragraph.querySelectorAll("var.needs-wordspace").forEach(function(line) {
                         var dw = parabox.width - line.clientWidth;
                         var spaces = line.textContent.split(" ").length - 1;
@@ -290,19 +319,22 @@ paragraph-text: >
                 //set up param labels
                 paragraph.querySelectorAll("var").forEach(function(line) {
                     var label = [];
-                    if (line.hasAttribute('data-xtra')) {
-                        label.push("XTRA " + line.getAttribute('data-xtra'));
-                    }
-                    if (line.hasAttribute('data-letterspace')) {
-                        label.push("ls " + line.getAttribute('data-letterspace'));
-                    }
-                    if (line.hasAttribute('data-wordspace')) {
-                        label.push("ws " + line.getAttribute('data-wordspace'));
-                    }
+                    line.getAttributeNames().forEach(function(attr) {
+                        var nicename;
+                        if (attr.substr(0, 5) !== 'data-') {
+                            return;
+                        }
+                        switch(attr) {
+                            case 'data-params': return;
+                            case 'data-letterspace': nicename = 'ls'; break;
+                            case 'data-wordspace': nicename = 'ws'; break;
+                            default: nicename = attr.substr(5); break;
+                        }
+                        label.push(nicename + ' ' + line.getAttribute(attr));
+                    });
                     if (label.length) {
                         line.setAttribute('data-params', label.join(" "));
                     }
-                    
                     line.textContent = line.textContent;
                 });
             });

@@ -4,9 +4,7 @@
 "use strict";
 
 window.fontNames = {{site.data.fonts.names|jsonify}};
-window.globalAxes = {{site.data.fonts.axes[site.data.fonts.names["Amstelvar-Alpha"]]|jsonify}};
-window.axisDefaults = Object.keys(globalAxes).reduce(function(defaults, axis, i) { if ("default" in globalAxes[axis]) { defaults[axis] = globalAxes[axis].default; } return defaults; }, {});
-
+window.globalAxes = {{site.data.fonts.axes|jsonify}};
 
 function varbroSetup() {
     overrideTNJS();
@@ -632,60 +630,66 @@ var calculations = {{site.data.calculations|jsonify}};
 
 //pull axis info from typetools
 var composites = {
-    "opsz":{
-        "10":{"XOPQ":110,"YOPQ":75,"YTLC":525},
-        "14":[],
-        "72":{"XTRA":300,"YOPQ":12,"YTLC":475}
-    },"wdth":{
-        "35":{"XTRA":42,"XOPQ":70,"YOPQ":45/* ,"PWDT":60 */},
-        "100":[]
-    },"wght":{
-        "100":{"XOPQ":38,"YOPQ":25,"XTRA":375,"YTSE":8/* ,"PWGT":38 */},
-        "400":[],
-        "900":{"XOPQ":250,"XTRA":250,"YTLC":525/* ,"PWGT":250 */}
+    'AmstelvarAlpha-VF': {
+        "opsz":{
+            "10":{"XOPQ":110,"YOPQ":75,"YTLC":525},
+            "14":[],
+            "72":{"XTRA":300,"YOPQ":12,"YTLC":475}
+        },"wdth":{
+            "35":{"XTRA":42,"XOPQ":70,"YOPQ":45/* ,"PWDT":60 */},
+            "100":[]
+        },"wght":{
+            "100":{"XOPQ":38,"YOPQ":25,"XTRA":375,"YTSE":8/* ,"PWGT":38 */},
+            "400":[],
+            "900":{"XOPQ":250,"XTRA":250,"YTLC":525/* ,"PWGT":250 */}
+        }
     }
 };
 
 
 //convert a set of axes from blended to all-parametric
-window.allParametric = function(axes) {
+window.allParametric = function(font, axes) {
     var axisDeltas = {};
     
     //special case for "relweight" specifying weight as % of default XOPQ
     // back-figure this to a `wght` value
     if ('relweight' in axes) {
-        var baseXOPQ = axisDefaults.XOPQ + (axisDeltas.XOPQ || 0);
-    
-        //not sure if this should be based on the regular-default XOPQ, or the opsz-modified one
-    //        var targetXOPQ = Math.round(baseXOPQ * axes.relweight.value/100);
-        var targetXOPQ = Math.round(axisDefaults.XOPQ * axes.relweight/100);
-    
-        //back-figure wght value from XOPQ
-        axes.wght = parametricToComposite('XOPQ', targetXOPQ, 'wght');
+        if ('XOPQ' in globalAxes[font]) {
+            var baseXOPQ = globalAxes[font].XOPQ.default + (axisDeltas.XOPQ || 0);
+        
+            //not sure if this should be based on the regular-default XOPQ, or the opsz-modified one
+        //        var targetXOPQ = Math.round(baseXOPQ * axes.relweight.value/100);
+            var targetXOPQ = Math.round(globalAxes[font].XOPQ.default * axes.relweight/100);
+        
+            //back-figure wght value from XOPQ
+            axes.wght = parametricToComposite(font, 'XOPQ', targetXOPQ, 'wght');
+        } else if ('wght' in globalAxes[font]) {
+            axes.wght *= axes.relweight / 100;
+        }
         delete axes.relweight;
     }
     
     Object.forEach(axes, function(val, axis) {
-        Object.forEach(compositeToParametric(axis, val), function(v, k) {
+        Object.forEach(compositeToParametric(font, axis, val), function(v, k) {
             if (!(k in axisDeltas)) {
                 axisDeltas[k] = 0;
             }
-            axisDeltas[k] += v - axisDefaults[k];
+            axisDeltas[k] += v - globalAxes[font][k].default;
         });
     });
 
     var result = {};
     Object.forEach(axisDeltas, function(v, k) {
-        result[k] = axisDefaults[k] + v;
+        result[k] = globalAxes[font][k].default + v;
     });
     
     return result;
 };
 
-window.compositeToParametric = function(caxis, cvalue) {
+window.compositeToParametric = function(font, caxis, cvalue) {
     cvalue = parseFloat(cvalue);
     
-    if (!(caxis in composites)) {
+    if (!(font in composites) || !(caxis in composites[font])) {
         var temp = {};
         temp[caxis] = cvalue;
         return temp;
@@ -697,13 +701,13 @@ window.compositeToParametric = function(caxis, cvalue) {
     var lowerPivot, upperPivot;
     var lowerAxes, upperAxes;
     //pivot value and axes
-    Object.forEach(composites[caxis], function(paxes, pivot) {
+    Object.forEach(composites[font][caxis], function(paxes, pivot) {
         pivot = parseFloat(pivot);
         
         //add any new axes to the list
         Object.forEach(paxes, function(pval, paxis) {
             if (!(paxis in allAxes)) {
-                allAxes[paxis] = globalAxes[paxis].default;
+                allAxes[paxis] = globalAxes[font][paxis].default;
             }
         });
         
@@ -734,7 +738,7 @@ window.compositeToParametric = function(caxis, cvalue) {
         var l = axis in lowerAxes ? lowerAxes[axis] : dflt;
         var r = upperPivot === lowerPivot ? 0.0 : (cvalue-lowerPivot)/(upperPivot-lowerPivot);
         result[axis] = l + r*(u-l);
-        if (globalAxes[axis].max - globalAxes[axis].min > 50) {
+        if (globalAxes[font][axis].max - globalAxes[font][axis].min > 50) {
             result[axis] = Math.round(result[axis]);
         }
     });
@@ -743,20 +747,20 @@ window.compositeToParametric = function(caxis, cvalue) {
 }
 
 //given a value for a parametric axis, back-calculate the composite value that would produce it
-window.parametricToComposite = function(paxis, pvalue, caxis) {
-    if (!(caxis in composites)) {
+window.parametricToComposite = function(font, paxis, pvalue, caxis) {
+    if (!(font in composites) || !(caxis in composites[font])) {
         return null;
     }
 
     pvalue = parseFloat(pvalue);
 
-    var mydefault = globalAxes[paxis].default;
+    var mydefault = globalAxes[font][paxis].default;
     
     var lowerC, upperC;
     var lowerP, upperP;
 
     //pivot value and axes
-    Object.forEach(composites[caxis], function(paxes, pivot) {
+    Object.forEach(composites[font][caxis], function(paxes, pivot) {
         pivot = parseFloat(pivot);
         
         var myval = paxis in paxes ? paxes[paxis] : mydefault;
@@ -787,7 +791,7 @@ window.parametricToComposite = function(paxis, pvalue, caxis) {
 
     var result = lowerC + (pvalue - lowerP)/(upperP - lowerP) * (upperC - lowerC);
 
-    if (globalAxes[caxis].max - globalAxes[caxis].min > 50) {
+    if (globalAxes[font][caxis].max - globalAxes[font][caxis].min > 50) {
         return Math.round(result);
     }
     
@@ -916,14 +920,8 @@ function interInterpolate(targetX, targetY, theGrid) {
     }
 }
 
-window.getJustificationTolerances = function(targetsize, targetweight) {
-    var font = 'AmstelvarAlpha';
-    
-    if (!(font in calculations["justification"])) {
-        return {};
-    }
-
-    return interInterpolate(targetsize, targetweight, calculations["justification"][font]);
+window.getJustificationTolerances = function(font, targetsize, targetweight) {
+    return interInterpolate(targetsize, targetweight, calculations.justification[font] || calculations.justification['default']);
 };
 
 HTMLElement.prototype.setLineHeight = function() {
@@ -938,7 +936,7 @@ HTMLElement.prototype.setLineHeight = function() {
     
     var yopq = fvs2obj(css.fontVariationSettings).YOPQ;
     if (isNaN(yopq) && fontfamily in calculations["line-height"]) {
-        yopq = axisDefaults.YOPQ;
+        yopq = (globalAxes[fontfamily].YOPQ || globalAxes["AmstelvarAlpha-VF"].YOPQ).default;
     }
     if (isNaN(yopq)) {
         yopq = calculations["line-height"].YOPQdefault;
@@ -953,17 +951,6 @@ HTMLElement.prototype.setLineHeight = function() {
     this.setAttribute('data-column-width', Math.round(charsPerLine));
     this.setAttribute('data-line-height', Math.round(lineHeight*100)/100);
     this.setAttribute('data-yopq', yopq);
-};
-
-window.testRanges = function() {
-    var el = document.querySelector('#unique-specimen-8 span.rendered');
-    var sizes = [9, 10, 12, 14, 24, 48, 60];
-    var weights = [90, 100, 110, 155, 200, 210, 220];
-    sizes.forEach(function(size) {
-        weights.forEach(function(weight) {
-            console.log(size, weight, JSON.stringify(getJustificationTolerances(size, weight)));
-        });
-    });
 };
 
 window.doLineHeights = function() {
@@ -987,6 +974,7 @@ Element.prototype.setFVS = function(k, v) {
 };
 
 window.doJustification = function() {
+    return;
     document.querySelectorAll('.specimen.justify .rendered').forEach(function (paragraph) {
         var container = paragraph.closest('.specimen.justify');
 
@@ -998,10 +986,11 @@ window.doJustification = function() {
 
         //reset paragraph to plain text and remove special styling
         var parastyle = getComputedStyle(paragraph);
+        var fontfamily = getPrimaryFontFamily(parastyle.fontFamily);
         var fontsizepx = parseFloat(parastyle.fontSize);
         var fontsize = fontsizepx * 72/96;
         var relweight = 100;
-        var tolerances = getJustificationTolerances(fontsize, relweight);
+        var tolerances = getJustificationTolerances(fontyfamily, fontsize, relweight);
         
         var fvs = window.allParametric({ 'opsz': fontsize, 'relweight': relweight });
         var words = paragraph.textContent.trim().split(/\s+/);
