@@ -654,7 +654,7 @@ window.allParametric = function(font, axes) {
     //special case for "relweight" specifying weight as % of default XOPQ
     // back-figure this to a `wght` value
     if ('relweight' in axes) {
-        if ('XOPQ' in globalAxes[font]) {
+        if ('XOPQ' in globalAxes[font] && font in composites) {
             var baseXOPQ = globalAxes[font].XOPQ.default + (axisDeltas.XOPQ || 0);
         
             //not sure if this should be based on the regular-default XOPQ, or the opsz-modified one
@@ -664,7 +664,7 @@ window.allParametric = function(font, axes) {
             //back-figure wght value from XOPQ
             axes.wght = parametricToComposite(font, 'XOPQ', targetXOPQ, 'wght');
         } else if ('wght' in globalAxes[font]) {
-            axes.wght *= axes.relweight / 100;
+            axes.wght = ('wght' in axes ? axes.wght : globalAxes[font].wght) * axes.relweight / 100;
         }
         delete axes.relweight;
     }
