@@ -79,10 +79,6 @@ paragraph-text: >
     var allDemos = document.querySelectorAll('article.justify');
     var allParagraphs = document.querySelectorAll('article.justify p');
 
-    if (!allParagraphs.length) {
-        return;
-    }
-
     //set up sliders to adjust size and weight
     var sliders = document.querySelector('ul.parambuliders');
     var fontSelect = sliders.querySelector('select[name="font-family"]');
@@ -92,49 +88,44 @@ paragraph-text: >
     sizeSlider.value = parseFloat(getComputedStyle(document.querySelector('article.justify p')).fontSize) * 72/96;
 
     //resize all the paragraphs when you resize one
-    var reflowFuncs = [];
     function resizeAll(w) {
         allDemos.forEach(function(container) {
             container.style.width = w + "px";
         });
     }
     
-    function reflowAll() {
-        reflowFuncs.forEach(function(f) { f(); });
-    }
-    
     //reset paragraph to plain text and remove special styling
-    var fontfamily, fontsize, fontsizepx, relweight, tolerances;
-    function resetParagraph(paragraph) {
-        fontfamily = (fontSelect.querySelector('option:checked') || fontSelect.querySelector('option')).value;
-        fontsize = parseInt(sizeSlider.value);
-        relweight = parseInt(weightSlider.value);
-        fontsizepx = fontsize * 96/72;
-        tolerances = getJustificationTolerances(fontfamily, fontsize, relweight);
+    function resetParagraphs() {
+        var fontfamily = (fontSelect.querySelector('option:checked') || fontSelect.querySelector('option')).value;
+        var fontsize = parseInt(sizeSlider.value);
+        var relweight = parseInt(weightSlider.value);
+        var fontsizepx = fontsize * 96/72;
+        var tolerances = getJustificationTolerances(fontfamily, fontsize, relweight);
 
         var fvs = window.allParametric(fontfamily, { 'opsz': fontsize, 'relweight': relweight });
-        var words = paragraph.textContent.trim().split(/\s+/);
         
-        paragraph.style.fontFamily = '"' + fontfamily + '"';
-        paragraph.style.fontSize = fontsize + 'pt';
-        paragraph.style.fontVariationSettings = obj2fvs(fvs);
-        paragraph.innerHTML = "<span>" + words.join("</span> <span>") + "</span>";
+        allParagraphs.forEach(function(paragraph) {
+            var words = paragraph.textContent.trim().split(/\s+/);
+            
+            paragraph.style.fontFamily = '"' + fontfamily + '"';
+            paragraph.style.fontSize = fontsize + 'pt';
+            paragraph.style.fontVariationSettings = obj2fvs(fvs);
+            paragraph.innerHTML = "<span>" + words.join("</span> <span>") + "</span>";
+        });
     }
     
-    resetParagraph(allParagraphs[0]);
+    resetParagraphs();
     
     function doSizeWeight(evt) {
-        allParagraphs.forEach(function(para) {
-            resetParagraph(para);
-        });
+        resetParagraphs();
         
         if (evt && evt.type === 'change') {
-            reflowAll();
+            window.doJustification();
         }
         
         //for font change, do it again in a second to make sure the font loaded
         if (evt && evt.target.tagName === 'SELECT') {
-            setTimeout(reflowAll, 500);
+            setTimeout(window.doJustification, 500);
         }
     }
     
@@ -142,216 +133,17 @@ paragraph-text: >
     sliders.addEventListener('change', doSizeWeight);
 
     document.querySelectorAll('article.justify').forEach(function(container) {
-        var paragraphs = container.querySelectorAll('p');
-
-        var modes = {};
-        
-        container.className.split(/\s+/).forEach(function(word) {
-            modes[word] = true;
-        });
-
         // resize article
         window.makeResizable(container, {
             'change': function(evt) {
+                evt.preventDefault();
                 resizeAll(parseInt(container.style.width), false);
             },
             'end': function(evt) {
-                reflowAll();
+                window.doJustification();
             }
         });
     
-        // the real stuff
-
-        //shortcut
-/*
-        if (modes.wordspace && Object.keys(modes).length === 1) {
-            container.style.textAlign = "justify";
-            return;
-        }
-*/
-        
-        function reflow() {
-            var startTime = window.performance.now();
-            
-            //reset to free-flowing text
-            paragraphs.forEach(resetParagraph);
-          
-            //first set maximum squish and do regular wrapping, then expand
-            paragraphs.forEach(function(paragraph) {
-                Object.forEach(tolerances, function(tol, axis) {
-                    if (axis.length !== 4) {
-                        return;
-                    }
-                    if (axis.toLowerCase() in modes) {
-                        paragraph.setFVS(axis, tol[0]);
-                    }
-                });
-            });
-            
-            paragraphs.forEach(function(paragraph) {
-                var parabox = paragraph.getBoundingClientRect();
-                var spans = paragraph.querySelectorAll("span");
-            
-                var lastY = false;
-                var lines = [], line = [];
-        
-                spans.forEach(function(word) {
-                    // var box = word.getBoundingClientRect();
-                    // var eol = box.left - parabox.left + box.width;
-                    var y = word.getBoundingClientRect().top;
-                    if (lastY === false) {
-                        lastY = y;
-                    }
-                    
-                    if (y === lastY) {
-                        line.push(word.textContent);
-                    } else {
-                        //wrap!
-                        line = line.join(" ");
-                        lines.push(line);
-                        line = [word.textContent];
-                        // word = word.previousSibling;
-                        // while (word.previousSibling) {
-                        //   word = word.previousSibling;
-                        //   paragraph.removeChild(word.nextSibling);
-                        // }
-                        // paragraph.removeChild(word);
-                        //paragraph.innerHTML = paragraph.innerHTML.trim();
-                    }
-                    
-                    lastY = y;
-                });
-
-                if (line.length) {
-                  lines.push(line.join(" "));
-                }
-            
-                paragraph.innerHTML = "<var>" + lines.join("</var> <var>") + "</var>";
-
-                //now expand width to fit
-                paragraph.querySelectorAll("var").forEach(function(line, index) {
-                    //don't wordspace last line of paragraph
-                    if (line.nextElementSibling) {
-                        if (modes.wordspace) {
-                            line.addClass("needs-wordspace");
-                        }
-                        if (modes.letterspace) {
-                            line.addClass('needs-letterspace');
-                        }
-                    }
-
-                    Object.forEach(tolerances, function(tol, axis) {
-                        if (axis.length !== 4) {
-                            return;
-                        }
-                        if (axis.toLowerCase() in modes) {
-                            var tries = 0;
-
-                            var cmin = tolerances[axis][0];
-                            var cmax = tolerances[axis][2];
-                            var cnow = fvs2obj(paragraph.style.fontVariationSettings)[axis];
-                            var cnew;
-                
-                            var dw, tries = 10;
-                            
-                            while (tries--) {
-                                line.setFVS(axis, cnow);
-                                line.setAttribute('data-' + axis, Math.round(cnow));
-                                dw = parabox.width - line.clientWidth;
-                                
-                                //console.log(line.textContent.trim().split(' ')[0], dw, cmin, cmax, cnow);
-                                
-                                if (Math.abs(dw) < 1) {
-                                    line.removeClass('needs-wordspace');
-                                    line.setAttribute('data-wordspace', 0);
-                                    break;
-                                }
-                                
-                                if (dw < 0) {
-                                    //narrower
-                                    cnew = (cnow + cmin) / 2;
-                                    cmax = cnow;
-                                } else {
-                                    cnew = (cnow + cmax) / 2;
-                                    cmin = cnow;
-                                }
-                                
-                                if (Math.abs(cnew - cnow) / (tolerances[axis][2] - tolerances[axis][0]) < 0.005) {
-                                    break;
-                                }
-                                
-                                cnow = cnew;
-                            }
-                        }
-                    });
-                });
-
-                if (modes.letterspace && 'letter-spacing' in tolerances) {
-                    paragraph.querySelectorAll("var.needs-letterspace").forEach(function(line) {
-                        var dw = parabox.width - line.clientWidth;
-                        
-                        var minLS = tolerances['letter-spacing'][0];
-                        var maxLS = tolerances['letter-spacing'][2];
-                        var fitLS = dw / line.textContent.length / fontsizepx;
-
-                        fitLS = Math.max(minLS, Math.min(maxLS, fitLS));
-
-                        line.style.letterSpacing = fitLS + "em";
-                        
-                        line.setAttribute('data-letterspace', Math.round(fitLS * 1000));
-                        
-                        //console.log(line.textContent.trim().split(' ')[0], dw);
-                    });
-                }
-
-                if (modes.wordspace) {
-                    paragraph.querySelectorAll("var.needs-wordspace").forEach(function(line) {
-                        var dw = parabox.width - line.clientWidth;
-                        var spaces = line.textContent.split(" ").length - 1;
-                        line.style.wordSpacing = (dw / spaces / fontsizepx) + "em";
-                        
-                        line.setAttribute('data-wordspace', Math.round(parseFloat(line.style.wordSpacing) * 1000));
-                        
-                        //console.log(line.textContent.trim().split(' ')[0], dw);
-                    });
-                }
-                
-                //set up param labels
-                paragraph.querySelectorAll("var").forEach(function(line) {
-                    var label = [];
-                    line.getAttributeNames().forEach(function(attr) {
-                        var nicename;
-                        if (attr.substr(0, 5) !== 'data-') {
-                            return;
-                        }
-                        switch(attr) {
-                            case 'data-params': return;
-                            case 'data-letterspace': nicename = 'ls'; break;
-                            case 'data-wordspace': nicename = 'ws'; break;
-                            default: nicename = attr.substr(5); break;
-                        }
-                        label.push(nicename + ' ' + line.getAttribute(attr));
-                    });
-                    if (label.length) {
-                        line.setAttribute('data-params', label.join(" "));
-                    }
-                    line.textContent = line.textContent;
-                });
-            });
-            
-            window.doLineHeights();
-            
-            var endTime = window.performance.now();
-            
-            console.log(container.className, "Reflowed in " + Math.round(endTime - startTime) / 1000 + "s");
-        }
-        //document.querySelector("button[name=reflow]").addEventListener("click", reflow);
-        
-        reflow();
-
-        reflowFuncs.push(reflow);
-        
-        window.addEventListener("load", reflow);
     });
 })();
 </script>
