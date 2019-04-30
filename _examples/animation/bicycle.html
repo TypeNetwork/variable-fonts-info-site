@@ -1,0 +1,43 @@
+---
+breadcrumbs: ["Animation", "Examples…"]
+title: Bicycle
+description: Using Zycon, which contains the glyph of an animated bicyler, a character can leave its static location and appear to move of it’s own power.
+playground: true
+---
+<style>
+    @font-face {
+        font-family: Zycon;
+        src: url("{{site.baseurl}}/fonts/Zycon.woff2") format("woff2"), url("{{site.baseurl}}/fonts/Zycon.woff") format("woff");
+    }
+    
+    @keyframes bicycle {
+        0% {
+            left: -1.5em;
+            font-variation-settings: "M1  " -1;
+        }
+        
+        100% {
+            left: 0.5em;
+            font-variation-settings: "M1  " 1;
+        }
+    }
+    
+    #bicycle-example {
+        position: relative;
+        font-family: Zycon;
+        font-size: 96pt;
+        overflow: hidden;
+        line-height: 1;
+        letter-spacing: 1em;
+        white-space: nowrap;
+    }
+    
+    #bicycle-example span {
+        position: relative;
+        animation: bicycle 1s linear infinite;
+    }
+</style>
+
+<div id='bicycle-example'>
+    <span>🚴🚴🚴🚴</span>
+</div>
