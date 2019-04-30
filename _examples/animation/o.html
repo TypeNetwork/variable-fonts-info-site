@@ -1,0 +1,27 @@
+---
+breadcrumbs: ["Animation", "Examples…"]
+title: o
+description: 
+playground: true
+---
+<style>
+    @keyframes big-o {
+        0% {
+            font-variation-settings: "wght" 300, "wdth" 100;
+        }
+        
+        100% {
+            font-variation-settings: "wght" 700, "wdth" 50;
+        }
+    }
+    
+    #big-o {
+        font-family: "{{site.data.fonts.names['Amstelvar-Alpha']}}";
+        font-size: 3in;
+        line-height: 1;
+        text-align: center;
+        animation: big-o 4s ease-in-out infinite alternate;
+    }
+</style>
+
+<div id='big-o'>o</div>
