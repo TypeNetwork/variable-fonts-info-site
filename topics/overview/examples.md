@@ -11,7 +11,7 @@ On any new operating system running any up-to-date browser, the demonstration of
 
 Most of the demonstrations on this site will take the form of code playgrounds overlaying each example, with the code (which users can change) appearing in the lower half of the pane and the typographic results shown above. This will allow users to see precisely which instances from our sample variable fonts and their values are being used, and, in more complex examples, how multiple instances and code can interact in suggesting better typography. 
 
-Nearly all of the examples on this site are intended to demonstrate that it’s the job of the contemporary type designer to develop fonts with fluid values for a complete interoperable set of parametric axes appropriate to each font family’s intended uses. Such fonts can easily be programmed to interact with the other fluid values of web typography having to do with the spaces in and among the glyphs and stretching to the margins of pages. 
+Nearly all of the examples on this site are intended to demonstrate that it’s in a relatively simple realm of the contemporary type designer to develop fonts with fluid values for any one or a complete set of parametric axes appropriate to each font family’s intended uses. Such fonts can easily be programmed to interact with the other fluid values of web typography having to do with the spaces in and among the glyphs, around the text and to the margins of the page, wherever the end of those margins may be. 
 
 <style>
     #overview-examples-screenshots figure img {
