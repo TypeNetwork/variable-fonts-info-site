@@ -1,13 +1,7 @@
 ---
 layout: article
-breadcrumbs: ["Grades", "TKTKTK…"]
-sidebar: "Grades"
-title: "Grades primer"
+breadcrumbs: ["Grades", "Before variables…"]
+title: Grades in a printed world
 ---
 
-before vars _ style made custom to need or one style's requirements in printing.
-
-After cars _ styles avaiable to the entire design space. 
-
-(note to editor: please find example and cover that in the after, and please embelish to 
-as many "before" and after issues as possible)
+Fonts of different styles on the same width have been in use typographically since mechanical typesetting required regular and italic fonts on the same widths, aka duplexing. Controlling the weight of type in production processed was left to the people and machinery spreading the ink, and controlled the speed and pressure of the presses. With digital type, once much or the physical process was streamlined, typographers started asking for multiple weights on the same width as the most effective way to deal with the mixture of offset and gravure processes in use in single publication. Later, after a study organized by the Poynter Center for Media studies on typefaces for newspapers, Font Bureau developed multiple grades of a single regular style of Poynter Old Style to enhance the production capabilities of newspapers.
