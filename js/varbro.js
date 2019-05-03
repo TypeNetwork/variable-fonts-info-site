@@ -546,10 +546,10 @@ function setupPlayground() {
         var newCSS = css.textContent.replace(/^.+?\{/gm, function(rules) {
             var newrules = [];
             rules.split(/,/).forEach(function(rule) {
-                if (rule.trim().match(/^@|\.example/)) {
+                if (rule.trim().match(/^@/)) {
                     newrules.push(rule);
                 } else {
-                    newrules.push('.example ' + rule);
+                    newrules.push('#playground-output ' + rule);
                 }
             })
             return newrules.join(", ");

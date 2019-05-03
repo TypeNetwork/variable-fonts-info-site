@@ -13,6 +13,7 @@
 {% comment %}
     HTML can't be indented or it will be escaped
 {% endcomment %}
+
 <figure id='{{specimen_id}}' class="specimen {{layout}}"{% if params.css %} style="{% for kv in params.css %}{{kv[0]}}:{{kv[1]}};{% endfor %}"{% endif %}>
     {% if params.caption %}
         <figcaption>{{params.caption}}</figcaption>
@@ -26,7 +27,6 @@
 {% else %}
 
     {% include _specimen-vars.html params=params %}
-    
     {% assign element = params.element|default:"figure" %}
     
 {% comment %}

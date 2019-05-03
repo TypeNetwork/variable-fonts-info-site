@@ -5,7 +5,7 @@
             <li>{% include specimen.html params=entry playground=forloop.last %}</li>
         {% endfor %}
         </ul>
-    {% elsif include.example.text %}
+    {% else %}
         {% include specimen.html params=include.example %}
     {% endif %}
     {% assign contentlength = include.example.content|trim|size %}

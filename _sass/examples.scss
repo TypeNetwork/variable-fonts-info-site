@@ -92,7 +92,7 @@
     }
 
     &.grey, &.gray {
-        ul.comparison, .extra-content, figure {
+        ul.comparison, ul.comparison > li,, ul.lines, ul.lines >li, .extra-content, figure, .specimen {
             background: transparent;
             padding: 0;
         }
