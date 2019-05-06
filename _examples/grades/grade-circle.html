@@ -1,0 +1,39 @@
+---
+breadcrumbs: ["Grades", "Examples…"]
+title: Grade circle
+description: Text can be styled in an part of a variable font’s design space. Here the lightest and widest Roboto Delta experiment is having grades applied to create an area of text with a different weight, without change to the layout.
+playground: true
+font: Roboto-Delta
+text: >
+    DESIGNING SHAPES IN AND WITH TEXT HAS BEEN<br>
+    A TRADITION IN GR<span>APHIC D</span>ESIGN FOREVER. BUT<br>
+    COMPOSING IT <span>WAS A LOT OF TR</span>OUBLE IN SOME<br>
+    CASES W<span>HERE THE DESIRE WA</span>S FOR THE<br>
+    APPEAR<span>ANCE OF TEXT TO CHA</span>NGE, BUT<br>
+    CHANGIN<span>G THE APPEARANCE ALSO</span> CHANGES<br>
+    THE LA<span>YOUT OF THE TEXT. SEVER</span>AL FONT<br>
+    STYLES M<span>ADE ON THE SAME WIDT</span>H CAN HELP,<br>
+    BUT THE U<span>LTIMATE SOLUTION IS</span> TO HAVE A<br>
+    FLUID RANG<span>E OF STYLES THAT</span> ALLOW THE<br>
+    SEPARATION OF TH<span>E TEXTU</span>RAL AND GRAPHICAL<br>
+    NATURES OF LETTERS — IF IT COULD ONLY EXIST.
+size: 16
+class: circle-grade-demo
+css:
+    background: white !important
+    padding: 1rem
+    text-align: center
+    display: block
+    white-space: nowrap
+    overflow: hidden
+axes:
+    opsz: 15
+    wght: 100
+    wdth: 125
+    GRAD: 0
+---
+<style>
+    .circle-grade-demo span.rendered span {
+        font-variation-settings: "opsz" 15, "wght" 100, "wdth" 125, "GRAD" 1;
+    }
+</style>
