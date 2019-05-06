@@ -253,7 +253,7 @@ function setupFitToWidth() {
     spans.forEach(function(span) {
         var specimen = span.closest('.specimen.fit-to-width');
         specimens.push(specimen);
-        specimen.style.overflow = 'hidden';
+        //specimen.style.overflow = 'hidden';
         span.style.whiteSpace = 'nowrap';
         //make bigger for more accurate math
         span.style.fontSize = "72px";

@@ -17,19 +17,19 @@ In the process of experimenting with variations for font compression, Apple beca
 
 Not until years later, after Microsoft had undertaken (and Adobe and Google were starting to undertake) international font-family development, did the thinking and conversation about what would become OpenType 1.8 begin, leading to the <a href="https://medium.com/variable-fonts/https-medium-com-tiro-introducing-opentype-variable-fonts-12ba6cd2369">2016 release</a> of a specification that included variable fonts. This initial pursuit of font-family file compression, besides having a new aspect relevant to performance of international font families on the web, rekindled interest in variations for extended, old, new, and different uses.
 
-<figure>
+<figure style='margin-top:-0.666rem;'>
 {% include specimen.html layout="compact" font="Amstelvar-Alpha" size="fit" text="AMSTELVAR ALPHA" link="https://github.com/TypeNetwork/Amstelvar" %}
 {% include specimen.html layout="compact" font="Amstelvar-Alpha" size="fit" text="An Experimental 17-Axis Variable" link="https://github.com/TypeNetwork/Amstelvar" %}
   <figcaption><a href="https://github.com/TypeNetwork/Amstelvar">Amstelvar</a>, the first “extreme font challenge” Font Bureau worked on for Google.</figcaption>
-  </figure>
+</figure>
 
 Font Bureau began public variable development in late 2016, when we started alpha designs of <a href="https://github.com/TypeNetwork/Amstelvar">Amstelvar</a> and <a href="https://github.com/TypeNetwork/Decovar">Decovar</a>  for Google, which, along with other companies, had done significant work on a variable-font generator. Microsoft and Apple had developed variable-font system extensions for their upcoming operating systems. Microsoft had also developed huge amounts of documentation and provided wise specification management. And Adobe had gone to work on what would become the PostScript extension for variable fonts in CFF2. WebKit rapidly updated to the spec, which Apple quickly put into a version of Safari.
 
-<figure>
+<figure style='margin-top:-1.5rem;'>
 {% include specimen.html layout="compact" font="Decovar" size="fit" text="DECOVAR ALPHA" TRMF="114" SKLD="100" BLDA="204" link="https://github.com/TypeNetwork/Decovar" %}
 {% include specimen.html layout="compact" font="Decovar" size="fit" text="An Experimental 15-Axis Variable" link="https://github.com/TypeNetwork/Decovar" %}
   <figcaption>Font Bureau’s second project for Google: <a href="https://www.github.com/typenetwork/fb-decovar">Decovar</a>, a modular parametric display font.</figcaption>
-  </figure>
+</figure>
 
 ## Thinking (and designing) ahead
 
