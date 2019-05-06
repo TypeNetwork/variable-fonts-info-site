@@ -17,15 +17,13 @@ text: >
     FLUID RANG<span>E OF STYLES THAT</span> ALLOW THE<br>
     SEPARATION OF TH<span>E TEXTU</span>RAL AND GRAPHICAL<br>
     NATURES OF LETTERS — IF IT COULD ONLY EXIST.
-size: 16
+size: 14
 class: circle-grade-demo
 css:
     background: white !important
     padding: 1rem
     text-align: center
     display: block
-    white-space: nowrap
-    overflow: hidden
 axes:
     opsz: 15
     wght: 100
@@ -33,6 +31,16 @@ axes:
     GRAD: 0
 ---
 <style>
+    .circle-grade-demo span.rendered {
+        font-size: 3.3vw !important;
+    }
+
+    @media (min-width: 533px) {
+        .circle-grade-demo span.rendered {
+            font-size: 14pt !important;
+        }
+    }
+
     .circle-grade-demo span.rendered span {
         font-variation-settings: "opsz" 15, "wght" 100, "wdth" 125, "GRAD" 1;
     }
