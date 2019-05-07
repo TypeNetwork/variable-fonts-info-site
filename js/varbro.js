@@ -314,6 +314,7 @@ function addNav() {
     if (!links.length) return;
     links.forEach(function(a, i) {
         if (a.href.replace(/#.*$/, '') === window.location.href.replace(/#.*$/, '')) {
+            a.addClass('current');
             if (i > 0) {
                 prev = links[i-1];
             }
