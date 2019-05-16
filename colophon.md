@@ -2,6 +2,7 @@
 layout: article
 breadcrumbs: ["About"]
 title: Colophon
+nav: false
 ---
 
 ## Authors
