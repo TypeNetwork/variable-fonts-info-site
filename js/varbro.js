@@ -934,9 +934,9 @@ HTMLElement.prototype.setLineHeight = function() {
     var boxheight = this.contentHeight();
     var totalChars = this.textContent.trim().length;
     var charsPerLine = totalChars / (boxheight / Math.max(1, parseInt(css.lineHeight)));
-    
+
     var yopq = fvs2obj(css.fontVariationSettings).YOPQ;
-    if (isNaN(yopq) && fontfamily in calculations["line-height"]) {
+    if (isNaN(yopq) && fontfamily in calculations["line-height"] && fontfamily in globalAxes) {
         yopq = (globalAxes[fontfamily].YOPQ || globalAxes["AmstelvarAlpha-VF"].YOPQ).default;
     }
     if (isNaN(yopq)) {
@@ -993,7 +993,8 @@ window.doJustification = function() {
         var fontsize = fontsizepx * 72/96;
         var fvs = fvs2obj(parastyle.fontVariationSettings);
         var relweight;
-        if (fvs.XOPQ && globalAxes[fontfamily].XOPQ) {
+
+        if (fvs.XOPQ && globalAxes[fontfamily] && globalAxes[fontfamily].XOPQ) {
             relweight = 100 * fvs.XOPQ / globalAxes[fontfamily].XOPQ.default;
         } else if (parseInt(parastyle.fontWeight)) {
             relweight = 100 * parseInt(parastyle.fontWeight) / 400;
