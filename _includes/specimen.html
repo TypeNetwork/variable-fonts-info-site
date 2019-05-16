@@ -40,7 +40,7 @@
 
 <{{element}} id='{{specimen_id}}' class='specimen {{layout}} {{params.class}} {% if params.label %}has-label{% endif %} {% if params.size == "fit" %}fit-to-width{% endif %}' {% if params.fit %}data-fit-ratio="{{params.fit}}"{% endif %}>
     {% if params.link %}<a class='linked-specimen' href="{{params.link}}">{% endif %}
-        <span class='rendered' style='{{specimen_css}}' {% if params.editable %}contenteditable{% endif %}>{{the_text}}</span>
+        <span class='rendered' style='{{specimen_css}}'>{{the_text}}</span>
     {% if params.link %}</a>{% endif %}
     {% if element == "figure" %}
         <figcaption>

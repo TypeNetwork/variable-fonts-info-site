@@ -1,23 +1,22 @@
 ---
 breadcrumbs: ["Grades", "Examples…"]
 title: Receding Baseline
-description: Text rendered in 3D environments can respond to its "distance" from the user, maintaining readability under varying conditions.
-text: What goes around comes around
-editable: true
-class: receding-example
+description: Text in 3D environments can respond to its "distance" from the user, maintaining readability under varying conditions.
+text: A long time ago in a galaxy far, far away
+class: compact receding-example
 size: 48
 font: Roboto-Delta
 ---
 <style>
-    .receding-example {
-        background: transparent !important;
-        padding: 0 !important;
+    .recedint-example .extra-content {
+        position: absolute;
     }
+
     .receding-example .specimen .rendered {
         position: relative;
         perspective: 334px;
         perspective-origin: center center;
-        top: 12rem; /* to make space for sliders */
+        top: 8rem;
     }
     
     .receding-example .specimen .rendered span {
@@ -34,26 +33,7 @@ font: Roboto-Delta
         list-style: none;
         margin: 0;
         padding: 0;
-    }
-    
-    #sphere-sliders li {
-        display: grid;
-        grid-template-columns: 3em 1fr 1fr;
-        grid-gap: 0.5rem;
-        padding: 0.1rem 0 !important;
-    }
-    
-    #sphere-sliders input[name=text], #sphere-sliders input[name=angle] {
-        grid-column: 2/4;
-    }
-    
-    #sphere-sliders label {
-        font-size: 85%;
-        justify-self: center;
-    }
-    
-    #sphere-sliders label:first-child {
-        justify-self: end;
+        position: absolute;
     }
 </style>
 
@@ -61,23 +41,15 @@ font: Roboto-Delta
 </style>
 
 <ul id='sphere-sliders'>
-    <li><label>Text</label> <input type='text' name='text' value="{{page.text}}"></li>
-    <li><label>Depth</label> <input type='range' name='angle' min='10' max='330' value='240'></li>
-    
-    <li><label></label> <label>Near</label> <label>Far</label></li>
-    
+    <li><label>Depth</label> <input type='range' name='angle' min='10' max='330' value='225'></li>
     <li><label>Opsz</label> <input type='range' name='opsz1' min='8' max='144' value='12'> <input type='range' name='opsz2' min='8' max='144' value='12'></li>
-    <li><label>Grade</label> <input type='range' name='GRAD1' min='-1' max='1' value='-0.5' step="0.01"> <input type='range' name='GRAD2' min='-1' max='1' value='0.6' step="0.01"></li>
+    <li><label>Grade</label> <input type='range' name='GRAD1' min='-1' max='1' value='0' step="0.01"> <input type='range' name='GRAD2' min='-1' max='1' value='0' step="0.01"></li>
     <li><label>Weight</label> <input type='range' name='wght1' min='100' max='900' value='400'> <input type='range' name='wght2' min='100' max='900' value='400'></li>
     <li><label>Width</label> <input type='range' name='wdth1' min='75' max='125' value='100' step="0.1"> <input type='range' name='wdth2' min='75' max='125' value='100' step="0.1"></li>
 </ul>
 
-<div id='receding-placeholder'></div>
-
 <script>
     var canvas = document.querySelector('.receding-example .specimen .rendered');
-    var textInput = document.querySelector('#sphere-sliders input[name=text]');
-
     canvas.style.whiteSpace = 'nowrap';
     var total = canvas.textContent.trim().length;
     if (total > 0) {
@@ -88,7 +60,7 @@ font: Roboto-Delta
         function doSphere() {
             //reset string into individual unstyled spans for each letter
             canvas.style.transform = "";
-            canvas.innerHTML = ('<span>' + textInput.value.trim().split(/(?=[^])/u).join("</span><span>") + "</span>").replace(/<span>\s+<\/span>/g, ' ');
+            canvas.innerHTML = ('<span>' + canvas.textContent.trim().split(/(?=[^])/u).join("</span><span>") + "</span>").replace(/<span>\s+<\/span>/g, ' ');
     
             var spans = canvas.querySelectorAll('span');
     
@@ -130,7 +102,7 @@ font: Roboto-Delta
                 var lettRect = letter.getBoundingClientRect();
                 offsets[i] = (lettRect.left - lineRect.left) / lineRect.width;
             });
-            
+    
             //now actually rotate letters along a circle
             var radius = Math.round(360 / spread * lineRect.width / tau);
             canvas.style.perspective = (radius * 1) + 'px';
@@ -138,7 +110,7 @@ font: Roboto-Delta
             spans.forEach(function(letter, i) {
                 var ratio = offsets[i];
     
-                var angle = spread/2 - spread * ratio - 5; //not sure why the correction at the end is necessary
+                var angle = spread/2 - spread * ratio;
                 
                 var transforms = [];
                 transforms.push("rotateY(" + Math.round(100*angle)/100 + "deg)");
@@ -148,16 +120,13 @@ font: Roboto-Delta
                 letter.style.transform = transforms.join(" ");
             });
             
-            
             //and now scale the whole thing into the actual viewport
             var screen = canvas.parentElement.getBoundingClientRect();
             var left = canvas.querySelector('span:first-of-type').getBoundingClientRect();
             var right = canvas.querySelector('span:last-of-type').getBoundingClientRect();
             var transformedWidth = right.left - left.left + right.width;
-            var transformedHeight = Math.min(left.bottom, right.bottom) - canvas.getBoundingClientRect().top;
             canvas.style.transformOrigin = "top left";
             canvas.style.transform = "scale(" + (screen.width / transformedWidth) + ") translateX(" + Math.round(screen.left - left.left) + "px)"; 
-            document.getElementById('receding-placeholder').style.height = (transformedHeight + 16) + 'px';
         }
         
         
@@ -165,9 +134,6 @@ font: Roboto-Delta
             input.addEventListener('input', doSphere);
             input.addEventListener('change', doSphere);
         });
-        
-        window.addEventListener('resize', doSphere);
-        
         doSphere();
     }
 </script>
