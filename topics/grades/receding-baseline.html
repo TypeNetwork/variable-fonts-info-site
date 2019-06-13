@@ -1,30 +1,40 @@
 ---
+layout: article
 breadcrumbs: ["Grades", "Examples…"]
 title: Receding Baseline
-description: Text rendered in 3D environments can respond to its "distance" from the user, maintaining readability under varying conditions.
 text: What goes around comes around
-editable: true
-class: receding-example
-size: 48
-font: Roboto-Delta
 ---
+<p>
+    Text rendered in 3D environments can respond to its "distance" from the user, maintaining readability under varying conditions.
+</p>
+
 <style>
-    .receding-example {
-        background: transparent !important;
-        padding: 0 !important;
+    #varbro-site #receding-example {
+        position: relative;
+        margin-top: 0.5in;
+        margin-bottom: 0.5in;
     }
-    .receding-example .specimen .rendered {
+
+    #receding-example samp {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        border: 0 none transparent;
+        font-family: {{site.data.fonts.names["Roboto-Delta"]}};
+        font-size: 48pt;
+    }
+
+    #receding-example samp {
         position: relative;
         perspective: 334px;
-        perspective-origin: center center;
-        top: 12rem; /* to make space for sliders */
+        perspective-origin: center top;
     }
     
-    .receding-example .specimen .rendered span {
+    #receding-example samp span {
         display: inline-block;
     }
 
-    .receding-example .specimen .rendered span.positioned {
+    #receding-example samp span.positioned {
         position: absolute;
         left: 0;
         top: 0;
@@ -33,7 +43,9 @@ font: Roboto-Delta
     #sphere-sliders {
         list-style: none;
         margin: 0;
-        padding: 0;
+        padding: 1rem;
+        background: #F0F0F0;
+        font-size: 0.9rem;
     }
     
     #sphere-sliders li {
@@ -57,9 +69,6 @@ font: Roboto-Delta
     }
 </style>
 
-<style>
-</style>
-
 <ul id='sphere-sliders'>
     <li><label>Text</label> <input type='text' name='text' value="{{page.text}}"></li>
     <li><label>Depth</label> <input type='range' name='angle' min='10' max='330' value='240'></li>
@@ -72,10 +81,12 @@ font: Roboto-Delta
     <li><label>Width</label> <input type='range' name='wdth1' min='75' max='125' value='100' step="0.1"> <input type='range' name='wdth2' min='75' max='125' value='100' step="0.1"></li>
 </ul>
 
-<div id='receding-placeholder'></div>
+<figure id='receding-example'>
+    <samp>{{page.text}}</samp>
+</figure>
 
 <script>
-    var canvas = document.querySelector('.receding-example .specimen .rendered');
+    var canvas = document.querySelector('#receding-example samp');
     var textInput = document.querySelector('#sphere-sliders input[name=text]');
 
     canvas.style.whiteSpace = 'nowrap';
@@ -154,10 +165,10 @@ font: Roboto-Delta
             var left = canvas.querySelector('span:first-of-type').getBoundingClientRect();
             var right = canvas.querySelector('span:last-of-type').getBoundingClientRect();
             var transformedWidth = right.left - left.left + right.width;
-            var transformedHeight = Math.min(left.bottom, right.bottom) - canvas.getBoundingClientRect().top;
+            var transformedHeight = Math.min(left.bottom, right.bottom) - screen.top;
             canvas.style.transformOrigin = "top left";
             canvas.style.transform = "scale(" + (screen.width / transformedWidth) + ") translateX(" + Math.round(screen.left - left.left) + "px)"; 
-            document.getElementById('receding-placeholder').style.height = (transformedHeight + 16) + 'px';
+            canvas.style.height = (transformedHeight + 16) + 'px';
         }
         
         
@@ -171,3 +182,4 @@ font: Roboto-Delta
         doSphere();
     }
 </script>
+
