@@ -5,11 +5,6 @@ description: Using Zycon, which contains the glyph of an animated bicyler, a cha
 playground: true
 ---
 <style>
-    @font-face {
-        font-family: Zycon;
-        src: url("{{site.baseurl}}/fonts/Zycon.woff2") format("woff2"), url("{{site.baseurl}}/fonts/Zycon.woff") format("woff");
-    }
-    
     @keyframes bicycle {
         0% {
             left: -1.5em;
@@ -24,7 +19,7 @@ playground: true
     
     #bicycle-example {
         position: relative;
-        font-family: Zycon;
+        font-family: "{{site.data.fonts.names.Zycon}}";
         font-size: 96pt;
         overflow: hidden;
         line-height: 1;

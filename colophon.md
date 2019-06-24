@@ -24,8 +24,9 @@ nav: false
 * Chris Lewis
 
 ## Typefaces used
-* Amstelvar
+* [Amstelvar](https://github.com/TypeNetwork/Amstelvar)
 * Momentum Sans
-* Roboto Delta
-* Decovar
+* [Roboto Delta](https://github.com/TypeNetwork/Roboto-Delta)
+* [Decovar](https://github.com/TypeNetwork/Decovar)
+* Zycon
 
