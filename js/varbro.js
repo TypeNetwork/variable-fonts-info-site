@@ -504,9 +504,11 @@ function loadPlayground(button) {
                 extraContent.querySelectorAll('style').forEach(function(style) {
                     cssFrame.textContent += "\n\n" + style.textContent.trim();
                 });
+/* //don't include scripts for now as it's causing problems with some examples: https://github.com/TypeNetwork/variable-fonts-info-site/issues/100
                 extraContent.querySelectorAll('script').forEach(function(s) {
                     htmlFrame.textContent += "\n\n<script>\n" + s.textContent.trim().replace(noRendered, '$1') + "\n</script>";
                 });
+*/
             }
             
             //remove .rendered from CSS and JS
@@ -561,6 +563,7 @@ function setupPlayground() {
             style.textContent = oldCSS = newCSS;
             
             //and run any scripts in the input
+/* //don't include scripts for now as it's causing problems with some examples: https://github.com/TypeNetwork/variable-fonts-info-site/issues/100
             output.querySelectorAll('script').forEach(function(script) {
                 var js = script.textContent;
                 script.parentNode.removeChild(script);
@@ -568,6 +571,7 @@ function setupPlayground() {
                 newscript.textContent = js;
                 output.appendChild(newscript);
             });
+*/
         }
 
         updatetimeout = null;
