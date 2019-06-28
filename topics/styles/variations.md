@@ -187,7 +187,7 @@ $opacity: 0.75;
 	font-family: "AmstelvarAlpha-VF";
 	font-size: 180px;
 	text-anchor: middle;
-	alignment-baseline: middle;
+	dominant-baseline: middle;
 	font-variation-settings: "opsz" 15, "XTRA" 308, "XOPQ" 67, "YTLC" 500, "GRAD" 98, "YOPQ" 40;
 	animation: stAage-play #{$time}s linear infinite;
 }
