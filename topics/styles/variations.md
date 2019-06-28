@@ -57,46 +57,34 @@ For example, in Amstelvar, Font Bureau added axes to adjust for the technical re
 {% capture css %}
 $radius: 1.5in;
 $nudge: 10%;
-$time: 19.1;
+$time: 20;
 $second: 100% / $time;
 $opacity: 0.75;
 @keyframes stAage-play {
 	0%, 
 	#{$second * 2},
-	#{$second * 4.1}, 
 	#{$second * 5},
-	#{$second * 7.1}, 
 	#{$second * 8},
-	#{$second * 10.1}, 
 	#{$second * 11},
-	#{$second * 13.1}, 
 	#{$second * 14},
-	#{$second * 16.1}, 
-	#{$second * 17},
-	#{$second * 19.1} {
+	#{$second * 17} {
 		font-variation-settings: "opsz" 15, "XTRA" 308, "XOPQ" 67, "YTLC" 500, "GRAD" 98, "YOPQ" 40;
 	}
-	#{$second * 2.1},
 	#{$second * 4} {
 		font-variation-settings: "opsz" 15, "XTRA" 277, "XOPQ" 67, "YTLC" 500, "GRAD" 98, "YOPQ" 40;
 	}
-	#{$second * 5.1},
 	#{$second * 7} {
 		font-variation-settings: "opsz" 15, "XTRA" 339, "XOPQ" 67, "YTLC" 500, "GRAD" 98, "YOPQ" 40;
 	}
-	#{$second * 8.1},
 	#{$second * 10} {
 		font-variation-settings: "opsz" 15, "XTRA" 308, "XOPQ" 67, "YTLC" 500, "GRAD" 108, "YOPQ" 40;
 	}
-	#{$second * 11.1},
 	#{$second * 13} {
 		font-variation-settings: "opsz" 15, "XTRA" 308, "XOPQ" 67, "YTLC" 500, "GRAD" 88, "YOPQ" 40;
 	}
-	#{$second * 14.1},
 	#{$second * 16} {
 		font-variation-settings: "opsz" 15, "XTRA" 308, "XOPQ" 67, "YTLC" 500, "GRAD" 98, "YOPQ" 44;
 	}
-	#{$second * 17.1},
 	#{$second * 19} {
 		font-variation-settings: "opsz" 15, "XTRA" 308, "XOPQ" 67, "YTLC" 500, "GRAD" 98, "YOPQ" 36;
 	}
