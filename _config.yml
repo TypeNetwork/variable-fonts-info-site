@@ -47,6 +47,7 @@ defaults:
       type: examples
     values:
       layout: example
+      excerpt_separator: bogus.just.trying.to.eliminate.build.warning
 
 
 # Exclude from processing.
