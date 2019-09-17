@@ -1,0 +1,64 @@
+---
+breadcrumbs: ["Scripts", "Examples…"]
+title: Multiscript style matching
+description: Here, Roboto’s weight is adjusted to match Noto Bold as a fallback.
+playground: true
+comparison:
+    -
+        font: Roboto-Delta
+        size: fit
+        text: <span class='noto'>我的征途是星辰大海</span> MY CONQUEST
+#        label: Default
+        axes:
+            opsz: 12.1
+            wght: 700
+    -
+        font: Roboto-Delta
+        size: fit
+        text: <span class='noto'>我的征途是星辰大海</span> MY CONQUEST
+#        label: YTUC ≈ YTCH = XTCH
+        axes:
+            opsz: 12.1
+            wght: 700
+            wdth: 108.5
+            YTDE: -200
+            YTUC: 760
+    -
+        font: Roboto-Delta
+        size: fit
+        text: <span class='noto'>我的征途是星辰大海</span> My Conquest is
+#        label: Default
+        axes:
+            opsz: 12.1
+            wght: 700
+    -
+        font: Roboto-Delta
+        size: fit
+        text: <span class='noto'>我的征途是星辰大海</span> My Conquest is
+#        label: YTUC + YTDE ≈ YTCH = XTCH
+        axes:
+            opsz: 12.1
+            wght: 700
+            wdth: 108.5
+            YTDE: -125
+            YTAS: 835
+            YTUC: 760
+            YTLC: 570
+---
+<style>
+    @font-face {
+        font-family: "Noto CJK Simplified";
+        font-weight: normal;
+        src: url("{{site.baseurl}}/fonts/NotoSansCJKsc-hinted/conquest/NotoSansMonoCJKsc-Regular.woff2") format("woff2");
+    }
+
+    @font-face {
+        font-family: "Noto CJK Simplified";
+        font-weight: bold;
+        src: url("{{site.baseurl}}/fonts/NotoSansCJKsc-hinted/conquest/NotoSansMonoCJKsc-Bold.woff2") format("woff2");
+    }
+
+    .specimen .noto {
+        font-family: "Noto CJK Simplified", sans-serif;
+    }
+</style>
