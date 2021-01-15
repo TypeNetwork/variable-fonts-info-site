@@ -242,8 +242,12 @@ function setupSidebar() {
 }
 
 function getPrimaryFontFamily(ff) {
-    return ff.split(',')[0].trim().replace(/^["']\s*/, '').replace(/\s*$/, '');
+    // Regex is taken from the String.trim() polyfill then added " and '
+    // at the beginning and the end classes.
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim#polyfill
+    return ff.split(',')[0].replace(/^[\s\uFEFF\xA0"']+|[\s\uFEFF\xA0"']+$/g, '');
 }
+
 
 function setupFitToWidth() {
     var spans = document.querySelectorAll('.specimen.fit-to-width span.rendered');
